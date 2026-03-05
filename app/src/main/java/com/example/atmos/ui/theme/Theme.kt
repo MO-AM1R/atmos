@@ -1,57 +1,142 @@
 package com.example.atmos.ui.theme
-
 import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary              = PrimaryLight,
+    onPrimary            = White,
+    secondary            = BackgroundLight2,
+    onSecondary          = PrimaryLight,
+    background           = BackgroundLight1,
+    onBackground         = TextPrimaryLight,
+    surface              = CardLight,
+    onSurface            = TextPrimaryLight,
+    surfaceVariant       = MutedLight,
+    onSurfaceVariant     = MutedForegroundLight,
+    outline              = BorderLight,
+    outlineVariant       = BorderLight,
+    error                = DestructiveLight,
+    onError              = White,
+    tertiary             = WeatherCyan,
+    onTertiary           = White,
+    tertiaryContainer    = WeatherViolet,
+    onTertiaryContainer  = White,
+    inverseSurface       = TextPrimaryLight,
+    inverseOnSurface     = BackgroundLight1,
+    scrim                = Color(0x52000000),
 )
+
+private val DarkColorScheme = darkColorScheme(
+    primary              = PrimaryDark,
+    onPrimary            = Color(0xFF262626),
+    secondary            = MutedDark,
+    onSecondary          = PrimaryDark,
+    background           = BackgroundDark,
+    onBackground         = TextPrimaryDark,
+    surface              = CardDark,
+    onSurface            = TextPrimaryDark,
+    surfaceVariant       = MutedDark,
+    onSurfaceVariant     = MutedForegroundDark,
+    outline              = BorderDark,
+    outlineVariant       = BorderDark,
+    error                = DestructiveDark,
+    onError              = DestructiveFgDark,
+    tertiary             = WeatherCyan,
+    onTertiary           = BackgroundDark,
+    tertiaryContainer    = WeatherViolet,
+    onTertiaryContainer  = White,
+    inverseSurface       = TextPrimaryDark,
+    inverseOnSurface     = BackgroundDark,
+    scrim                = Color(0x52000000),
+)
+
+data class WeatherExtraColors(
+    val cyan              : Color,
+    val violet            : Color,
+    val navy              : Color,
+    val cardSurface       : Color,
+    val inputBackground   : Color,
+    val switchBackground  : Color,
+    val textSecondary     : Color,
+    val alertCritical     : Color,
+    val alertWarning      : Color,
+    val alertInfo         : Color,
+    val alertSuccess      : Color,
+)
+
+val LightExtraColors = WeatherExtraColors(
+    cyan             = WeatherCyan,
+    violet           = WeatherViolet,
+    navy             = WeatherNavy,
+    cardSurface      = Color(0xCCFFFFFF),
+    inputBackground  = InputBackgroundLight,
+    switchBackground = SwitchBackgroundLight,
+    textSecondary    = TextSecondaryLight,
+    alertCritical    = AlertCritical,
+    alertWarning     = AlertWarning,
+    alertInfo        = AlertInfo,
+    alertSuccess     = AlertSuccess,
+)
+
+val DarkExtraColors = WeatherExtraColors(
+    cyan             = WeatherCyan,
+    violet           = WeatherViolet,
+    navy             = WeatherNavy,
+    cardSurface      = Color(0x1AFFFFFF),
+    inputBackground  = InputDark,
+    switchBackground = Color(0xFF3A3A4A),
+    textSecondary    = TextSecondaryDark,
+    alertCritical    = AlertCritical,
+    alertWarning     = AlertWarning,
+    alertInfo        = AlertInfo,
+    alertSuccess     = AlertSuccess,
+)
+
+val LocalWeatherExtraColors = staticCompositionLocalOf { LightExtraColors }
 
 @Composable
 fun AtmosTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
+    content:   @Composable () -> Unit
 ) {
-    val colorScheme = when {
-      dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-        val context = LocalContext.current
-        if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-      }
-      darkTheme -> DarkColorScheme
-      else -> LightColorScheme
+    val colorScheme  = if (darkTheme) DarkColorScheme  else LightColorScheme
+    val extraColors  = if (darkTheme) DarkExtraColors  else LightExtraColors
+
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = colorScheme.background.toArgb()
+            WindowCompat
+                .getInsetsController(window, view)
+                .isAppearanceLightStatusBars = !darkTheme
+        }
     }
 
-    MaterialTheme(
-      colorScheme = colorScheme,
-      typography = Typography,
-      content = content
-    )
+    CompositionLocalProvider(
+        LocalWeatherExtraColors provides extraColors
+    ) {
+        MaterialTheme(
+            colorScheme = colorScheme,
+            typography  = WeatherTypography,
+            shapes      = WeatherShapes,
+            content     = content
+        )
+    }
 }
+
+
+val MaterialTheme.extraColors: WeatherExtraColors
+    @Composable get() = LocalWeatherExtraColors.current
