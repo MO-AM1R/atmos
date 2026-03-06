@@ -1,4 +1,4 @@
-package com.example.atmos.data.interceptor
+package com.example.atmos.data.network.interceptor
 import com.example.atmos.utils.AppConstants
 import jakarta.inject.Inject
 import okhttp3.Interceptor
