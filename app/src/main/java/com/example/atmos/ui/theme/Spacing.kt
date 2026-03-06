@@ -12,3 +12,8 @@ object Spacing {
     val XXXLarge = 48.dp
     val Huge     = 64.dp
 }
+
+object Padding {
+    val screenPadding = Pair(20.dp, 15.dp)
+    val boxPadding = Pair(14.dp, 10.dp)
+}

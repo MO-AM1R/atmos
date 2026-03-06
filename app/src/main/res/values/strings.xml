@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">atmos</string>
+    <string name="app_name">Atmos</string>
+    <string name="icon">Icon</string>
+    <string name="your_personal_weather_companion">Your personal weather companion</string>
 </resources>
