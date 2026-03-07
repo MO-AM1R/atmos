@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.androidx.compose.animation)
     implementation(libs.androidx.compose.foundation)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.dotsindicator)
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.compose.animation.core)
