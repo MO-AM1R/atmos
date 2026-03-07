@@ -17,13 +17,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.atmos.R
 import com.example.atmos.domain.onboarding.OnboardingItem
 import com.example.atmos.ui.onboarding.components.OnboardingBottomSection
@@ -35,6 +40,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
+@Preview(showSystemUi = true, showBackground = true)
 fun OnboardingScreen() {
     val onboardingPages = listOf(
         OnboardingItem(
@@ -59,7 +65,10 @@ fun OnboardingScreen() {
         ),
     )
 
+    LocalContext.current
+
     val pagerState = rememberPagerState { onboardingPages.size }
+    val buttonLabel: MutableState<String?> = rememberSaveable { mutableStateOf(null) }
     val scope = rememberCoroutineScope()
 
     suspend fun navigateToNextPage() {
@@ -112,7 +121,7 @@ fun OnboardingScreen() {
                         BackgroundDark,
                         BackgroundDark2,
                         BackgroundDark2,
-                        ),
+                    ),
                     start = Offset(offsetX, offsetY),
                     end = Offset(offsetX + 600f, offsetY + 1000f)
                 )
@@ -123,6 +132,12 @@ fun OnboardingScreen() {
             ),
         contentAlignment = Alignment.BottomCenter
     ) {
+        buttonLabel.value =
+            if (pagerState.currentPage < 3)
+                stringResource(R.string.next)
+            else
+                stringResource(R.string.get_started)
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -138,17 +153,18 @@ fun OnboardingScreen() {
 
             OnboardingBottomSection(
                 pagerState = pagerState,
+                label = buttonLabel.value ?: stringResource(R.string.next),
                 onNextClick = {
                     scope.launch {
                         val currentPageIndex = pagerState.currentPage
 
-                        navigateToNextPage()
                         if (currentPageIndex == 1) {
                             //TODO: enable location permissions, enable location service
                         } else if (currentPageIndex == 2) {
                             //TODO: enable notification permissions
                         }
 
+                        navigateToNextPage()
                     }
                 }
             )

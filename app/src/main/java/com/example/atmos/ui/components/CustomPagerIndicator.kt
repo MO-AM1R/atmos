@@ -1,4 +1,5 @@
 package com.example.atmos.ui.components
+import android.graphics.pdf.PdfDocument
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,14 +12,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 
 @Composable
+@Preview(showSystemUi = true, showBackground = true)
 fun MyPagerIndicator(
     modifier: Modifier = Modifier,
-    pagerState: PagerState,
+    pagerState: PagerState = PagerState { 4 },
     activeDotColor: Color = Color.Blue,
     dotColor: Color = Color.Gray,
     pageCount: Int = 4,

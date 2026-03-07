@@ -11,4 +11,6 @@
     <string name="set_smart_alerts_for_rain_wind_snow_and_extreme_temps">Set smart alerts for rain, wind, snow\nand extreme temps</string>
     <string name="you_re_all_set">You\'re All Set! 🎉</string>
     <string name="choose_your_preferences_and_start_exploring">Choose your preferences and start\nexploring</string>
+    <string name="get_started">Get Started</string>
+    <string name="next">Next</string>
 </resources>

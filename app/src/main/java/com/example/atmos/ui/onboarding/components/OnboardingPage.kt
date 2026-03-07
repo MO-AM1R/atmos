@@ -25,7 +25,9 @@ import androidx.compose.ui.graphics.layer.drawLayer
 import androidx.compose.ui.graphics.rememberGraphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.atmos.R
 import com.example.atmos.domain.onboarding.OnboardingItem
 import com.example.atmos.ui.components.ResourceImage
 import com.example.atmos.ui.theme.Spacing
@@ -34,11 +36,12 @@ import kotlinx.coroutines.delay
 
 
 @Composable
+@Preview(showBackground = true, showSystemUi = true)
 fun OnboardingPage(
     modifier: Modifier = Modifier,
-    item: OnboardingItem,
-    currentPage: Int,
-    pageIndex  : Int,
+    item: OnboardingItem = OnboardingItem(R.drawable.weather, "Title", "Sub Title"),
+    currentPage: Int = 0,
+    pageIndex  : Int = 0,
 ) {
     var iconVisible by remember { mutableStateOf(false) }
     var titleVisible by remember { mutableStateOf(false) }
