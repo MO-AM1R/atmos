@@ -1,5 +1,6 @@
 [versions]
 agp                       = "9.0.1"
+dotsindicator = "5.1.0"
 kotlin                    = "2.3.10"
 composeBom                = "2026.02.01"
 coreKtx                   = "1.17.0"
@@ -56,6 +57,7 @@ androidx-compose-material-icons = { group = "androidx.compose.material",name = "
 androidx-compose-animation = { group = "androidx.compose.animation",name = "animation" }
 androidx-compose-foundation = { group = "androidx.compose.foundation",name = "foundation" }
 androidx-navigation-compose = { group = "androidx.navigation",name = "navigation-compose",version.ref = "navigationCompose" }
+dotsindicator = { module = "com.tbuonomo:dotsindicator", version.ref = "dotsindicator" }
 hilt-android = { group = "com.google.dagger",name = "hilt-android",version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger",name = "hilt-android-compiler",version.ref = "hilt" }
 hilt-navigation-compose = { group = "androidx.hilt",name = "hilt-navigation-compose",version.ref = "hiltNavigationCompose" }

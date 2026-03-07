@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">Atmos</string>
     <string name="icon">Icon</string>
+    <string name="image">Image</string>
     <string name="your_personal_weather_companion">Your personal weather companion</string>
+    <string name="know_your_weather">Know Your\nWeather</string>
+    <string name="real_time_forecasts_at_your_fingertips">Real-time forecasts at your fingertips</string>
+    <string name="track_any_location">Track Any\nLocation</string>
+    <string name="search_pin_and_save_your_favorite_cities_worldwide">Search, pin, and save your favorite\ncities worldwide</string>
+    <string name="never_miss_an_alert">Never Miss an\nAlert</string>
+    <string name="set_smart_alerts_for_rain_wind_snow_and_extreme_temps">Set smart alerts for rain, wind, snow\nand extreme temps</string>
+    <string name="you_re_all_set">You\'re All Set! 🎉</string>
+    <string name="choose_your_preferences_and_start_exploring">Choose your preferences and start\nexploring</string>
+    <string name="get_started">Get Started</string>
+    <string name="next">Next</string>
 </resources>
