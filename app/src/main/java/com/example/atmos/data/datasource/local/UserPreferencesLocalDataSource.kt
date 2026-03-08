@@ -11,4 +11,5 @@ interface UserPreferencesLocalDataSource {
     fun updateOption(locationOption: LocationOption)
     fun updateOption(windUnitOption: WindUnit)
     fun updateOption(temperatureUnitOption: TemperatureUnit)
+    fun isOnboardingSeenBefore(): Boolean
 }

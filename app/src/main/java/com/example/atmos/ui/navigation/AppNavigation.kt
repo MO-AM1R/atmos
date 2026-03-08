@@ -1,5 +1,6 @@
 package com.example.atmos.ui.navigation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -20,7 +21,20 @@ fun AppNavigation(
         startDestination = startDestination
     ){
         composable<Screens.SplashScreen> {
-            SplashScreen()
+            SplashScreen(
+                onFinish = { onboardingSeenBefore ->
+                    Log.d("TAG", "Seen before -> $onboardingSeenBefore")
+
+                    val target: Screens = Screens.OnboardingScreen
+                    if (onboardingSeenBefore){
+                        //TODO: change target to home
+                    }
+
+                    navController.navigate(target){
+                        popUpTo<Screens.SplashScreen> { inclusive = true }
+                    }
+                }
+            )
         }
 
         composable<Screens.OnboardingScreen> {

@@ -17,6 +17,7 @@ object AppConstants {
             const val LANGUAGE_OPTION_KEY = "language_option"
             const val TEMPERATURE_UNIT_OPTION_KEY = "temperature_unit_option"
             const val WIND_UNIT_OPTION_KEY = "wind_unit_option"
+            const val ONBOARDING_SEEN_BEFORE = "onboarding_seen_before"
         }
     }
 }

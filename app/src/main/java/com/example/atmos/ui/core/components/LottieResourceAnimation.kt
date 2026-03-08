@@ -1,10 +1,8 @@
 package com.example.atmos.ui.core.components
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import com.airbnb.lottie.LottieCompositionFactory
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -24,12 +22,6 @@ fun LottieResourceAnimation(
         iterations = LottieConstants.IterateForever,
         isPlaying = true
     )
-
-    DisposableEffect(resourceId) {
-        onDispose {
-            LottieCompositionFactory.clearCache(null)
-        }
-    }
 
     LottieAnimation(
         composition = composition,

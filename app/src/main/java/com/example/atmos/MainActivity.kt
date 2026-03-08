@@ -14,7 +14,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.atmos.ui.navigation.AppNavigation
-import com.example.atmos.ui.navigation.Screens
 import com.example.atmos.ui.theme.AtmosTheme
 import dagger.hilt.android.AndroidEntryPoint
 
