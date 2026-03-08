@@ -1,5 +1,6 @@
 package com.example.atmos.ui.onboarding
 
+import android.app.Activity
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,8 +29,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.example.atmos.R
 import com.example.atmos.domain.onboarding.OnboardingItem
 import com.example.atmos.ui.onboarding.components.OnboardingBottomSection
@@ -111,6 +117,22 @@ fun OnboardingScreen() {
         label = "offsetY"
     )
 
+    val view = LocalView.current
+    DisposableEffect(Unit) {
+        val window = (view.context as Activity).window
+        val insetsController = WindowCompat.getInsetsController(window, view)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        insetsController.hide(WindowInsetsCompat.Type.statusBars())
+        insetsController.hide(WindowInsetsCompat.Type.navigationBars())
+        insetsController.systemBarsBehavior =
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        onDispose {
+            WindowCompat.setDecorFitsSystemWindows(window, true)
+            insetsController.show(WindowInsetsCompat.Type.statusBars())
+            insetsController.show(WindowInsetsCompat.Type.navigationBars())
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -156,14 +178,6 @@ fun OnboardingScreen() {
                 label = buttonLabel.value ?: stringResource(R.string.next),
                 onNextClick = {
                     scope.launch {
-                        val currentPageIndex = pagerState.currentPage
-
-                        if (currentPageIndex == 1) {
-                            //TODO: enable location permissions, enable location service
-                        } else if (currentPageIndex == 2) {
-                            //TODO: enable notification permissions
-                        }
-
                         navigateToNextPage()
                     }
                 }
