@@ -44,8 +44,8 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.example.atmos.R
-import com.example.atmos.ui.components.LottieResourceAnimation
-import com.example.atmos.ui.components.ResourceIcon
+import com.example.atmos.ui.core.components.LottieResourceAnimation
+import com.example.atmos.ui.core.components.ResourceIcon
 import com.example.atmos.ui.theme.BackgroundDark2
 import com.example.atmos.ui.theme.Padding
 import com.example.atmos.ui.theme.Spacing

@@ -36,6 +36,7 @@ coroutinesTest            = "1.10.2"
 archCoreTesting           = "2.2.0"
 ksp                       = "2.3.4"
 animationCore             = "1.10.4"
+runtime = "1.10.4"
 
 
 [libraries]
@@ -92,6 +93,7 @@ coroutines-test = { group = "org.jetbrains.kotlinx",name = "kotlinx-coroutines-t
 arch-core-testing = { group = "androidx.arch.core",name = "core-testing",version.ref = "archCoreTesting" }
 hilt-android-testing = { group = "com.google.dagger",name = "hilt-android-testing",version.ref = "hilt" }
 androidx-compose-animation-core = { group = "androidx.compose.animation", name = "animation-core", version.ref = "animationCore" }
+androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
 
 
 [plugins]
