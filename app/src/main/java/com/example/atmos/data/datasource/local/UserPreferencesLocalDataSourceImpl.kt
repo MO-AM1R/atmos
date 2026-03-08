@@ -88,4 +88,8 @@ class UserPreferencesLocalDataSourceImpl
             )
         }
     }
+    
+    override fun isOnboardingSeenBefore(): Boolean {
+        return prefs.contains(Keys.ONBOARDING_SEEN_BEFORE)
+    }
 }

@@ -35,4 +35,8 @@ class UserPreferencesRepositoryImpl @Inject constructor(
     override fun seeOnboarding() {
         localDataSource.seeOnboarding()
     }
+    
+    override fun isOnboardingSeenBefore(): Boolean {
+        return localDataSource.isOnboardingSeenBefore()
+    }
 }

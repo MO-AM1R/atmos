@@ -12,4 +12,5 @@ interface UserPreferencesLocalDataSource {
     fun updateOption(windUnitOption: WindUnit)
     fun updateOption(temperatureUnitOption: TemperatureUnit)
     fun seeOnboarding()
+    fun isOnboardingSeenBefore(): Boolean
 }
