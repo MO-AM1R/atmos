@@ -12,6 +12,7 @@ class OnboardingViewModel @Inject constructor(
 
     fun onSeeOnboarding() {
         userPreferencesRepository.saveUserPreferences(null)
+        userPreferencesRepository.seeOnboarding()
     }
 
     fun onEvent(event: OnboardingEvent) {
