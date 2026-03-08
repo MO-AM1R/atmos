@@ -1,6 +1,6 @@
 [versions]
 agp                       = "9.0.1"
-dotsindicator = "5.1.0"
+dotsindicator             = "5.1.0"
 kotlin                    = "2.3.10"
 composeBom                = "2026.02.01"
 coreKtx                   = "1.17.0"
@@ -36,6 +36,8 @@ coroutinesTest            = "1.10.2"
 archCoreTesting           = "2.2.0"
 ksp                       = "2.3.4"
 animationCore             = "1.10.4"
+kotlinx-serialization     = "1.10.0"
+runtime                   = "1.10.4"
 
 
 [libraries]
@@ -92,6 +94,8 @@ coroutines-test = { group = "org.jetbrains.kotlinx",name = "kotlinx-coroutines-t
 arch-core-testing = { group = "androidx.arch.core",name = "core-testing",version.ref = "archCoreTesting" }
 hilt-android-testing = { group = "com.google.dagger",name = "hilt-android-testing",version.ref = "hilt" }
 androidx-compose-animation-core = { group = "androidx.compose.animation", name = "animation-core", version.ref = "animationCore" }
+androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
+kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 
 
 [plugins]
@@ -101,3 +105,4 @@ kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose",version.ref = "kot
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt-android = { id = "com.google.dagger.hilt.android",version.ref = "hilt" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize",version.ref = "kotlin" }
+kotlin-serialize = { id = "org.jetbrains.kotlin.plugin.serialization",version.ref = "kotlin" }

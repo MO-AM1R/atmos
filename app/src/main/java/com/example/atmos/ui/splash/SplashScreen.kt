@@ -43,9 +43,12 @@ import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.atmos.R
-import com.example.atmos.ui.components.LottieResourceAnimation
-import com.example.atmos.ui.components.ResourceIcon
+import com.example.atmos.ui.core.components.LottieResourceAnimation
+import com.example.atmos.ui.core.components.ResourceIcon
+import com.example.atmos.ui.splash.viewmodel.SplashViewModel
 import com.example.atmos.ui.theme.BackgroundDark2
 import com.example.atmos.ui.theme.Padding
 import com.example.atmos.ui.theme.Spacing
@@ -56,7 +59,8 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onFinish: (onboardingSeenBefore: Boolean) -> Unit
 ) {
     val view = LocalView.current
 
@@ -149,12 +153,16 @@ fun SplashScreen(
         insetsController.hide(WindowInsetsCompat.Type.navigationBars())
         insetsController.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+
         onDispose {
             WindowCompat.setDecorFitsSystemWindows(window, true)
             insetsController.show(WindowInsetsCompat.Type.statusBars())
             insetsController.show(WindowInsetsCompat.Type.navigationBars())
         }
     }
+
+    val viewModel = hiltViewModel<SplashViewModel>()
+    val state = viewModel.state.collectAsStateWithLifecycle()
 
     @Suppress("AssignedValueIsNeverRead")
     LaunchedEffect(Unit) {
@@ -169,6 +177,7 @@ fun SplashScreen(
         delay(200)
         delay(2000L)
 
+        onFinish(state.value.onboardingSeenBefore)
     }
 
     Box(

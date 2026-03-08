@@ -6,7 +6,7 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.atmos.domain.onboarding.OnboardingItem
+import com.example.atmos.domain.onboarding.model.OnboardingItem
 
 @Composable
 @Preview(showSystemUi = true, showBackground = true)

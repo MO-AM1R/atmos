@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.atmos.ui.components.MyPagerIndicator
+import com.example.atmos.ui.core.components.MyPagerIndicator
 import com.example.atmos.ui.theme.AppShapes
 import com.example.atmos.ui.theme.WeatherTypography
 import kotlinx.coroutines.delay
