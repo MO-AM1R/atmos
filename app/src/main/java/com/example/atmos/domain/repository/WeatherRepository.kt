@@ -4,8 +4,7 @@ import com.example.atmos.data.dto.CurrentWeatherResponseDto
 import com.example.atmos.data.dto.ForecastResponseDto
 import com.example.atmos.data.enums.Language
 import com.example.atmos.data.enums.TemperatureUnit
-import com.example.atmos.data.enums.WindUnit
-import com.example.atmos.utils.ApiResult
+import com.example.atmos.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface WeatherRepository {
@@ -15,7 +14,7 @@ interface WeatherRepository {
         lon: Double,
         unit: String = TemperatureUnit.KELVIN.apiValue,
         lang: String = Language.ARABIC.apiValue,
-    ): Flow<ApiResult<CurrentWeatherResponseDto?>>
+    ): Flow<Resource<CurrentWeatherResponseDto?>>
 
 
     fun getForecast(
@@ -23,5 +22,5 @@ interface WeatherRepository {
         lon: Double,
         unit: String = TemperatureUnit.KELVIN.apiValue,
         lang: String = Language.ARABIC.apiValue,
-    ): Flow<ApiResult<ForecastResponseDto?>>
+    ): Flow<Resource<ForecastResponseDto?>>
 }

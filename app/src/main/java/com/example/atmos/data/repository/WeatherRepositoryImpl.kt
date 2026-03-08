@@ -4,7 +4,7 @@ import com.example.atmos.data.datasource.remote.WeatherRemoteDatSource
 import com.example.atmos.data.dto.CurrentWeatherResponseDto
 import com.example.atmos.data.dto.ForecastResponseDto
 import com.example.atmos.domain.repository.WeatherRepository
-import com.example.atmos.utils.ApiResult
+import com.example.atmos.utils.Resource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -22,21 +22,21 @@ class WeatherRepositoryImpl @Inject constructor(
         lon: Double,
         unit: String,
         lang: String,
-    ): Flow<ApiResult<CurrentWeatherResponseDto?>> =
+    ): Flow<Resource<CurrentWeatherResponseDto?>> =
         flow {
-            emit(ApiResult.Loading())
+            emit(Resource.Loading())
 
             val result = remote.getCurrentWeather(lat, lon, unit, lang)
 
             if (result.isSuccess) {
-                emit(ApiResult.Success(result.getOrNull()))
+                emit(Resource.Success(result.getOrNull()))
             } else {
                 result.onFailure { throwable ->
-                    emit(ApiResult.Error("Error: ${throwable.localizedMessage}"))
+                    emit(Resource.Error("Error: ${throwable.localizedMessage}"))
                 }
             }
         }.catch { throwable ->
-            emit(ApiResult.Error("Error: ${throwable.localizedMessage}"))
+            emit(Resource.Error("Error: ${throwable.localizedMessage}"))
         }
             .flowOn(Dispatchers.IO)
 
@@ -46,21 +46,21 @@ class WeatherRepositoryImpl @Inject constructor(
         lon: Double,
         unit: String,
         lang: String,
-    ): Flow<ApiResult<ForecastResponseDto?>> =
+    ): Flow<Resource<ForecastResponseDto?>> =
         flow {
-            emit(ApiResult.Loading())
+            emit(Resource.Loading())
 
             val result = remote.getForecast(lat, lon, unit, lang)
 
             if (result.isSuccess) {
-                emit(ApiResult.Success(result.getOrNull()))
+                emit(Resource.Success(result.getOrNull()))
             } else {
                 result.onFailure { throwable ->
-                    emit(ApiResult.Error("Error: ${throwable.localizedMessage}"))
+                    emit(Resource.Error("Error: ${throwable.localizedMessage}"))
                 }
             }
         }.catch { throwable ->
-            emit(ApiResult.Error("Error: ${throwable.localizedMessage}"))
+            emit(Resource.Error("Error: ${throwable.localizedMessage}"))
         }
             .flowOn(Dispatchers.IO)
 
