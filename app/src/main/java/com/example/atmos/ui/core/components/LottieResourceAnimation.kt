@@ -1,4 +1,4 @@
-package com.example.atmos.ui.components
+package com.example.atmos.ui.core.components
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect

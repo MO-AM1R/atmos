@@ -28,8 +28,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.atmos.R
-import com.example.atmos.domain.onboarding.OnboardingItem
-import com.example.atmos.ui.components.ResourceImage
+import com.example.atmos.domain.onboarding.model.OnboardingItem
+import com.example.atmos.ui.core.components.ResourceImage
 import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
 import kotlinx.coroutines.delay
