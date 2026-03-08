@@ -1,5 +1,4 @@
 package com.example.atmos.ui.splash
-
 import android.app.Activity
 import androidx.compose.animation.core.EaseInOut
 import androidx.compose.animation.core.EaseOutBack
