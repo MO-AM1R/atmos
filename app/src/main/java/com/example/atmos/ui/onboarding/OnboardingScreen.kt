@@ -7,19 +7,19 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.atmos.R
 import com.example.atmos.domain.onboarding.model.OnboardingItem
 import com.example.atmos.ui.onboarding.components.GradientBackground
 import com.example.atmos.ui.onboarding.components.OnboardingBottomSection
 import com.example.atmos.ui.onboarding.components.OnboardingPager
+import com.example.atmos.ui.onboarding.state.OnboardingEvent
+import com.example.atmos.ui.onboarding.viewmodel.OnboardingViewModel
 import kotlinx.coroutines.launch
 
 
@@ -50,8 +50,9 @@ fun OnboardingScreen() {
     )
 
     val pagerState = rememberPagerState { onboardingPages.size }
-    val buttonLabel: MutableState<String?> = rememberSaveable { mutableStateOf(null) }
     val scope = rememberCoroutineScope()
+    val onboardingViewModel = hiltViewModel<OnboardingViewModel>()
+    val onEvent = onboardingViewModel::onEvent
 
     GradientBackground {
         Column(
@@ -62,7 +63,7 @@ fun OnboardingScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            buttonLabel.value =
+            val buttonLabel =
                 if (pagerState.currentPage < 3)
                     stringResource(R.string.next)
                 else
@@ -75,9 +76,14 @@ fun OnboardingScreen() {
 
             OnboardingBottomSection(
                 pagerState = pagerState,
-                label = buttonLabel.value ?: stringResource(R.string.next),
+                label = buttonLabel,
                 onNextClick = {
                     scope.launch {
+                        if (pagerState.currentPage == 3){
+                            onEvent(OnboardingEvent.OnSeeOnboarding)
+                            //TODO: navigate to home
+                        }
+
                         pagerState.animateScrollToPage(
                             pagerState.currentPage + 1,
                             animationSpec = tween(600, easing = FastOutSlowInEasing)
