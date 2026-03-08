@@ -25,7 +25,9 @@ import kotlinx.coroutines.launch
 
 @Composable
 @Preview(showSystemUi = true, showBackground = true)
-fun OnboardingScreen() {
+fun OnboardingScreen(
+    onFinish: () -> Unit = {}
+) {
     val onboardingPages = listOf(
         OnboardingItem(
             image = R.drawable.cloudy_suny_weather_icon,
@@ -81,7 +83,7 @@ fun OnboardingScreen() {
                     scope.launch {
                         if (pagerState.currentPage == 3){
                             onEvent(OnboardingEvent.OnSeeOnboarding)
-                            //TODO: navigate to home
+                            onFinish()
                         }
 
                         pagerState.animateScrollToPage(

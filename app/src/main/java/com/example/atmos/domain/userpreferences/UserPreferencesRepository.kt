@@ -13,5 +13,6 @@ interface UserPreferencesRepository {
     fun updateOption(locationOption: LocationOption)
     fun updateOption(windUnitOption: WindUnit)
     fun updateOption(temperatureUnitOption: TemperatureUnit)
+    fun seeOnboarding()
     fun isOnboardingSeenBefore(): Boolean
 }

@@ -32,6 +32,10 @@ class UserPreferencesRepositoryImpl @Inject constructor(
         localDataSource.updateOption(temperatureUnitOption)
     }
 
+    override fun seeOnboarding() {
+        localDataSource.seeOnboarding()
+    }
+    
     override fun isOnboardingSeenBefore(): Boolean {
         return localDataSource.isOnboardingSeenBefore()
     }

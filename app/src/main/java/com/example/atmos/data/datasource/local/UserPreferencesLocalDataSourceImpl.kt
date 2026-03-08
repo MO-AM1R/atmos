@@ -80,6 +80,15 @@ class UserPreferencesLocalDataSourceImpl
         }
     }
 
+    override fun seeOnboarding() {
+        prefs.edit(commit = true) {
+            this.putBoolean(
+                Keys.ONBOARDING_SEEN_BEFORE,
+                true
+            )
+        }
+    }
+    
     override fun isOnboardingSeenBefore(): Boolean {
         return prefs.contains(Keys.ONBOARDING_SEEN_BEFORE)
     }
