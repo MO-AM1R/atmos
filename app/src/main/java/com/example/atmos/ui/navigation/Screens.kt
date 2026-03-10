@@ -8,5 +8,7 @@ sealed class Screens {
     object SplashScreen: Screens()
 
     @Serializable
+    object HomeScreen: Screens()
+    @Serializable
     object OnboardingScreen: Screens()
 }
