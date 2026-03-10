@@ -2,7 +2,7 @@ package com.example.atmos.di
 import com.example.atmos.data.repository.UserPreferencesRepositoryImpl
 import com.example.atmos.data.repository.WeatherRepositoryImpl
 import com.example.atmos.domain.repository.WeatherRepository
-import com.example.atmos.domain.userpreferences.UserPreferencesRepository
+import com.example.atmos.domain.repository.UserPreferencesRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

@@ -5,7 +5,7 @@ import com.example.atmos.data.enums.Language
 import com.example.atmos.data.enums.LocationOption
 import com.example.atmos.data.enums.TemperatureUnit
 import com.example.atmos.data.enums.WindUnit
-import com.example.atmos.domain.userpreferences.UserPreferencesRepository
+import com.example.atmos.domain.repository.UserPreferencesRepository
 import jakarta.inject.Inject
 
 

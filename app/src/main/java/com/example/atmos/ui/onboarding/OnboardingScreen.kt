@@ -33,7 +33,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.atmos.R
-import com.example.atmos.domain.onboarding.model.OnboardingItem
+import com.example.atmos.domain.model.OnboardingItem
 import com.example.atmos.ui.onboarding.components.OnboardingBottomSection
 import com.example.atmos.ui.onboarding.components.OnboardingPager
 import com.example.atmos.ui.onboarding.state.OnboardingEvent
