@@ -1,4 +1,4 @@
-package com.example.atmos.app
+package com.example.atmos.utils
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network

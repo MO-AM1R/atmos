@@ -1,4 +1,4 @@
-package com.example.atmos.app
+package com.example.atmos.utils
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
