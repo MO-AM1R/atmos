@@ -1,0 +1,65 @@
+package com.example.atmos.ui.home.components
+
+import android.util.Log
+import androidx.compose.foundation.ScrollState
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.example.atmos.R
+import com.example.atmos.ui.core.components.ResourceIcon
+import com.example.atmos.ui.core.components.ResourceImage
+import com.example.atmos.ui.home.state.HomeUiState
+
+
+@Composable
+fun HomeContent(
+    uiState: HomeUiState,
+    scrollState: ScrollState,
+    isGpsEnabled: Boolean,
+    blurRadius: Dp,
+    onRetry: () -> Unit,
+    onRefresh: () -> Unit,
+    onRequestPermission: () -> Unit,
+    onOpenSettings: () -> Unit,
+    onOpenGpsSettings: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Box(modifier = modifier.fillMaxSize()) {
+
+        ResourceImage(
+            modifier = Modifier
+                .fillMaxSize()
+                .blur(blurRadius),
+            resourceId = R.drawable.background,
+            contentScale = ContentScale.Crop
+        )
+
+        ResourceIcon(
+            modifier = Modifier
+                .padding(horizontal = 25.dp, vertical = 50.dp)
+                .size(48.dp)
+                .align(Alignment.TopEnd)
+                .blur(blurRadius),
+            resourceId = R.drawable.home_icon
+        )
+
+        HomeStateContent(
+            isGpsEnabled = isGpsEnabled,
+            uiState = uiState,
+            scrollState = scrollState,
+            onRetry = onRetry,
+            onRefresh = onRefresh,
+            onRequestPermission = onRequestPermission,
+            onOpenSettings = onOpenSettings,
+            onOpenGpsSettings = onOpenGpsSettings
+        )
+    }
+}

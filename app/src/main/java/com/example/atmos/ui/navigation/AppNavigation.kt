@@ -1,6 +1,5 @@
 package com.example.atmos.ui.navigation
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -47,7 +46,7 @@ fun AppNavigation(
         }
 
         composable<Screens.HomeScreen> {
-            HomeScreen(modifier = modifier)
+            HomeScreen()
         }
     }
 }

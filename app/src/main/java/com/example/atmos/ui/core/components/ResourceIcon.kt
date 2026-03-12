@@ -13,7 +13,7 @@ import com.example.atmos.R
 fun ResourceIcon(
     modifier: Modifier = Modifier,
     resourceId: Int = R.drawable.ic_launcher_foreground,
-    color: Color? = Color.Black,
+    color: Color? = null,
 ) {
     Image(
         modifier = modifier,

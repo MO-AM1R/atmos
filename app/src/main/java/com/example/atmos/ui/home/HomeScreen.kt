@@ -1,65 +1,151 @@
 package com.example.atmos.ui.home
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import android.Manifest
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.remember
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
-import com.example.atmos.R
-import com.example.atmos.ui.core.components.ResourceIcon
-import com.example.atmos.ui.core.components.ResourceImage
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.atmos.ui.core.components.rememberPermissionHandler
+import com.example.atmos.ui.core.viewmodel.LocationPermissionEvent
+import com.example.atmos.ui.core.viewmodel.LocationPermissionViewModel
+import com.example.atmos.ui.home.components.HomeContent
+import com.example.atmos.ui.home.components.HomeDialogs
+import com.example.atmos.ui.home.state.HomeEvent
+import com.example.atmos.ui.home.state.HomeScreenState
+import com.example.atmos.ui.home.viewmodel.HomeScreenViewModel
+import com.example.atmos.utils.EdgeToEdgeEnable
+import com.example.atmos.utils.hasLocationPermission
+import com.example.atmos.utils.openAppSettings
+import com.example.atmos.utils.openGpsSettings
+import com.example.atmos.utils.requestLocation
+import com.google.android.gms.location.LocationServices
+
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
 fun HomeScreen(
-    modifier: Modifier = Modifier
+    viewModel: HomeScreenViewModel = hiltViewModel(),
+    permissionViewModel: LocationPermissionViewModel = hiltViewModel()
 ) {
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val permissionState by permissionViewModel.permissionState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
     val scrollState = rememberScrollState()
-    val backgroundBlurState by rememberSaveable { mutableStateOf(12.dp) }
 
-    Box(
-        modifier = Modifier.fillMaxSize()
-    ) {
-
-        ResourceImage(
-            modifier = Modifier.fillMaxSize().blur(backgroundBlurState),
-            resourceId = R.drawable.background,
-            contentScale = ContentScale.Crop
-        )
-
-        ResourceIcon(
-            modifier = Modifier
-                .padding(horizontal = 25.dp, vertical = 25.dp)
-                .size(120.dp).align(Alignment.TopEnd),
-            resourceId = R.drawable.home_icon,
-            color = Color(0xFFFFCC33)
-        )
-
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .verticalScroll(scrollState)
-        ) {
-
-
-
-        }
-
+    val fusedClient = remember {
+        LocationServices.getFusedLocationProviderClient(context)
     }
+
+    val isScrolledPastThreshold by remember {
+        derivedStateOf { scrollState.value > 100 }
+    }
+
+    val blurRadius by animateDpAsState(
+        targetValue = if (isScrolledPastThreshold) 0.dp else 12.dp,
+        animationSpec = tween(durationMillis = 400),
+        label = "blurRadius"
+    )
+
+    fun startLocationAndLoad() {
+        requestLocation(
+            fusedClient = fusedClient,
+            onLocationReady = { resolvedLocation ->
+                viewModel.onEvent(HomeEvent.OnLocationUpdated(resolvedLocation))
+                viewModel.onEvent(
+                    HomeEvent.OnLoad(
+                        latitude = resolvedLocation.latitude,
+                        longitude = resolvedLocation.longitude
+                    )
+                )
+            }
+        )
+    }
+
+    fun retryWithLocation() {
+        uiState.location?.let {
+            viewModel.onEvent(
+                HomeEvent.OnLoad(
+                    latitude = it.latitude,
+                    longitude = it.longitude
+                )
+            )
+        } ?: startLocationAndLoad()
+    }
+
+    val locationPermissionLauncher = rememberPermissionHandler(
+        onPermissionGranted = {
+            permissionViewModel.onEvent(LocationPermissionEvent.OnPermissionGranted)
+            if (permissionState.isGpsEnabled) {
+                startLocationAndLoad()
+            }
+        },
+        onPermissionDenied = {
+            permissionViewModel.onEvent(LocationPermissionEvent.OnPermissionDenied)
+        },
+        onPermanentlyDenied = {
+            permissionViewModel.onEvent(LocationPermissionEvent.OnPermissionPermanentlyDenied)
+        }
+    )
+
+    LaunchedEffect(permissionState, uiState.isConnected) {
+        when {
+            !context.hasLocationPermission() ->
+                locationPermissionLauncher.launch(
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                )
+            else -> {
+                if (permissionState.isGpsEnabled){
+                    if (uiState.isConnected){
+                        retryWithLocation()
+                    }else{
+                        viewModel.setScreenState(HomeScreenState.NetworkUnavailable)
+                    }
+                }
+            }
+        }
+    }
+
+    EdgeToEdgeEnable(LocalView.current)
+
+    HomeDialogs(
+        showPermissionRationaleDialog = permissionState.showPermissionRationaleDialog,
+        showPermanentDenyDialog = permissionState.showPermanentDenyDialog,
+        onRationaleConfirm = {
+            permissionViewModel.onEvent(LocationPermissionEvent.OnRationaleConfirmed)
+            locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        },
+        onRationaleDismiss = {
+            permissionViewModel.onEvent(LocationPermissionEvent.OnRationaleDismissed)
+            viewModel.setScreenState(HomeScreenState.LocationPermission)
+        },
+        onPermanentConfirm = {
+            permissionViewModel.onEvent(LocationPermissionEvent.OnPermanentDenyConfirmed)
+            context.openAppSettings()
+        },
+        onPermanentDismiss = {
+            permissionViewModel.onEvent(LocationPermissionEvent.OnPermanentDenyDismissed)
+            viewModel.setScreenState(HomeScreenState.LocationPermission)
+        }
+    )
+
+    HomeContent(
+        isGpsEnabled = permissionState.isGpsEnabled,
+        uiState = uiState,
+        scrollState = scrollState,
+        blurRadius = blurRadius,
+        onRetry = { retryWithLocation() },
+        onRefresh = { retryWithLocation() },
+        onRequestPermission = {
+            locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        },
+        onOpenSettings = { context.openAppSettings() },
+        onOpenGpsSettings = { context.openGpsSettings() }
+    )
 }
-
-
-@Composable
-fun WeatherCard(){}
