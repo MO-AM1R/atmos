@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -27,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.atmos.R
 import com.example.atmos.ui.theme.Spacing
+import com.example.atmos.ui.theme.extraColors
 
 
 @Composable
@@ -67,12 +69,16 @@ fun HomeLoadingContent(
 
 @Composable
 fun ShimmerBox(modifier: Modifier = Modifier) {
+    val colors = MaterialTheme.extraColors
+
     val shimmerColors = listOf(
-        Color.White.copy(alpha = 0.05f),
-        Color.White.copy(alpha = 0.15f),
-        Color.White.copy(alpha = 0.05f)
+        colors.cardBackgroundStrong.copy(alpha = 0.3F),
+        colors.cardBackgroundStrong.copy(alpha = 0.15F),
+        colors.cardBackgroundStrong.copy(alpha = 0.3F),
     )
+
     val transition = rememberInfiniteTransition(label = "shimmer")
+
     val translateAnim by transition.animateFloat(
         initialValue = 0f,
         targetValue = 1000f,
@@ -82,6 +88,8 @@ fun ShimmerBox(modifier: Modifier = Modifier) {
         ),
         label = stringResource(R.string.shimmertranslate)
     )
+
+
     Box(
         modifier = modifier.background(
             brush = Brush.horizontalGradient(
