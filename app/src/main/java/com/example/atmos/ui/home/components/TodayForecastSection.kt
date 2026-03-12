@@ -1,7 +1,6 @@
 package com.example.atmos.ui.home.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,12 +10,12 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -28,6 +27,7 @@ import com.example.atmos.R
 import com.example.atmos.domain.model.HourlyForecast
 import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
+import com.example.atmos.ui.theme.extraColors
 import com.example.atmos.utils.AppConstants.ICONS_BASE_URL
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -39,6 +39,8 @@ fun TodayForecastSection(
     hourlyForecasts: List<HourlyForecast>,
     modifier: Modifier = Modifier
 ) {
+    val colors = MaterialTheme.extraColors
+
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(Spacing.Medium)
@@ -47,7 +49,7 @@ fun TodayForecastSection(
             text = stringResource(R.string.today_s_forecast),
             style = WeatherTypography.headlineMedium,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = colors.textPrimary
         )
 
         LazyRow(
@@ -67,22 +69,14 @@ fun TodayForecastSection(
 @Composable
 fun HourlyForecastCard(
     modifier: Modifier = Modifier,
-    forecast: HourlyForecast,
-    isActive: Boolean = false
+    forecast: HourlyForecast
 ) {
+    val colors = MaterialTheme.extraColors
+
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(20.dp))
-            .background(
-                if (isActive) Color.White.copy(alpha = 0.35f)
-                else Color.White.copy(alpha = 0.15f)
-            )
-            .border(
-                width = 1.dp,
-                color = if (isActive) Color(0xFF00D4FF).copy(alpha = 0.8f)
-                else Color.White.copy(alpha = 0.2f),
-                shape = RoundedCornerShape(20.dp)
-            )
+            .background(colors.cardBackground)
             .padding(horizontal = 16.dp, vertical = 12.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(Spacing.XSmall)
@@ -91,7 +85,7 @@ fun HourlyForecastCard(
             text = SimpleDateFormat("h a", Locale.getDefault())
                 .format(Date(forecast.timestampUnix * 1000)),
             style = WeatherTypography.labelLarge,
-            color = Color.White.copy(alpha = 0.8f)
+            color = colors.textMuted
         )
 
         AsyncImage(
@@ -110,7 +104,7 @@ fun HourlyForecastCard(
             text = "${forecast.temperature.toInt()}°",
             style = WeatherTypography.titleMedium,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = colors.textPrimary
         )
     }
 }

@@ -1,7 +1,6 @@
 package com.example.atmos.ui.home.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,12 +8,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -24,6 +23,7 @@ import com.example.atmos.domain.model.CurrentWeather
 import com.example.atmos.ui.core.components.ResourceIcon
 import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
+import com.example.atmos.ui.theme.extraColors
 
 
 @Composable
@@ -69,15 +69,12 @@ fun StatCard(
     value: String,
     modifier: Modifier = Modifier
 ) {
+    val colors = MaterialTheme.extraColors
+
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(20.dp))
-            .background(Color.White.copy(alpha = 0.15f))
-            .border(
-                width = 1.dp,
-                color = Color.White.copy(alpha = 0.2f),
-                shape = RoundedCornerShape(20.dp)
-            )
+            .background(colors.cardBackground)
             .padding(vertical = 12.dp, horizontal = 8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(Spacing.XSmall)
@@ -85,19 +82,19 @@ fun StatCard(
         ResourceIcon(
             modifier = Modifier.size(24.dp),
             resourceId = icon,
-            color = Color(0xFF00D4FF)
+            color = colors.textPrimary
         )
         Text(
             text = label,
             style = WeatherTypography.labelSmall,
-            color = Color.White.copy(alpha = 0.7f),
+            color = colors.textMuted,
             textAlign = TextAlign.Center
         )
         Text(
             text = value,
             style = WeatherTypography.titleMedium,
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = colors.textPrimary,
             textAlign = TextAlign.Center
         )
     }

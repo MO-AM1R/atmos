@@ -1,6 +1,5 @@
 package com.example.atmos.ui.onboarding
 
-import android.app.Activity
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -18,19 +17,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.example.atmos.R
 import com.example.atmos.domain.model.OnboardingItem
@@ -41,7 +35,6 @@ import com.example.atmos.ui.onboarding.viewmodel.OnboardingViewModel
 import com.example.atmos.ui.theme.BackgroundDark
 import com.example.atmos.ui.theme.BackgroundDark2
 import com.example.atmos.ui.theme.Padding
-import com.example.atmos.utils.EdgeToEdgeEnable
 import kotlinx.coroutines.launch
 
 
@@ -104,8 +97,6 @@ fun OnboardingScreen(
         ),
         label = "offsetY"
     )
-
-//    EdgeToEdgeEnable(LocalView.current)
 
     Box(
         modifier = Modifier

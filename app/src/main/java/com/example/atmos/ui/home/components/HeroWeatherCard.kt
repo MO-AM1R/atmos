@@ -14,6 +14,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,6 +29,7 @@ import com.example.atmos.domain.model.CurrentWeather
 import com.example.atmos.ui.core.components.ResourceIcon
 import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
+import com.example.atmos.ui.theme.extraColors
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -39,16 +41,14 @@ fun HeroWeatherCard(
     onRefreshClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val colors = MaterialTheme.extraColors
+
     Box(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(32.dp))
-            .background(Color.White.copy(alpha = 0.15f))
-            .border(
-                width = 1.dp,
-                color = Color.White.copy(alpha = 0.3f),
-                shape = RoundedCornerShape(32.dp)
-            )
+            .background(colors.cardBackgroundStrong)
+            .border(1.dp, colors.cardBorder, RoundedCornerShape(32.dp))
             .padding(24.dp)
     ) {
         IconButton(
@@ -70,7 +70,7 @@ fun HeroWeatherCard(
                 text = weather?.cityName ?: "--",
                 style = WeatherTypography.headlineMedium,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = colors.textPrimary
             )
 
             Text(
@@ -81,7 +81,7 @@ fun HeroWeatherCard(
                     ).format(Date(it.timestampUnix * 1000))
                 } ?: "--",
                 style = WeatherTypography.bodyMedium,
-                color = Color.White.copy(alpha = 0.8f)
+                color = colors.textMuted
             )
 
             Spacer(modifier = Modifier.height(Spacing.XLarge))
@@ -89,7 +89,7 @@ fun HeroWeatherCard(
             ResourceIcon(
                 modifier = Modifier.size(100.dp),
                 resourceId = R.drawable.cloud_sun,
-                color = Color.White
+                color = colors.textPrimary
             )
 
             Spacer(modifier = Modifier.height(Spacing.Large))
@@ -98,7 +98,7 @@ fun HeroWeatherCard(
                 text = weather?.let { "${it.temperature.toInt()}°" } ?: "--°",
                 style = WeatherTypography.displayLarge,
                 fontWeight = FontWeight.ExtraBold,
-                color = Color.White
+                color = colors.textPrimary
             )
 
             Spacer(modifier = Modifier.height(Spacing.Small))
@@ -112,7 +112,7 @@ fun HeroWeatherCard(
                 Text(
                     text = weather?.weatherMain ?: "--",
                     style = WeatherTypography.titleMedium,
-                    color = Color.White
+                    color = colors.textPrimary
                 )
             }
 
@@ -121,7 +121,7 @@ fun HeroWeatherCard(
             Text(
                 text = weather?.weatherDescription ?: "--",
                 style = WeatherTypography.bodyMedium,
-                color = Color.White.copy(alpha = 0.8f),
+                color = colors.textMuted,
                 textAlign = TextAlign.Center
             )
         }

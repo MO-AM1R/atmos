@@ -1,7 +1,6 @@
 package com.example.atmos.ui.home.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -15,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -37,6 +37,7 @@ import com.example.atmos.domain.model.HourlyForecast
 import com.example.atmos.domain.model.groupIntoDays
 import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
+import com.example.atmos.ui.theme.extraColors
 import com.example.atmos.utils.AppConstants.ICONS_BASE_URL
 
 
@@ -49,6 +50,8 @@ fun FiveDayOutlookSection(
         hourlyForecasts.groupIntoDays()
     }
 
+    val colors = MaterialTheme.extraColors
+
     Column(
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(Spacing.Medium)
@@ -57,7 +60,7 @@ fun FiveDayOutlookSection(
             text = stringResource(R.string._5_day_outlook),
             style = WeatherTypography.headlineMedium,
             fontWeight = FontWeight.Bold,
-            color = Color.White
+            color = colors.textPrimary
         )
 
         dayForecasts.forEach { dayForecast ->
@@ -81,16 +84,13 @@ fun DayForecastRow(
     val endFraction = ((dayForecast.maxTemp - globalMin) / globalRange)
         .coerceIn(0.0, 1.0).toFloat()
 
+    val colors = MaterialTheme.extraColors
+
     Row(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .background(Color.White.copy(alpha = 0.1f))
-            .border(
-                width = 1.dp,
-                color = Color.White.copy(alpha = 0.15f),
-                shape = RoundedCornerShape(16.dp)
-            )
+            .background(colors.cardBackground)
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -100,14 +100,14 @@ fun DayForecastRow(
                 text = dayForecast.dayName,
                 style = WeatherTypography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
-                color = Color.White,
+                color = colors.textPrimary,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
             Text(
                 text = dayForecast.dateLabel,
                 style = WeatherTypography.labelSmall,
-                color = Color.White.copy(alpha = 0.6f)
+                color = colors.textMuted
             )
         }
 
@@ -162,13 +162,13 @@ fun DayForecastRow(
             Text(
                 text = "${dayForecast.minTemp.toInt()}°",
                 style = WeatherTypography.titleMedium,
-                color = Color.White.copy(alpha = 0.6f)
+                color = colors.textMuted
             )
             Text(
                 text = "${dayForecast.maxTemp.toInt()}°",
                 style = WeatherTypography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = colors.textPrimary
             )
         }
     }

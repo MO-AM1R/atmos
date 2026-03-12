@@ -14,7 +14,6 @@ import com.example.atmos.R
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import kotlin.coroutines.EmptyCoroutineContext.get
 
 private val LightColorScheme = lightColorScheme(
     primary = PrimaryLight,
@@ -96,7 +95,7 @@ val DayExtraColors = WeatherExtraColors(
     violet = WeatherViolet,
     navy = WeatherNavy,
     cardBackground = DayCardBackground,
-    cardBackgroundStrong = DayCardBackgroundStrong,
+    cardBackgroundStrong = DayCardBackground.copy(alpha = 0.9F),
     cardBorder = DayCardBorder,
     cardSurface = Color(0xCCFFFFFF),
     inputBackground = InputBackgroundLight,
