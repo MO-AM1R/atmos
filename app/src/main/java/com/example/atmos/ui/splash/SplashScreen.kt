@@ -146,7 +146,7 @@ fun SplashScreen(
         label = "loadingAlpha"
     )
 
-    EdgeToEdgeEnable(LocalView.current)
+//    EdgeToEdgeEnable(LocalView.current)
 
     val viewModel = hiltViewModel<SplashViewModel>()
     val state = viewModel.state.collectAsStateWithLifecycle()

@@ -21,7 +21,6 @@ import com.example.atmos.ui.home.components.HomeDialogs
 import com.example.atmos.ui.home.state.HomeEvent
 import com.example.atmos.ui.home.state.HomeScreenState
 import com.example.atmos.ui.home.viewmodel.HomeScreenViewModel
-import com.example.atmos.utils.EdgeToEdgeEnable
 import com.example.atmos.utils.hasLocationPermission
 import com.example.atmos.utils.openAppSettings
 import com.example.atmos.utils.openGpsSettings
@@ -111,8 +110,6 @@ fun HomeScreen(
             }
         }
     }
-
-    EdgeToEdgeEnable(LocalView.current)
 
     HomeDialogs(
         showPermissionRationaleDialog = permissionState.showPermissionRationaleDialog,

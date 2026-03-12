@@ -105,7 +105,7 @@ fun OnboardingScreen(
         label = "offsetY"
     )
 
-    EdgeToEdgeEnable(LocalView.current)
+//    EdgeToEdgeEnable(LocalView.current)
 
     Box(
         modifier = Modifier
