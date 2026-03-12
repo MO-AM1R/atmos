@@ -1,11 +1,11 @@
 package com.example.atmos.ui.home.components
 
-import android.util.Log
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -13,10 +13,11 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.atmos.R
 import com.example.atmos.ui.core.components.ResourceIcon
 import com.example.atmos.ui.core.components.ResourceImage
 import com.example.atmos.ui.home.state.HomeUiState
+import com.example.atmos.ui.theme.background
+import com.example.atmos.ui.theme.homeIcon
 
 
 @Composable
@@ -38,7 +39,7 @@ fun HomeContent(
             modifier = Modifier
                 .fillMaxSize()
                 .blur(blurRadius),
-            resourceId = R.drawable.background,
+            resourceId = MaterialTheme.background,
             contentScale = ContentScale.Crop
         )
 
@@ -48,7 +49,7 @@ fun HomeContent(
                 .size(48.dp)
                 .align(Alignment.TopEnd)
                 .blur(blurRadius),
-            resourceId = R.drawable.home_icon
+            resourceId = MaterialTheme.homeIcon
         )
 
         HomeStateContent(
