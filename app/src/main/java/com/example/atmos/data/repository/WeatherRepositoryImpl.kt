@@ -3,7 +3,7 @@ package com.example.atmos.data.repository
 import com.example.atmos.data.datasource.remote.WeatherRemoteDatSource
 import com.example.atmos.data.mappers.toDomain
 import com.example.atmos.domain.model.CurrentWeather
-import com.example.atmos.domain.model.ForecastDay
+import com.example.atmos.domain.model.Forecast
 import com.example.atmos.domain.repository.WeatherRepository
 import com.example.atmos.utils.Resource
 import kotlinx.coroutines.Dispatchers
@@ -47,7 +47,7 @@ class WeatherRepositoryImpl @Inject constructor(
         lon: Double,
         unit: String,
         lang: String,
-    ): Flow<Resource<ForecastDay?>> =
+    ): Flow<Resource<Forecast?>> =
         flow {
             emit(Resource.Loading())
 

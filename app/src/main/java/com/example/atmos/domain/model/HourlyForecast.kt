@@ -25,7 +25,7 @@ data class HourlyForecast(
 )
 
 
-fun List<HourlyForecast>.groupIntoDays(): List<DayForecast> {
+fun List<HourlyForecast>.groupIntoDays(): List<ForecastDay> {
     return this
         .groupBy { forecast ->
             SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
@@ -38,7 +38,7 @@ fun List<HourlyForecast>.groupIntoDays(): List<DayForecast> {
                         .format(Date(it.timestampUnix * 1000)).toInt() - 12
                 ) }
 
-            DayForecast(
+            ForecastDay(
                 dayName           = SimpleDateFormat("EEEE", Locale.getDefault())
                     .format(Date((hourlyList.first().timestampUnix) * 1000)),
                 dateLabel         = SimpleDateFormat("MMM d", Locale.getDefault())

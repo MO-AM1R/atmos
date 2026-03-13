@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.atmos.R
-import com.example.atmos.domain.model.DayForecast
+import com.example.atmos.domain.model.ForecastDay
 import com.example.atmos.domain.model.HourlyForecast
 import com.example.atmos.domain.model.groupIntoDays
 import com.example.atmos.ui.theme.Spacing
@@ -64,7 +64,7 @@ fun FiveDayOutlookSection(
         )
 
         dayForecasts.forEach { dayForecast ->
-            DayForecastRow(dayForecast = dayForecast)
+            DayForecastRow(forecastDay = dayForecast)
         }
     }
 }
@@ -72,16 +72,16 @@ fun FiveDayOutlookSection(
 
 @Composable
 fun DayForecastRow(
-    dayForecast: DayForecast,
+    forecastDay: ForecastDay,
     modifier: Modifier = Modifier
 ) {
     val globalMin = -10.0
     val globalMax = 45.0
     val globalRange = globalMax - globalMin
 
-    val startFraction = ((dayForecast.minTemp - globalMin) / globalRange)
+    val startFraction = ((forecastDay.minTemp - globalMin) / globalRange)
         .coerceIn(0.0, 1.0).toFloat()
-    val endFraction = ((dayForecast.maxTemp - globalMin) / globalRange)
+    val endFraction = ((forecastDay.maxTemp - globalMin) / globalRange)
         .coerceIn(0.0, 1.0).toFloat()
 
     val colors = MaterialTheme.extraColors
@@ -97,7 +97,7 @@ fun DayForecastRow(
     ) {
         Column(modifier = Modifier.width(80.dp)) {
             Text(
-                text = dayForecast.dayName,
+                text = forecastDay.dayName,
                 style = WeatherTypography.titleMedium,
                 fontWeight = FontWeight.SemiBold,
                 color = colors.textPrimary,
@@ -105,7 +105,7 @@ fun DayForecastRow(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = dayForecast.dateLabel,
+                text = forecastDay.dateLabel,
                 style = WeatherTypography.labelSmall,
                 color = colors.textMuted
             )
@@ -113,7 +113,7 @@ fun DayForecastRow(
 
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(ICONS_BASE_URL + dayForecast.representativeIcon + ".png")
+                .data(ICONS_BASE_URL + forecastDay.representativeIcon + ".png")
                 .crossfade(true)
                 .build(),
             contentDescription = stringResource(R.string.description),
@@ -160,12 +160,12 @@ fun DayForecastRow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "${dayForecast.minTemp.toInt()}°",
+                text = "${forecastDay.minTemp.toInt()}°",
                 style = WeatherTypography.titleMedium,
                 color = colors.textMuted
             )
             Text(
-                text = "${dayForecast.maxTemp.toInt()}°",
+                text = "${forecastDay.maxTemp.toInt()}°",
                 style = WeatherTypography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = colors.textPrimary

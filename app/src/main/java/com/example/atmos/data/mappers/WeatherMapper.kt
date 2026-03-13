@@ -4,7 +4,7 @@ import com.example.atmos.data.dto.CurrentWeatherResponseDto
 import com.example.atmos.data.dto.ForecastItemDto
 import com.example.atmos.data.dto.ForecastResponseDto
 import com.example.atmos.domain.model.CurrentWeather
-import com.example.atmos.domain.model.ForecastDay
+import com.example.atmos.domain.model.Forecast
 import com.example.atmos.domain.model.HourlyForecast
 
 fun CurrentWeatherResponseDto.toDomain(): CurrentWeather {
@@ -55,8 +55,8 @@ fun ForecastItemDto.toDomain(): HourlyForecast {
     )
 }
 
-fun ForecastResponseDto.toDomain(): ForecastDay {
-    return ForecastDay(
+fun ForecastResponseDto.toDomain(): Forecast {
+    return Forecast(
         cityName        = city.cityName,
         countryCode     = city.countryCode,
         latitude        = city.coordinate.latitude,

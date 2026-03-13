@@ -4,7 +4,7 @@ import com.example.atmos.data.database.entity.CurrentWeatherEntity
 import com.example.atmos.data.database.entity.ForecastDayEntity
 import com.example.atmos.data.database.entity.HourlyForecastEntity
 import com.example.atmos.domain.model.CurrentWeather
-import com.example.atmos.domain.model.ForecastDay
+import com.example.atmos.domain.model.Forecast
 import com.example.atmos.domain.model.HourlyForecast
 
 fun CurrentWeather.toEntity(): CurrentWeatherEntity {
@@ -114,7 +114,7 @@ fun HourlyForecastEntity.isExpired(): Boolean {
     return System.currentTimeMillis() - cachedAtUnix > thirtyMinutesMillis
 }
 
-fun ForecastDay.toEntity(): ForecastDayEntity {
+fun Forecast.toEntity(): ForecastDayEntity {
     return ForecastDayEntity(
         cityName       = cityName,
         countryCode    = countryCode,
@@ -126,8 +126,8 @@ fun ForecastDay.toEntity(): ForecastDayEntity {
 
 fun ForecastDayEntity.toDomain(
     hourlyForecasts: List<HourlyForecastEntity>
-): ForecastDay {
-    return ForecastDay(
+): Forecast {
+    return Forecast(
         cityName        = cityName,
         countryCode     = countryCode,
         latitude        = latitude,

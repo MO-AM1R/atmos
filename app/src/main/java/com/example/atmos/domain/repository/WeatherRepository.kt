@@ -3,7 +3,7 @@ package com.example.atmos.domain.repository
 import com.example.atmos.data.enums.Language
 import com.example.atmos.data.enums.TemperatureUnit
 import com.example.atmos.domain.model.CurrentWeather
-import com.example.atmos.domain.model.ForecastDay
+import com.example.atmos.domain.model.Forecast
 import com.example.atmos.utils.Resource
 import kotlinx.coroutines.flow.Flow
 
@@ -22,5 +22,5 @@ interface WeatherRepository {
         lon: Double,
         unit: String = TemperatureUnit.CELSIUS.apiValue,
         lang: String = Language.ENGLISH.apiValue,
-    ): Flow<Resource<ForecastDay?>>
+    ): Flow<Resource<Forecast?>>
 }
