@@ -5,9 +5,9 @@ import com.example.atmos.data.network.WeatherApiService
 import javax.inject.Inject
 
 
-class WeatherRemoteDatSourceImpl @Inject constructor(
+class WeatherRemoteDataSourceImpl @Inject constructor(
     private val api: WeatherApiService
-): WeatherRemoteDatSource {
+): WeatherRemoteDataSource {
 
     override suspend fun getCurrentWeather(
         lat: Double,
