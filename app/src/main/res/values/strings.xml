@@ -38,4 +38,18 @@
     <string name="location_permission">Location Permission</string>
     <string name="atmos_needs_location_access_to_show_accurate_weather_for_your_area_please_allow_location_permission_to_continue">Atmos needs location access to show accurate weather for your area. Please allow location permission to continue.</string>
     <string name="not_now">Not Now</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_subtitle">Customize your experience</string>
+
+    <string name="settings_section_location">Location</string>
+    <string name="settings_gps_title">GPS Location</string>
+    <string name="settings_gps_subtitle">Use current location</string>
+    <string name="settings_choose_map">Choose from Map</string>
+
+    <string name="settings_section_units">Units</string>
+    <string name="settings_temperature">Temperature</string>
+    <string name="settings_wind_speed">Wind Speed</string>
+
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_language">Language</string>
 </resources>
