@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
@@ -21,15 +22,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.atmos.R
 import com.example.atmos.domain.model.CurrentWeather
-import com.example.atmos.ui.core.components.ResourceIcon
 import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
 import com.example.atmos.ui.theme.extraColors
+import com.example.atmos.utils.AppConstants.ICONS_BASE_URL
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -86,10 +92,16 @@ fun HeroWeatherCard(
 
             Spacer(modifier = Modifier.height(Spacing.XLarge))
 
-            ResourceIcon(
-                modifier = Modifier.size(100.dp),
-                resourceId = R.drawable.cloud_sun,
-                color = colors.textPrimary
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(ICONS_BASE_URL + weather?.weatherIconCode + ".png")
+                    .crossfade(true)
+                    .build(),
+                contentDescription = stringResource(R.string.description),
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .size(100.dp),
             )
 
             Spacer(modifier = Modifier.height(Spacing.Large))
