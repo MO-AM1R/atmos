@@ -12,15 +12,18 @@ interface WeatherRepository {
     fun getCurrentWeather(
         lat: Double,
         lon: Double,
+        forceUpdate: Boolean = false,
         unit: String = TemperatureUnit.CELSIUS.apiValue,
         lang: String = Language.ENGLISH.apiValue,
-    ): Flow<Resource<CurrentWeather?>>
-
+    ): Flow<Resource<CurrentWeather>>
 
     fun getForecast(
         lat: Double,
         lon: Double,
+        forceUpdate: Boolean = false,
         unit: String = TemperatureUnit.CELSIUS.apiValue,
         lang: String = Language.ENGLISH.apiValue,
-    ): Flow<Resource<Forecast?>>
+    ): Flow<Resource<Forecast>>
+
+    suspend fun hasCache(): Boolean
 }
