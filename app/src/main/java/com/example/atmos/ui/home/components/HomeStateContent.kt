@@ -1,6 +1,5 @@
 package com.example.atmos.ui.home.components
 
-import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn

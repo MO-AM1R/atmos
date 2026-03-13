@@ -1,6 +1,4 @@
 package com.example.atmos.ui.home.viewmodel
-
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.atmos.utils.NetworkMonitor
@@ -35,11 +33,12 @@ class HomeScreenViewModel @Inject constructor(
     private fun observeNetworkStatus() {
         viewModelScope.launch {
             networkMonitor.networkStatus.collect { isConnected ->
-                _uiState.update { it.copy(isConnected = isConnected) }
-                if (!isConnected) {
+                if (!isConnected && !weatherRepository.hasCache()) {
                     _uiState.update {
-                        it.copy(screenState = HomeScreenState.NetworkUnavailable)
+                        it.copy(screenState = HomeScreenState.NetworkUnavailable, isConnected = false)
                     }
+                }else if (isConnected){
+                    _uiState.update{ it.copy(isConnected = true) }
                 }
             }
         }
@@ -50,7 +49,8 @@ class HomeScreenViewModel @Inject constructor(
             is HomeEvent.OnLoad -> {
                 loadWeather(
                     latitude = event.latitude,
-                    longitude = event.longitude
+                    longitude = event.longitude,
+                    forceUpdate = event.forceUpdate
                 )
             }
 
@@ -64,21 +64,19 @@ class HomeScreenViewModel @Inject constructor(
         _uiState.update { it.copy(screenState = state) }
     }
 
-    private fun loadWeather(latitude: Double, longitude: Double) {
+    private fun loadWeather(latitude: Double, longitude: Double, forceUpdate: Boolean = false) {
         viewModelScope.launch {
             _uiState.update {
-                Log.d("TAG", "Loading")
                 it.copy(
                     isLoading = true,
                     error = null,
                     screenState = HomeScreenState.Loading
                 )
             }
-            Log.d("TAG", "${_uiState.value.screenState is HomeScreenState.Loading}")
 
             combine(
-                weatherRepository.getCurrentWeather(latitude, longitude),
-                weatherRepository.getForecast(latitude, longitude)
+                weatherRepository.getCurrentWeather(latitude, longitude, forceUpdate),
+                weatherRepository.getForecast(latitude, longitude, forceUpdate)
             ) { currentWeatherResource, forecastResource ->
                 Pair(currentWeatherResource, forecastResource)
             }.collect { (currentWeatherResource, forecastResource) ->

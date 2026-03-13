@@ -66,12 +66,13 @@ fun HomeScreen(
         )
     }
 
-    fun retryWithLocation() {
+    fun retryWithLocation(forceUpdate: Boolean = false) {
         uiState.location?.let {
             viewModel.onEvent(
                 HomeEvent.OnLoad(
                     latitude = it.latitude,
-                    longitude = it.longitude
+                    longitude = it.longitude,
+                    forceUpdate = forceUpdate
                 )
             )
         } ?: startLocationAndLoad()
@@ -137,7 +138,7 @@ fun HomeScreen(
         scrollState = scrollState,
         blurRadius = blurRadius,
         onRetry = { retryWithLocation() },
-        onRefresh = { retryWithLocation() },
+        onRefresh = { retryWithLocation(true) },
         onRequestPermission = {
             locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         },
