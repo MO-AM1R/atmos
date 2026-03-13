@@ -10,6 +10,8 @@ object AppConstants {
 
     const val WEATHER_API_KEY = BuildConfig.WEATHER_API_KEY
 
+    const val CACHE_DURATION_MS = 120 * 60 * 1000L
+
     object SharedPreferences {
         const val NAME = "atmos_shared_preference"
 
