@@ -1,5 +1,6 @@
 package com.example.atmos.ui.settings
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -52,7 +53,7 @@ import com.example.atmos.ui.theme.extraColors
 @Preview(showBackground = true, showSystemUi = true)
 fun SettingsScreen(
     uiState: SettingsUiState = SettingsUiState(),
-    onGpsToggled: (Boolean) -> Unit = {},
+    onGpsToggled: (LocationOption) -> Unit = {},
     onTemperatureUnitSelected: (TemperatureUnit) -> Unit = {},
     onWindUnitSelected: (WindUnit) -> Unit = {},
     onLanguageClicked: () -> Unit = {},
@@ -75,8 +76,9 @@ fun SettingsScreen(
 
             LocationSection(
                 locationOption = uiState.locationOption,
-                onGpsToggled = onGpsToggled,
-                onChooseMapClicked = onNavigateToMapScreen
+                onToggled = onGpsToggled,
+                onChangeClicked = onNavigateToMapScreen,
+                storedLocation = uiState.storedLocation
             )
 
             Spacer(modifier = Modifier.height(28.dp))
@@ -139,10 +141,11 @@ private fun SettingsSectionTitle(title: String) {
 }
 
 @Composable
-private fun LocationSection(
+fun LocationSection(
     locationOption: LocationOption,
-    onGpsToggled: (Boolean) -> Unit,
-    onChooseMapClicked: () -> Unit
+    storedLocation: String?,
+    onToggled: (LocationOption) -> Unit,
+    onChangeClicked: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -154,33 +157,56 @@ private fun LocationSection(
                 color = MaterialTheme.extraColors.cardBorder,
                 shape = RoundedCornerShape(16.dp)
             )
-            .padding(horizontal = 16.dp, vertical = 14.dp)
+            .padding(horizontal = 16.dp, vertical = 14.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        GpsLocationRow(
-            isEnabled = locationOption == LocationOption.GPS,
-            onToggled = onGpsToggled
+        SpecificLocationToggleRow(
+            isSpecificEnabled = locationOption == LocationOption.SPECIFIC_LOCATION,
+            onToggled = { isEnabled ->
+                if (isEnabled) {
+                    // TODO: Navigate to map/search to pick location
+                    onToggled(LocationOption.SPECIFIC_LOCATION)
+                } else {
+                    onToggled(LocationOption.GPS)
+                }
+            }
         )
 
-        Spacer(Modifier.height(12.dp))
+        AnimatedVisibility(
+            visible = locationOption == LocationOption.SPECIFIC_LOCATION
+        ) {
+            Column {
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = 12.dp),
+                    thickness = 0.5.dp,
+                    color = Color(0xFF4A4565).copy(alpha = 0.4f)
+                )
+                ChooseFromMapRow(
+                    storedLocation = storedLocation,
+                    onChangeClicked = onChangeClicked  // TODO: Navigate to map screen
+                )
+            }
+        }
 
-        HorizontalDivider(
-            modifier = Modifier.padding(horizontal = 12.dp),
-            thickness = 0.5.dp,
-            color = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
-        )
-
-        Spacer(Modifier.height(12.dp))
-
-        ChooseFromMapRow(
-            onClick = onChooseMapClicked
-        )
+        AnimatedVisibility(
+            visible = locationOption == LocationOption.GPS
+        ) {
+            Column {
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = 12.dp),
+                    thickness = 0.5.dp,
+                    color = Color(0xFF4A4565).copy(alpha = 0.4f)
+                )
+                GpsAutoRow()
+            }
+        }
     }
 }
 
 @Composable
-private fun GpsLocationRow(
-    isEnabled: Boolean,
-    onToggled: (Boolean) -> Unit
+private fun SpecificLocationToggleRow(
+    isSpecificEnabled: Boolean,
+    onToggled: (Boolean) -> Unit,
 ) {
     Row(
         modifier = Modifier
@@ -200,32 +226,41 @@ private fun GpsLocationRow(
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    painter = painterResource(R.drawable.ic_gps),
+                    painter = painterResource(
+                        // TODO: State = isSpecificEnabled → pin icon, else gps icon
+                        if (isSpecificEnabled) R.drawable.ic_pin
+                        else R.drawable.ic_gps
+                    ),
                     contentDescription = null,
                     tint = MaterialTheme.extraColors.textPrimary,
                     modifier = Modifier.size(22.dp)
                 )
             }
 
-            Column {
+            Column(
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
                 Text(
-                    text = stringResource(R.string.settings_gps_title),
+                    text = stringResource(R.string.settings_specific_location),
                     fontSize = 15.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.extraColors.textPrimary
                 )
                 Text(
-                    text = stringResource(R.string.settings_gps_subtitle),
+                    text = stringResource(
+                        // TODO: State = isSpecificEnabled → specific subtitle, else gps subtitle
+                        if (isSpecificEnabled) R.string.settings_specific_location_subtitle
+                        else R.string.settings_gps_auto_subtitle
+                    ),
                     fontSize = 12.sp,
                     color = MaterialTheme.extraColors.textMuted
                 )
             }
         }
 
-        // TODO: State = isEnabled (true → LocationOption.GPS, false → LocationOption.SPECIFIC_LOCATION)
-        // TODO: Request location permission when toggled to true
+        // TODO: State = isSpecificEnabled
         Switch(
-            checked = isEnabled,
+            checked = isSpecificEnabled,
             onCheckedChange = onToggled,
             colors = SwitchDefaults.colors(
                 checkedThumbColor = Color.White,
@@ -238,14 +273,37 @@ private fun GpsLocationRow(
 }
 
 @Composable
+private fun GpsAutoRow() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        Icon(
+            painter = painterResource(R.drawable.ic_gps),
+            contentDescription = null,
+            tint = MaterialTheme.extraColors.textPrimary,
+            modifier = Modifier.size(18.dp)
+        )
+        Text(
+            text = stringResource(R.string.settings_gps_auto_detecting),
+            fontSize = 13.sp,
+            color = MaterialTheme.extraColors.textMuted
+        )
+    }
+}
+
+@Composable
 private fun ChooseFromMapRow(
-    onClick: () -> Unit
+    storedLocation: String?,
+    onChangeClicked: () -> Unit  // TODO: Navigate to map screen
 ) {
     // TODO: Navigate to Map Screen on click
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onClick() }
+            .clickable { onChangeClicked() }
             .clip(RoundedCornerShape(16.dp))
             .background(color = MaterialTheme.extraColors.cardBorder.copy(alpha = 0.1f))
             .padding(horizontal = 16.dp, vertical = 14.dp),
@@ -263,7 +321,7 @@ private fun ChooseFromMapRow(
                 modifier = Modifier.size(22.dp)
             )
             Text(
-                text = stringResource(R.string.settings_choose_map),
+                text = storedLocation ?: stringResource(R.string.settings_choose_map),
                 fontSize = 15.sp,
                 color = MaterialTheme.extraColors.textPrimary
             )

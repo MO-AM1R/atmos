@@ -52,4 +52,11 @@
 
     <string name="settings_section_appearance">Appearance</string>
     <string name="settings_language">Language</string>
+
+    <string name="settings_specific_location">Specific Location</string>
+    <string name="settings_specific_location_subtitle">Using saved location</string>
+    <string name="settings_gps_auto_subtitle">GPS will detect automatically</string>
+    <string name="settings_gps_auto_detecting">Detecting location automatically via GPS</string>
+    <string name="settings_no_location_stored">No location saved — tap to choose</string>
+    <string name="settings_change_location">Change ›</string>
 </resources>
