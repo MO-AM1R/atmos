@@ -20,7 +20,7 @@ data class CurrentWeatherEntity(
     val windSpeedRaw       : Double,
     val windDirectionDeg   : Int,
     val cloudCoverPercent  : Int,
-    val visibilityMeters   : Int,
+    val visibilityMeters   : Int?,
     val weatherConditionId : Int,
     val weatherMain        : String,
     val weatherDescription : String,

@@ -1,7 +1,6 @@
 package com.example.atmos.data.database.entity
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 
 
 @Entity(
@@ -13,6 +12,10 @@ data class HourlyForecastEntity(
     val cityName           : String,
     val forecastDateText   : String,
     val temperature        : Double,
+    val countryCode        : String,
+    val latitude           : Double,
+    val longitude          : Double,
+    val timezoneOffset     : Int,
     val feelsLike          : Double,
     val minimumTemp        : Double,
     val maximumTemp        : Double,
@@ -21,7 +24,7 @@ data class HourlyForecastEntity(
     val windSpeedRaw       : Double,
     val windDirectionDeg   : Int,
     val cloudCoverPercent  : Int,
-    val visibilityMeters   : Int,
+    val visibilityMeters   : Int?,
     val weatherConditionId : Int,
     val weatherMain        : String,
     val weatherDescription : String,
