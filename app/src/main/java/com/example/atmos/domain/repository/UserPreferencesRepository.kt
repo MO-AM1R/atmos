@@ -1,11 +1,10 @@
-package com.example.atmos.domain.userpreferences
+package com.example.atmos.domain.repository
 
 import com.example.atmos.data.dto.UserPreferencesDto
 import com.example.atmos.data.enums.Language
 import com.example.atmos.data.enums.LocationOption
 import com.example.atmos.data.enums.TemperatureUnit
 import com.example.atmos.data.enums.WindUnit
-
 
 interface UserPreferencesRepository {
     fun saveUserPreferences(userPreferencesDto: UserPreferencesDto?)

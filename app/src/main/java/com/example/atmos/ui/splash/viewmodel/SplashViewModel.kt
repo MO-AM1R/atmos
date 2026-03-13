@@ -1,6 +1,6 @@
 package com.example.atmos.ui.splash.viewmodel
 import androidx.lifecycle.ViewModel
-import com.example.atmos.domain.userpreferences.UserPreferencesRepository
+import com.example.atmos.domain.repository.UserPreferencesRepository
 import com.example.atmos.ui.splash.state.SplashUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject

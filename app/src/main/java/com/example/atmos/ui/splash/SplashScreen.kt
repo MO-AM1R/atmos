@@ -1,6 +1,5 @@
 package com.example.atmos.ui.splash
 
-import android.app.Activity
 import androidx.compose.animation.core.EaseInOut
 import androidx.compose.animation.core.EaseOutBack
 import androidx.compose.animation.core.EaseOutCubic
@@ -23,7 +22,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -35,14 +33,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.WindowInsetsControllerCompat
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.atmos.R
@@ -62,8 +56,6 @@ fun SplashScreen(
     modifier: Modifier = Modifier,
     onFinish: (onboardingSeenBefore: Boolean) -> Unit
 ) {
-    val view = LocalView.current
-
     var iconRotation by remember { mutableFloatStateOf(-180f) }
     var iconVisible by remember { mutableStateOf(false) }
     var titleVisible by remember { mutableStateOf(false) }
@@ -144,22 +136,6 @@ fun SplashScreen(
         animationSpec = tween(durationMillis = 500),
         label = "loadingAlpha"
     )
-
-    DisposableEffect(Unit) {
-        val window = (view.context as Activity).window
-        val insetsController = WindowCompat.getInsetsController(window, view)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
-        insetsController.hide(WindowInsetsCompat.Type.statusBars())
-        insetsController.hide(WindowInsetsCompat.Type.navigationBars())
-        insetsController.systemBarsBehavior =
-            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-
-        onDispose {
-            WindowCompat.setDecorFitsSystemWindows(window, true)
-            insetsController.show(WindowInsetsCompat.Type.statusBars())
-            insetsController.show(WindowInsetsCompat.Type.navigationBars())
-        }
-    }
 
     val viewModel = hiltViewModel<SplashViewModel>()
     val state = viewModel.state.collectAsStateWithLifecycle()

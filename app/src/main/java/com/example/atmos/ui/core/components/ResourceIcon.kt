@@ -13,12 +13,12 @@ import com.example.atmos.R
 fun ResourceIcon(
     modifier: Modifier = Modifier,
     resourceId: Int = R.drawable.ic_launcher_foreground,
-    color: Color = Color.Black,
+    color: Color? = null,
 ) {
     Image(
         modifier = modifier,
         painter = painterResource(resourceId),
         contentDescription = stringResource(R.string.icon),
-        colorFilter = ColorFilter.tint(color)
+        colorFilter = if(color != null) ColorFilter.tint(color) else null
     )
 }

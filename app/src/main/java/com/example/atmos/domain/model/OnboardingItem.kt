@@ -1,4 +1,4 @@
-package com.example.atmos.domain.onboarding.model
+package com.example.atmos.domain.model
 
 data class OnboardingItem(
     val image: Int,

@@ -5,7 +5,7 @@ import com.example.atmos.data.enums.Language
 import com.example.atmos.data.enums.TemperatureUnit
 
 
-interface WeatherRemoteDatSource {
+interface WeatherRemoteDataSource {
 
     suspend fun getCurrentWeather(
         lat: Double,
