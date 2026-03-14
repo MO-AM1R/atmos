@@ -7,7 +7,7 @@ import com.example.atmos.data.enums.WindUnit
 
 
 data class SettingsUiState(
-    val locationOption: LocationOption = LocationOption.SPECIFIC_LOCATION,
+    val locationOption: LocationOption = LocationOption.GPS,
     val temperatureUnit: TemperatureUnit = TemperatureUnit.CELSIUS,
     val windUnit: WindUnit = WindUnit.METERS_PER_SECOND,
     val storedLocation: String? = null,
