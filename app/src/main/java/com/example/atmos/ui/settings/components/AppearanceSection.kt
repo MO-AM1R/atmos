@@ -10,15 +10,19 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.atmos.R
 import com.example.atmos.data.enums.Language
+import com.example.atmos.ui.settings.state.SettingsEvent
 import com.example.atmos.ui.theme.SettingsSectionBackground
 import com.example.atmos.ui.theme.extraColors
 
 @Composable
 fun AppearanceSection(
     language: Language,
-    onLanguageClicked: () -> Unit
+    onEvent: (SettingsEvent) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -32,9 +36,19 @@ fun AppearanceSection(
             )
             .padding(4.dp)
     ) {
-        LanguageRow(
-            language = language,
-            onClick = onLanguageClicked
+        UnitRowHeader(
+            iconRes = R.drawable.ic_language,
+            iconTint = MaterialTheme.extraColors.violet,
+            iconBackground = MaterialTheme.extraColors.violet.copy(alpha = 0.2f),
+            label = stringResource(R.string.settings_language)
+        )
+        UnitSelector(
+            options = Language.entries,
+            selected = language,
+            label = { it.value },
+            onSelect = { lang ->
+                onEvent(SettingsEvent.OnLanguageClicked(lang))
+            }
         )
     }
 }

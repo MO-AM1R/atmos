@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.atmos.data.enums.LocationOption
+import com.example.atmos.ui.settings.state.SettingsEvent
 import com.example.atmos.ui.theme.SettingsSectionBackground
 import com.example.atmos.ui.theme.extraColors
 
@@ -23,8 +24,8 @@ import com.example.atmos.ui.theme.extraColors
 fun LocationSection(
     locationOption: LocationOption,
     storedLocation: String?,
-    onToggled: (LocationOption) -> Unit,
     onChangeClicked: () -> Unit,
+    onEvent: (SettingsEvent) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -43,10 +44,9 @@ fun LocationSection(
             isSpecificEnabled = locationOption == LocationOption.SPECIFIC_LOCATION,
             onToggled = { isEnabled ->
                 if (isEnabled) {
-                    // TODO: Navigate to map/search to pick location
-                    onToggled(LocationOption.SPECIFIC_LOCATION)
+                    onEvent(SettingsEvent.OnGpsToggled(LocationOption.SPECIFIC_LOCATION))
                 } else {
-                    onToggled(LocationOption.GPS)
+                    onEvent(SettingsEvent.OnGpsToggled(LocationOption.GPS))
                 }
             }
         )
@@ -62,7 +62,7 @@ fun LocationSection(
                 )
                 ChooseFromMapRow(
                     storedLocation = storedLocation,
-                    onChangeClicked = onChangeClicked  // TODO: Navigate to map screen
+                    onChangeClicked = onChangeClicked
                 )
             }
         }

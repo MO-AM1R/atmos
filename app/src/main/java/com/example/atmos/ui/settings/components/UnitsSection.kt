@@ -14,10 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.atmos.R
 import com.example.atmos.data.enums.TemperatureUnit
 import com.example.atmos.data.enums.WindUnit
+import com.example.atmos.ui.settings.state.SettingsEvent
 import com.example.atmos.ui.theme.SettingsSectionBackground
 import com.example.atmos.ui.theme.extraColors
 
@@ -25,8 +27,7 @@ import com.example.atmos.ui.theme.extraColors
 fun UnitsSection(
     selectedTemperatureUnit: TemperatureUnit,
     selectedWindUnit: WindUnit,
-    onTemperatureUnitSelected: (TemperatureUnit) -> Unit,
-    onWindUnitSelected: (WindUnit) -> Unit
+    onEvent: (SettingsEvent) -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -48,12 +49,13 @@ fun UnitsSection(
                 iconBackground = Color.Red.copy(alpha = 0.3f),
                 label = stringResource(R.string.settings_temperature)
             )
-            // TODO: State = selectedTemperatureUnit
             UnitSelector(
                 options = TemperatureUnit.entries,
                 selected = selectedTemperatureUnit,
                 label = { it.symbol },
-                onSelect = onTemperatureUnitSelected
+                onSelect = { unit ->
+                    onEvent(SettingsEvent.OnTemperatureUnitSelected(unit))
+                }
             )
         }
 
@@ -69,12 +71,13 @@ fun UnitsSection(
                 iconBackground = MaterialTheme.extraColors.cyan.copy(alpha = 0.3f),
                 label = stringResource(R.string.settings_wind_speed)
             )
-            // TODO: State = selectedWindUnit
             UnitSelector(
                 options = WindUnit.entries,
                 selected = selectedWindUnit,
                 label = { it.symbol },
-                onSelect = onWindUnitSelected
+                onSelect = { unit ->
+                    onEvent(SettingsEvent.OnWindUnitSelected(unit))
+                }
             )
         }
     }

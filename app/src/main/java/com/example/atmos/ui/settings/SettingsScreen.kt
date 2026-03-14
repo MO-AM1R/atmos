@@ -8,33 +8,60 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.atmos.R
-import com.example.atmos.data.enums.LocationOption
-import com.example.atmos.data.enums.TemperatureUnit
-import com.example.atmos.data.enums.WindUnit
 import com.example.atmos.ui.onboarding.components.GradientBackground
 import com.example.atmos.ui.settings.components.AppearanceSection
 import com.example.atmos.ui.settings.components.LocationSection
 import com.example.atmos.ui.settings.components.SettingsHeader
 import com.example.atmos.ui.settings.components.SettingsSectionTitle
 import com.example.atmos.ui.settings.components.UnitsSection
-import com.example.atmos.ui.settings.state.SettingsUiState
+import com.example.atmos.ui.settings.state.SettingsNavigationEvent
+import com.example.atmos.ui.settings.viewmodel.SettingsViewModel
 
 
 @Composable
-@Preview(showBackground = true, showSystemUi = true)
 fun SettingsScreen(
-    uiState: SettingsUiState = SettingsUiState(),
-    onGpsToggled: (LocationOption) -> Unit = {},
-    onTemperatureUnitSelected: (TemperatureUnit) -> Unit = {},
-    onWindUnitSelected: (WindUnit) -> Unit = {},
-    onLanguageClicked: () -> Unit = {},
-    onNavigateToMapScreen: () -> Unit = {},
+    savedStateHandle: SavedStateHandle,
+    navigateToMap: () -> Unit,
+    settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
+
+    val uiState = settingsViewModel.uiState.collectAsStateWithLifecycle()
+
+
+    suspend fun observeOnEvents() {
+        settingsViewModel.settingNavigationEvents.collect { event ->
+            when (event) {
+                SettingsNavigationEvent.NavigateToMap -> {
+                    navigateToMap()
+                }
+            }
+        }
+    }
+
+    suspend fun observeOnSavedStateHandle() {
+        //TODO: put the key of the selected point
+        savedStateHandle.getStateFlow<String?>("KEY", null)
+            .collect { pointJson ->
+                //TODO: convert the point
+
+                savedStateHandle.remove<String>("KEY")
+            }
+    }
+
+
+    LaunchedEffect(Unit) {
+        observeOnEvents()
+        observeOnSavedStateHandle()
+    }
+
     GradientBackground {
         Column(
             modifier = Modifier
@@ -51,10 +78,10 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             LocationSection(
-                locationOption = uiState.locationOption,
-                onToggled = onGpsToggled,
-                onChangeClicked = onNavigateToMapScreen,
-                storedLocation = uiState.storedLocation
+                locationOption = uiState.value.locationOption,
+                storedLocation = "",
+                onEvent = settingsViewModel::onEvent,
+                onChangeClicked = navigateToMap
             )
 
             Spacer(modifier = Modifier.height(28.dp))
@@ -64,10 +91,9 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             UnitsSection(
-                selectedTemperatureUnit = uiState.temperatureUnit,
-                selectedWindUnit = uiState.windUnit,
-                onTemperatureUnitSelected = onTemperatureUnitSelected,
-                onWindUnitSelected = onWindUnitSelected
+                selectedTemperatureUnit = uiState.value.temperatureUnit,
+                selectedWindUnit = uiState.value.windUnit,
+                onEvent = settingsViewModel::onEvent,
             )
 
             Spacer(modifier = Modifier.height(28.dp))
@@ -77,8 +103,8 @@ fun SettingsScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             AppearanceSection(
-                language = uiState.language,
-                onLanguageClicked = onLanguageClicked
+                language = uiState.value.language,
+                onEvent = settingsViewModel::onEvent,
             )
         }
     }
