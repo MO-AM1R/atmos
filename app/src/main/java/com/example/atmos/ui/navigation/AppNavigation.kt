@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import com.example.atmos.ui.home.HomeScreen
 import com.example.atmos.ui.map.MapScreen
 import com.example.atmos.ui.onboarding.OnboardingScreen
+import com.example.atmos.ui.settings.SettingsScreen
 import com.example.atmos.ui.splash.SplashScreen
 
 @Composable
@@ -52,6 +53,15 @@ fun AppNavigation(
 
         composable<Screens.MapScreen> {
             MapScreen(modifier = modifier, navController = navController)
+        }
+
+        composable<Screens.SettingsScreen> { backStackEntry ->
+            SettingsScreen(
+                savedStateHandle = backStackEntry.savedStateHandle,
+                navigateToMap = {
+                    navController.navigate(Screens.MapScreen)
+                },
+            )
         }
     }
 }

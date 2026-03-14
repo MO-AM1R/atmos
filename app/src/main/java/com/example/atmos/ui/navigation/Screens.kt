@@ -13,6 +13,10 @@ sealed class Screens {
 
     @Serializable
     object HomeScreen: Screens()
+
     @Serializable
     object OnboardingScreen: Screens()
+
+    @Serializable
+    object SettingsScreen: Screens()
 }

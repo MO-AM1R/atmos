@@ -16,13 +16,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.tooling.preview.Preview
 import com.example.atmos.ui.theme.BackgroundDark
 import com.example.atmos.ui.theme.BackgroundDark2
 import com.example.atmos.ui.theme.Padding
 
 
 @Composable
-fun GradientBackground(content: @Composable BoxScope.() -> Unit) {
+@Preview()
+fun GradientBackground(content: @Composable BoxScope.() -> Unit = {}) {
 
     val infinite = rememberInfiniteTransition()
 

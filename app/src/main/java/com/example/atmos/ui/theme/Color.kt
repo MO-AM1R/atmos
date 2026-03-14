@@ -64,3 +64,5 @@ val AlertCritical = Color(0xFFFF6B6B)
 val AlertWarning  = Color(0xFFFFD93D)
 val AlertInfo     = Color(0xFF48CAE4)
 val AlertSuccess  = Color(0xFF6BCB77)
+
+val SettingsSectionBackground = Color(0xFF9797DA)

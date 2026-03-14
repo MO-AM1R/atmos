@@ -38,23 +38,37 @@
     <string name="location_permission">Location Permission</string>
     <string name="atmos_needs_location_access_to_show_accurate_weather_for_your_area_please_allow_location_permission_to_continue">Atmos needs location access to show accurate weather for your area. Please allow location permission to continue.</string>
     <string name="not_now">Not Now</string>
-    <!-- Map Error -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_subtitle">Customize your experience</string>
+
+    <string name="settings_section_location">Location</string>
+    <string name="settings_gps_title">GPS Location</string>
+    <string name="settings_gps_subtitle">Use current location</string>
+    <string name="settings_choose_map">Choose from Map</string>
+
+    <string name="settings_section_units">Units</string>
+    <string name="settings_temperature">Temperature</string>
+    <string name="settings_wind_speed">Wind Speed</string>
+
+    <string name="settings_section_appearance">Appearance</string>
+    <string name="settings_language">Language</string>
+
+    <string name="settings_specific_location">Specific Location</string>
+    <string name="settings_specific_location_subtitle">Using saved location</string>
+    <string name="settings_gps_auto_subtitle">GPS will detect automatically</string>
+    <string name="settings_gps_auto_detecting">Detecting location automatically via GPS</string>
+    <string name="settings_no_location_stored">No location saved — tap to choose</string>
+    <string name="settings_change_location">Change ›</string>
     <string name="map_error_title">Something Went Wrong</string>
     <string name="map_error_default">An unexpected error occurred.\nPlease try again.</string>
     <string name="map_error_retry">Try Again</string>
-
-    <!-- Map Network -->
     <string name="map_no_network_title">No Internet Connection</string>
     <string name="map_no_network_message">Please check your connection\nand try again.</string>
     <string name="map_no_network_retry">Retry</string>
-
-    <!-- Map Permission -->
     <string name="map_permission_title">Location Access Needed</string>
     <string name="map_permission_message">We need your location to show\nyou the map and nearby places.</string>
     <string name="map_permission_allow">Allow Location</string>
     <string name="map_permission_open_settings">Open Settings</string>
-
-    <!-- Map GPS -->
     <string name="map_gps_disabled_title">GPS is Disabled</string>
     <string name="map_gps_disabled_message">Please enable GPS to detect\nyour current location.</string>
     <string name="map_gps_enable">Enable GPS</string>
