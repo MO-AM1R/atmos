@@ -51,7 +51,6 @@ fun SpecificLocationToggleRow(
             ) {
                 Icon(
                     painter = painterResource(
-                        // TODO: State = isSpecificEnabled → pin icon, else gps icon
                         if (isSpecificEnabled) R.drawable.ic_pin
                         else R.drawable.ic_gps
                     ),
@@ -72,7 +71,6 @@ fun SpecificLocationToggleRow(
                 )
                 Text(
                     text = stringResource(
-                        // TODO: State = isSpecificEnabled → specific subtitle, else gps subtitle
                         if (isSpecificEnabled) R.string.settings_specific_location_subtitle
                         else R.string.settings_gps_auto_subtitle
                     ),
@@ -82,7 +80,6 @@ fun SpecificLocationToggleRow(
             }
         }
 
-        // TODO: State = isSpecificEnabled
         Switch(
             checked = isSpecificEnabled,
             onCheckedChange = onToggled,
@@ -90,7 +87,9 @@ fun SpecificLocationToggleRow(
                 checkedThumbColor = Color.White,
                 checkedTrackColor = MaterialTheme.colorScheme.primary,
                 uncheckedThumbColor = Color.White,
-                uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant
+                uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant,
+                checkedBorderColor = Color.Transparent,
+                uncheckedBorderColor = Color.Transparent
             )
         )
     }
