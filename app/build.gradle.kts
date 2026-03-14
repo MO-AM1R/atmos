@@ -32,6 +32,18 @@ android {
             "\"${localProperties.getProperty("WEATHER_API_KEY") ?: ""}\""
         )
 
+        buildConfigField(
+            "String",
+            "MAP_PUBLIC_API_KEY",
+            "\"${localProperties.getProperty("MAP_PUBLIC_API_KEY") ?: ""}\""
+        )
+
+        buildConfigField(
+            "String",
+            "MAP_PRIVATE_API_KEY",
+            "\"${localProperties.getProperty("MAP_PRIVATE_API_KEY") ?: ""}\""
+        )
+
         applicationId = "com.example.atmos"
         minSdk = 24
         targetSdk = 36
@@ -68,6 +80,17 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.splash.screen)
+    implementation(libs.android.ndk27)
+    implementation(libs.extension.maps.compose) {
+        exclude(group = "com.mapbox.common", module = "common")
+    }
+    implementation(libs.mapbox.search.android) {
+        exclude(group = "com.mapbox.common", module = "common")
+    }
+    implementation(libs.mapbox.search.android.ui) {
+        exclude(group = "com.mapbox.common", module = "common")
+    }
+    implementation(libs.accompanist.permissions)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.ui)
