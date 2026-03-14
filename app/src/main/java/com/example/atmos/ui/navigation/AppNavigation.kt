@@ -2,10 +2,11 @@ package com.example.atmos.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.atmos.ui.home.HomeScreen
+import com.example.atmos.ui.map.MapScreen
 import com.example.atmos.ui.onboarding.OnboardingScreen
 import com.example.atmos.ui.splash.SplashScreen
 
@@ -19,16 +20,16 @@ fun AppNavigation(
     NavHost(
         navController = navController,
         startDestination = startDestination
-    ){
+    ) {
         composable<Screens.SplashScreen> {
             SplashScreen(
                 onFinish = { onboardingSeenBefore ->
                     var target: Screens = Screens.OnboardingScreen
-                    if (onboardingSeenBefore){
+                    if (onboardingSeenBefore) {
                         target = Screens.HomeScreen
                     }
 
-                    navController.navigate(target){
+                    navController.navigate(target) {
                         popUpTo<Screens.SplashScreen> { inclusive = true }
                     }
                 }
@@ -38,7 +39,7 @@ fun AppNavigation(
         composable<Screens.OnboardingScreen> {
             OnboardingScreen(
                 onFinish = {
-                    navController.navigate(Screens.HomeScreen){
+                    navController.navigate(Screens.HomeScreen) {
                         popUpTo<Screens.SplashScreen> { inclusive = true }
                     }
                 }
@@ -47,6 +48,10 @@ fun AppNavigation(
 
         composable<Screens.HomeScreen> {
             HomeScreen()
+        }
+
+        composable<Screens.MapScreen> {
+            MapScreen(modifier = modifier, navController = navController)
         }
     }
 }

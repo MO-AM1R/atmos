@@ -1,4 +1,5 @@
 package com.example.atmos.ui.navigation
+import androidx.navigation.NavHostController
 import kotlinx.serialization.Serializable
 
 
@@ -6,6 +7,9 @@ import kotlinx.serialization.Serializable
 sealed class Screens {
     @Serializable
     object SplashScreen: Screens()
+
+    @Serializable
+    object MapScreen: Screens()
 
     @Serializable
     object HomeScreen: Screens()
