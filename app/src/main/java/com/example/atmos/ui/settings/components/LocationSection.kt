@@ -24,7 +24,8 @@ import com.example.atmos.ui.theme.extraColors
 fun LocationSection(
     locationOption: LocationOption,
     storedLocation: String?,
-    onChangeClicked: () -> Unit,
+    isLoadingLocationName: Boolean,
+    navigateToMap: () -> Unit,
     onEvent: (SettingsEvent) -> Unit,
 ) {
     Column(
@@ -44,9 +45,9 @@ fun LocationSection(
             isSpecificEnabled = locationOption == LocationOption.SPECIFIC_LOCATION,
             onToggled = { isEnabled ->
                 if (isEnabled) {
-                    onEvent(SettingsEvent.OnGpsToggled(LocationOption.SPECIFIC_LOCATION))
+                    onEvent(SettingsEvent.OnLocationOptionChanged(LocationOption.SPECIFIC_LOCATION))
                 } else {
-                    onEvent(SettingsEvent.OnGpsToggled(LocationOption.GPS))
+                    onEvent(SettingsEvent.OnLocationOptionChanged(LocationOption.GPS))
                 }
             }
         )
@@ -54,7 +55,7 @@ fun LocationSection(
         AnimatedVisibility(
             visible = locationOption == LocationOption.SPECIFIC_LOCATION
         ) {
-            Column {
+            Column(verticalArrangement = Arrangement.spacedBy(0.dp)) {
                 HorizontalDivider(
                     modifier = Modifier.padding(horizontal = 12.dp),
                     thickness = 0.5.dp,
@@ -62,7 +63,8 @@ fun LocationSection(
                 )
                 ChooseFromMapRow(
                     storedLocation = storedLocation,
-                    onChangeClicked = onChangeClicked
+                    isLoadingLocationName = isLoadingLocationName,
+                    navigateToMap = navigateToMap
                 )
             }
         }
@@ -70,7 +72,7 @@ fun LocationSection(
         AnimatedVisibility(
             visible = locationOption == LocationOption.GPS
         ) {
-            Column {
+            Column(verticalArrangement = Arrangement.spacedBy(0.dp)) {
                 HorizontalDivider(
                     modifier = Modifier.padding(horizontal = 12.dp),
                     thickness = 0.5.dp,
