@@ -1,42 +1,55 @@
 package com.example.atmos.data.repository
-import com.example.atmos.data.datasource.local.UserPreferencesLocalDataSource
-import com.example.atmos.data.dto.UserPreferencesDto
+
+import com.example.atmos.data.datasource.local.UserPreferencesDataStore
 import com.example.atmos.data.enums.Language
 import com.example.atmos.data.enums.LocationOption
 import com.example.atmos.data.enums.TemperatureUnit
 import com.example.atmos.data.enums.WindUnit
+import com.example.atmos.domain.model.StoredPoint
+import com.example.atmos.domain.model.UserPreferences
 import com.example.atmos.domain.repository.UserPreferencesRepository
 import jakarta.inject.Inject
+import jakarta.inject.Singleton
+import kotlinx.coroutines.flow.Flow
 
 
+@Singleton
 class UserPreferencesRepositoryImpl @Inject constructor(
-    val localDataSource: UserPreferencesLocalDataSource
-): UserPreferencesRepository {
-    override fun saveUserPreferences(userPreferencesDto: UserPreferencesDto?) {
-        localDataSource.saveUserPreferences(userPreferencesDto ?: UserPreferencesDto())
+    private val dataStore: UserPreferencesDataStore
+) : UserPreferencesRepository {
+
+    override suspend fun hasSeenOnboarding(): Boolean {
+        return dataStore.hasSeenOnboarding()
     }
 
-    override fun updateOption(languageOption: Language) {
-        localDataSource.updateOption(languageOption)
-    }
+    override suspend fun saveUserPreferences(userPreferences: UserPreferences?) =
+        dataStore.saveUserPreferences(userPreferences)
 
-    override fun updateOption(locationOption: LocationOption) {
-        localDataSource.updateOption(locationOption)
-    }
+    override suspend fun saveStoredPoint(point: StoredPoint) =
+        dataStore.saveStoredPoint(point)
 
-    override fun updateOption(windUnitOption: WindUnit) {
-        localDataSource.updateOption(windUnitOption)
-    }
+    override suspend fun saveStoredLocationName(name: String) =
+        dataStore.saveStoredLocationName(name)
 
-    override fun updateOption(temperatureUnitOption: TemperatureUnit) {
-        localDataSource.updateOption(temperatureUnitOption)
-    }
+    override suspend fun getStoredLocationName(): String? =
+        dataStore.getStoredLocationName()
 
-    override fun seeOnboarding() {
-        localDataSource.seeOnboarding()
-    }
-    
-    override fun isOnboardingSeenBefore(): Boolean {
-        return localDataSource.isOnboardingSeenBefore()
+    override suspend fun saveLocationOption(option: LocationOption) =
+        dataStore.saveLocationOption(option)
+
+    override suspend fun saveTemperatureUnit(unit: TemperatureUnit) =
+        dataStore.saveTemperatureUnit(unit)
+
+    override suspend fun saveWindUnit(unit: WindUnit) =
+        dataStore.saveWindUnit(unit)
+
+    override suspend fun saveLanguage(language: Language) =
+        dataStore.saveLanguage(language)
+
+    override suspend fun seeOnboarding() =
+        dataStore.seeOnboarding()
+
+    override fun getUserPreferences(): Flow<UserPreferences> {
+        return dataStore.getUserPreferences()
     }
 }
