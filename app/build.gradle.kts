@@ -80,6 +80,7 @@ dependencies {
     implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.splash.screen)
+    implementation(libs.androidx.datastore.preferences.core)
     implementation(libs.android.ndk27)
     implementation(libs.extension.maps.compose) {
         exclude(group = "com.mapbox.common", module = "common")
