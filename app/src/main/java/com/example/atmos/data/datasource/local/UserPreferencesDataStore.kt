@@ -1,4 +1,4 @@
-package com.example.atmos.domain.repository
+package com.example.atmos.data.datasource.local
 
 import com.example.atmos.data.enums.Language
 import com.example.atmos.data.enums.LocationOption
@@ -8,8 +8,7 @@ import com.example.atmos.domain.model.StoredPoint
 import com.example.atmos.domain.model.UserPreferences
 import kotlinx.coroutines.flow.Flow
 
-
-interface UserPreferencesRepository {
+interface UserPreferencesDataStore {
     suspend fun hasSeenOnboarding(): Boolean
     suspend fun saveUserPreferences(userPreferences: UserPreferences?)
     suspend fun saveStoredPoint(point: StoredPoint)

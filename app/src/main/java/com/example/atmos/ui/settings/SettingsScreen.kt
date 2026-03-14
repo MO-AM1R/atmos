@@ -16,14 +16,18 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.atmos.R
+import com.example.atmos.domain.model.StoredPoint
 import com.example.atmos.ui.onboarding.components.GradientBackground
 import com.example.atmos.ui.settings.components.AppearanceSection
 import com.example.atmos.ui.settings.components.LocationSection
 import com.example.atmos.ui.settings.components.SettingsHeader
 import com.example.atmos.ui.settings.components.SettingsSectionTitle
 import com.example.atmos.ui.settings.components.UnitsSection
+import com.example.atmos.ui.settings.state.SettingsEvent
 import com.example.atmos.ui.settings.state.SettingsNavigationEvent
 import com.example.atmos.ui.settings.viewmodel.SettingsViewModel
+import com.example.atmos.utils.AppConstants
+import com.mapbox.geojson.Point
 
 
 @Composable
@@ -47,12 +51,21 @@ fun SettingsScreen(
     }
 
     suspend fun observeOnSavedStateHandle() {
-        //TODO: put the key of the selected point
-        savedStateHandle.getStateFlow<String?>("KEY", null)
+        savedStateHandle.getStateFlow<String?>(AppConstants.MapConstants.SELECTED_POINT_KEY, null)
             .collect { pointJson ->
-                //TODO: convert the point
+                pointJson?.let {
+                    val point: Point = Point.fromJson(it)
 
-                savedStateHandle.remove<String>("KEY")
+                    settingsViewModel.onEvent(
+                        SettingsEvent.OnLocationPointSelected(
+                            StoredPoint(
+                                latitude = point.latitude(),
+                                longitude = point.longitude()
+                            )
+                        )
+                    )
+                }
+                savedStateHandle.remove<String>(AppConstants.MapConstants.SELECTED_POINT_KEY)
             }
     }
 
@@ -79,9 +92,10 @@ fun SettingsScreen(
 
             LocationSection(
                 locationOption = uiState.value.locationOption,
-                storedLocation = "",
+                storedLocation = uiState.value.storedLocationName,
+                isLoadingLocationName = uiState.value.isLoadingLocationName,
                 onEvent = settingsViewModel::onEvent,
-                onChangeClicked = navigateToMap
+                navigateToMap = navigateToMap
             )
 
             Spacer(modifier = Modifier.height(28.dp))

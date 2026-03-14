@@ -1,4 +1,7 @@
 package com.example.atmos.utils
+import androidx.datastore.preferences.core.booleanPreferencesKey
+import androidx.datastore.preferences.core.doublePreferencesKey
+import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.atmos.BuildConfig
 
 
@@ -17,11 +20,14 @@ object AppConstants {
         const val NAME = "atmos_shared_preference"
 
         object Keys{
-            const val LOCATION_OPTION_KEY = "location_option"
-            const val LANGUAGE_OPTION_KEY = "language_option"
-            const val TEMPERATURE_UNIT_OPTION_KEY = "temperature_unit_option"
-            const val WIND_UNIT_OPTION_KEY = "wind_unit_option"
-            const val ONBOARDING_SEEN_BEFORE = "onboarding_seen_before"
+            val LOCATION_OPTION        = stringPreferencesKey("location_option")
+            val LATITUDE               = doublePreferencesKey("latitude")
+            val LONGITUDE              = doublePreferencesKey("longitude")
+            val STORED_LOCATION_NAME   = stringPreferencesKey("stored_location_name")
+            val TEMPERATURE_UNIT       = stringPreferencesKey("temperature_unit")
+            val WIND_UNIT              = stringPreferencesKey("wind_unit")
+            val LANGUAGE               = stringPreferencesKey("language")
+            val HAS_SEEN_ONBOARDING    = booleanPreferencesKey("has_seen_onboarding")
         }
     }
 

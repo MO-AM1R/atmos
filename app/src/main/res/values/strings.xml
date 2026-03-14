@@ -73,4 +73,6 @@
     <string name="map_gps_disabled_message">Please enable GPS to detect\nyour current location.</string>
     <string name="map_gps_enable">Enable GPS</string>
     <string name="map_save_location">Save</string>
+    <string name="settings_fetching_location">Fetching location name…</string>
+    <string name="settings_selected_location">Selected Location</string>
 </resources>
