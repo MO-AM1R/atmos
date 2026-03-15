@@ -47,6 +47,8 @@ class HomeScreenViewModel @Inject constructor(
     fun onEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.OnLoad -> {
+                if (_uiState.value.isDataLoaded && !event.forceUpdate) return
+
                 loadWeather(
                     latitude = event.latitude,
                     longitude = event.longitude,
