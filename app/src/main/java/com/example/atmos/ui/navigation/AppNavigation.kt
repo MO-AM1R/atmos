@@ -47,7 +47,7 @@ fun AppNavigation(
         }
 
         composable<Screens.MapScreen> {
-            MapScreen(modifier = modifier, navController = navController)
+            MapScreen(navController = navController)
         }
 
         composable<Screens.BaseScreen> {
