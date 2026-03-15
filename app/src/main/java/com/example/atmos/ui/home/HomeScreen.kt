@@ -16,6 +16,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.atmos.ui.core.components.rememberPermissionHandler
 import com.example.atmos.ui.core.viewmodel.LocationPermissionEvent
 import com.example.atmos.ui.core.viewmodel.LocationPermissionViewModel
+import com.example.atmos.ui.core.viewmodel.NetworkViewModel
 import com.example.atmos.ui.home.components.HomeContent
 import com.example.atmos.ui.home.components.HomeDialogs
 import com.example.atmos.ui.home.state.HomeEvent
@@ -31,10 +32,12 @@ import com.google.android.gms.location.LocationServices
 @Composable
 fun HomeScreen(
     viewModel: HomeScreenViewModel = hiltViewModel(),
-    permissionViewModel: LocationPermissionViewModel = hiltViewModel()
+    permissionViewModel: LocationPermissionViewModel = hiltViewModel(),
+    networkViewModel: NetworkViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val permissionState by permissionViewModel.permissionState.collectAsStateWithLifecycle()
+    val networkState by networkViewModel.isConnected.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val scrollState = rememberScrollState()
 
@@ -97,7 +100,7 @@ fun HomeScreen(
     LaunchedEffect(
         permissionState.isPermissionGranted,
         permissionState.isGpsEnabled,
-        uiState.isConnected
+        networkState
     ) {
         when {
             !context.hasLocationPermission() -> {
@@ -107,7 +110,7 @@ fun HomeScreen(
             }
             else -> {
                 if (permissionState.isGpsEnabled) {
-                    if (uiState.isConnected) {
+                    if (networkState) {
                         if (!uiState.isDataLoaded) {
                             retryWithLocation()
                         }

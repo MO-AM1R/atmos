@@ -1,7 +1,6 @@
 package com.example.atmos.ui.home.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.atmos.utils.NetworkMonitor
 import com.example.atmos.domain.repository.WeatherRepository
 import com.example.atmos.ui.home.state.HomeEvent
 import com.example.atmos.ui.home.state.HomeScreenState
@@ -19,30 +18,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModel @Inject constructor(
-    private val weatherRepository: WeatherRepository,
-    private val networkMonitor: NetworkMonitor
+    private val weatherRepository: WeatherRepository
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
-
-    init {
-        observeNetworkStatus()
-    }
-
-    private fun observeNetworkStatus() {
-        viewModelScope.launch {
-            networkMonitor.networkStatus.collect { isConnected ->
-                if (!isConnected && !weatherRepository.hasCache()) {
-                    _uiState.update {
-                        it.copy(screenState = HomeScreenState.NetworkUnavailable, isConnected = false)
-                    }
-                }else if (isConnected){
-                    _uiState.update{ it.copy(isConnected = true) }
-                }
-            }
-        }
-    }
 
     fun onEvent(event: HomeEvent) {
         when (event) {
