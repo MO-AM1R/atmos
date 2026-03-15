@@ -12,6 +12,7 @@ data class HomeUiState(
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
     val isConnected: Boolean = true,
+    val isDataLoaded: Boolean = false,
     val error: String? = null,
     val screenState: HomeScreenState = HomeScreenState.Loading
 )

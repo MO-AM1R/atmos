@@ -1,4 +1,5 @@
 package com.example.atmos.ui.home
+
 import android.Manifest
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
@@ -93,17 +94,24 @@ fun HomeScreen(
         }
     )
 
-    LaunchedEffect(permissionState, uiState.isConnected) {
+    LaunchedEffect(
+        permissionState.isPermissionGranted,
+        permissionState.isGpsEnabled,
+        uiState.isConnected
+    ) {
         when {
-            !context.hasLocationPermission() ->
+            !context.hasLocationPermission() -> {
                 locationPermissionLauncher.launch(
                     Manifest.permission.ACCESS_FINE_LOCATION
                 )
+            }
             else -> {
-                if (permissionState.isGpsEnabled){
-                    if (uiState.isConnected){
-                        retryWithLocation()
-                    }else{
+                if (permissionState.isGpsEnabled) {
+                    if (uiState.isConnected) {
+                        if (!uiState.isDataLoaded) {
+                            retryWithLocation()
+                        }
+                    } else {
                         viewModel.setScreenState(HomeScreenState.NetworkUnavailable)
                     }
                 }
