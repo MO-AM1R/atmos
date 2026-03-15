@@ -84,7 +84,7 @@ fun SpecificLocationToggleRow(
             checked = isSpecificEnabled,
             onCheckedChange = onToggled,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = Color.White,
+                checkedThumbColor = BackgroundDark2,
                 checkedTrackColor = MaterialTheme.colorScheme.primary,
                 uncheckedThumbColor = Color.White,
                 uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant,
