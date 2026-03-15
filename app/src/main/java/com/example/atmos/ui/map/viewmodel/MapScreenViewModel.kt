@@ -21,14 +21,15 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.concurrent.Executors
 
 @HiltViewModel
 class MapScreenViewModel @Inject constructor(
 
 ) : ViewModel() {
+    private val searchExecutor = Executors.newSingleThreadExecutor()
     private val _mapState = MutableStateFlow(MapScreenUIState())
     val mapState = _mapState.asStateFlow()
-
     private val _mapNavigationEvent = Channel<MapNavigationEvent>(Channel.BUFFERED)
     val mapNavigationEvent = _mapNavigationEvent.receiveAsFlow()
 
@@ -121,6 +122,7 @@ class MapScreenViewModel @Inject constructor(
                         ) {
                             _mapState.value.mapSearchEngineState.searchEngine.select(
                                 suggestions = suggestions,
+                                executor = searchExecutor,
                                 callback = object : SearchMultipleSelectionCallback {
                                     override fun onResult(
                                         suggestions: List<SearchSuggestion>,
@@ -159,5 +161,12 @@ class MapScreenViewModel @Inject constructor(
 
     fun setScreenState(state: MapScreenState) {
         _mapState.update { it.copy(screenState = state) }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+
+        if (!searchExecutor.isShutdown || !searchExecutor.isTerminated)
+            searchExecutor.shutdown()
     }
 }
