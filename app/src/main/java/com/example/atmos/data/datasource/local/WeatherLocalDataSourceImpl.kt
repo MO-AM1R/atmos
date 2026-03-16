@@ -8,7 +8,9 @@ import com.example.atmos.utils.AppConstants
 import jakarta.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import javax.inject.Singleton
 
+@Singleton
 class WeatherLocalDataSourceImpl @Inject constructor(
     private val weatherDao: WeatherDao,
     private val forecastDao: ForecastDao

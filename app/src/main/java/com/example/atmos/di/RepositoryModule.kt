@@ -1,6 +1,8 @@
 package com.example.atmos.di
+import com.example.atmos.data.repository.FavoriteRepositoryImpl
 import com.example.atmos.data.repository.UserPreferencesRepositoryImpl
 import com.example.atmos.data.repository.WeatherRepositoryImpl
+import com.example.atmos.domain.repository.FavoriteRepository
 import com.example.atmos.domain.repository.WeatherRepository
 import com.example.atmos.domain.repository.UserPreferencesRepository
 import dagger.Binds
@@ -25,4 +27,10 @@ abstract class RepositoryModule {
     abstract fun bindUserPreferencesRepository(
         impl: UserPreferencesRepositoryImpl
     ): UserPreferencesRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindFavoriteRepository(
+        impl: FavoriteRepositoryImpl
+    ): FavoriteRepository
 }

@@ -1,5 +1,7 @@
 package com.example.atmos.di
 
+import com.example.atmos.data.datasource.local.FavoritesLocalDataSource
+import com.example.atmos.data.datasource.local.FavoritesLocalDataSourceImpl
 import com.example.atmos.data.datasource.local.UserPreferencesDataStore
 import com.example.atmos.data.datasource.local.UserPreferencesDataStoreImpl
 import com.example.atmos.data.datasource.local.WeatherLocalDataSource
@@ -33,4 +35,10 @@ abstract class DataSourcesModule {
     abstract fun bindWeatherLocalDataSource(
         impl: WeatherLocalDataSourceImpl
     ): WeatherLocalDataSource
+
+    @Binds
+    @Singleton
+    abstract fun binFavoritesLocalDataSource(
+        impl: FavoritesLocalDataSourceImpl
+    ): FavoritesLocalDataSource
 }

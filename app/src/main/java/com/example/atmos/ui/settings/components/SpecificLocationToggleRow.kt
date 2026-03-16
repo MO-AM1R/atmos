@@ -25,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.atmos.R
 import com.example.atmos.ui.theme.BackgroundDark2
+import com.example.atmos.ui.theme.SettingsSectionBackground
+import com.example.atmos.ui.theme.White
 import com.example.atmos.ui.theme.extraColors
 
 @Composable
@@ -84,8 +86,8 @@ fun SpecificLocationToggleRow(
             checked = isSpecificEnabled,
             onCheckedChange = onToggled,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = BackgroundDark2,
-                checkedTrackColor = MaterialTheme.colorScheme.primary,
+                checkedThumbColor = White,
+                checkedTrackColor = BackgroundDark2,
                 uncheckedThumbColor = Color.White,
                 uncheckedTrackColor = MaterialTheme.colorScheme.surfaceVariant,
                 checkedBorderColor = Color.Transparent,

@@ -8,6 +8,12 @@ sealed class BaseContainerScreens {
     object SettingsScreens : BaseContainerScreens()
 
     @Serializable
+    data class FavoriteDetailsScreen(
+        val latitude : Double,
+        val longitude: Double
+    ) : BaseContainerScreens()
+
+    @Serializable
     object MapScreen: BaseContainerScreens()
 
     @Serializable
