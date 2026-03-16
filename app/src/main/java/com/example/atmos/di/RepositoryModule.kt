@@ -1,7 +1,9 @@
 package com.example.atmos.di
+import com.example.atmos.data.repository.AlertRepositoryImpl
 import com.example.atmos.data.repository.FavoriteRepositoryImpl
 import com.example.atmos.data.repository.UserPreferencesRepositoryImpl
 import com.example.atmos.data.repository.WeatherRepositoryImpl
+import com.example.atmos.domain.repository.AlertRepository
 import com.example.atmos.domain.repository.FavoriteRepository
 import com.example.atmos.domain.repository.WeatherRepository
 import com.example.atmos.domain.repository.UserPreferencesRepository
@@ -33,4 +35,10 @@ abstract class RepositoryModule {
     abstract fun bindFavoriteRepository(
         impl: FavoriteRepositoryImpl
     ): FavoriteRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindAlertRepository(
+        impl: AlertRepositoryImpl
+    ): AlertRepository
 }
