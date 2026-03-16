@@ -60,7 +60,7 @@ class FavoritesLocalDataSourceTest {
     }
 
     @Test
-    fun getAllFavorites() = runTest {
+    fun getAllFavorites_retrieveAllFavoriteTasks() = runTest {
         dummyData.forEach { favoritesLocalDataSource.insertFavorite(it) }
 
         val actualList = favoritesLocalDataSource.getAllFavorites().first()
