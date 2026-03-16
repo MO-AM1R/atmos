@@ -19,6 +19,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.atmos.data.enums.TemperatureUnit
+import com.example.atmos.domain.model.FavoriteWeatherItem
 import com.example.atmos.ui.favorites.components.FavoriteCustomSnackbar
 import com.example.atmos.ui.favorites.components.FavoriteHeader
 import com.example.atmos.ui.favorites.components.FavoriteLocationItem
@@ -63,7 +64,7 @@ fun FavoritesScreen(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 32.dp)
+                    .padding(top = 32.dp, bottom = 110.dp)
             ) {
                 FavoriteHeader(
                     modifier = Modifier.padding(horizontal = 16.dp),

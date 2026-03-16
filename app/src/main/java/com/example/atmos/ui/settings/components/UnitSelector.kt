@@ -44,7 +44,6 @@ fun <T> UnitSelector(
                     .weight(1f)
                     .clip(RoundedCornerShape(50.dp))
                     .background(
-                        // TODO: State = isSelected → primary color, else transparent
                         if (isSelected) MaterialTheme.extraColors.violet
                         else Color.Transparent
                     )
@@ -56,7 +55,6 @@ fun <T> UnitSelector(
                     text = label(option),
                     fontSize = 14.sp,
                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                    // TODO: State = isSelected → White, else onSurfaceVariant
                     color = if (isSelected) Color.White
                     else MaterialTheme.extraColors.textMuted
                 )
