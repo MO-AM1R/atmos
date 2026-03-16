@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.unit.dp
+import com.example.atmos.domain.model.UserPreferences
 import com.example.atmos.ui.home.state.HomeUiState
 import com.example.atmos.ui.theme.Spacing
 
@@ -22,7 +23,8 @@ fun HomeSuccessContent(
     uiState: HomeUiState,
     scrollState: ScrollState,
     onRefresh: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    userPreferencesState: UserPreferences?
 ) {
     val heroAlpha by remember {
         derivedStateOf {
@@ -43,12 +45,13 @@ fun HomeSuccessContent(
         HeroWeatherCard(
             modifier = Modifier.graphicsLayer { alpha = heroAlpha },
             weather = uiState.currentWeather,
+            temperatureUnit = userPreferencesState?.temperatureUnitOption,
             onRefreshClick = onRefresh
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        WeatherStatsRow(weather = uiState.currentWeather)
+        WeatherStatsRow(weather = uiState.currentWeather, userPreferencesState = userPreferencesState)
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -62,6 +65,6 @@ fun HomeSuccessContent(
             hourlyForecasts = uiState.forecastDays?.hourlyForecasts ?: emptyList()
         )
 
-        Spacer(modifier = Modifier.height(100.dp))
+        Spacer(modifier = Modifier.height(150.dp))
     }
 }

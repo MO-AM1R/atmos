@@ -9,6 +9,7 @@ import androidx.compose.foundation.ScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.atmos.R
+import com.example.atmos.domain.model.UserPreferences
 import com.example.atmos.ui.core.components.GpsDisabledContent
 import com.example.atmos.ui.core.components.LocationPermissionContent
 import com.example.atmos.ui.core.components.NetworkUnavailableContent
@@ -26,6 +27,7 @@ fun HomeStateContent(
     onRequestPermission: () -> Unit,
     onOpenSettings: () -> Unit,
     onOpenGpsSettings: () -> Unit,
+    userPreferencesState: UserPreferences?,
 ) {
     AnimatedContent(
         targetState = uiState.screenState,
@@ -53,6 +55,7 @@ fun HomeStateContent(
 
                 is HomeScreenState.Success -> {
                     HomeSuccessContent(
+                        userPreferencesState = userPreferencesState,
                         uiState = uiState,
                         scrollState = scrollState,
                         onRefresh = onRefresh

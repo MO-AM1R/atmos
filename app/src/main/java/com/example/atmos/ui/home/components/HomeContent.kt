@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.blur
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.example.atmos.domain.model.UserPreferences
 import com.example.atmos.ui.core.components.ResourceIcon
 import com.example.atmos.ui.core.components.ResourceImage
 import com.example.atmos.ui.home.state.HomeUiState
@@ -31,7 +32,8 @@ fun HomeContent(
     onRequestPermission: () -> Unit,
     onOpenSettings: () -> Unit,
     onOpenGpsSettings: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    userPreferencesState: UserPreferences?
 ) {
     Box(modifier = modifier.fillMaxSize()) {
 
@@ -54,6 +56,7 @@ fun HomeContent(
 
         HomeStateContent(
             isGpsEnabled = isGpsEnabled,
+            userPreferencesState = userPreferencesState,
             uiState = uiState,
             scrollState = scrollState,
             onRetry = onRetry,

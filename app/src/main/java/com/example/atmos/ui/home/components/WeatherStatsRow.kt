@@ -19,17 +19,21 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.atmos.R
+import com.example.atmos.data.enums.WindUnit
 import com.example.atmos.domain.model.CurrentWeather
+import com.example.atmos.domain.model.UserPreferences
 import com.example.atmos.ui.core.components.ResourceIcon
 import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
 import com.example.atmos.ui.theme.extraColors
+import com.example.atmos.utils.formatWindSpeed
 
 
 @Composable
 fun WeatherStatsRow(
     weather: CurrentWeather?,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    userPreferencesState: UserPreferences?
 ) {
     Row(
         modifier = modifier.fillMaxWidth(),
@@ -45,7 +49,7 @@ fun WeatherStatsRow(
             modifier = Modifier.weight(1f),
             icon = R.drawable.ic_wind,
             label = stringResource(R.string.wind_speed),
-            value = "${weather?.windSpeedRaw ?: "--"} m/s"
+            value = weather?.windSpeedRaw?.formatWindSpeed(userPreferencesState?.windUnitOption ?: WindUnit.METERS_PER_SECOND) ?: "--"
         )
         StatCard(
             modifier = Modifier.weight(1f),

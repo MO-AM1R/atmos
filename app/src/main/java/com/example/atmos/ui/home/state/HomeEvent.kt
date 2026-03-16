@@ -1,15 +1,14 @@
 package com.example.atmos.ui.home.state
 
-import android.location.Location
+import com.example.atmos.domain.model.StoredPoint
 
 sealed class HomeEvent {
     data class OnLoad(
-        val latitude : Double,
-        val longitude: Double,
+        val point: StoredPoint,
         val forceUpdate: Boolean = false
     ) : HomeEvent()
+}
 
-    data class OnLocationUpdated(
-        val location: Location
-    ) : HomeEvent()
+sealed class HomeUIEvents {
+    object TriggerGPSLocation : HomeUIEvents()
 }

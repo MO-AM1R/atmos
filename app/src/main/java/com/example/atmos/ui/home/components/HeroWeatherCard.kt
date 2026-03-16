@@ -31,11 +31,13 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.atmos.R
+import com.example.atmos.data.enums.TemperatureUnit
 import com.example.atmos.domain.model.CurrentWeather
 import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
 import com.example.atmos.ui.theme.extraColors
 import com.example.atmos.utils.AppConstants.ICONS_BASE_URL
+import com.example.atmos.utils.formatTemperature
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -45,7 +47,8 @@ import java.util.Locale
 fun HeroWeatherCard(
     weather: CurrentWeather?,
     onRefreshClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    temperatureUnit: TemperatureUnit?
 ) {
     val colors = MaterialTheme.extraColors
 
@@ -107,7 +110,8 @@ fun HeroWeatherCard(
             Spacer(modifier = Modifier.height(Spacing.Large))
 
             Text(
-                text = weather?.let { "${it.temperature.toInt()}°" } ?: "--°",
+                text = weather?.temperature?.formatTemperature(temperatureUnit ?: TemperatureUnit.CELSIUS)
+                    ?: "--°",
                 style = WeatherTypography.displayLarge,
                 fontWeight = FontWeight.ExtraBold,
                 color = colors.textPrimary

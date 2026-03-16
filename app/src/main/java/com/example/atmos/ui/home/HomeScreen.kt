@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.atmos.domain.model.StoredPoint
 import com.example.atmos.ui.core.components.rememberPermissionHandler
 import com.example.atmos.ui.core.viewmodel.LocationPermissionEvent
 import com.example.atmos.ui.core.viewmodel.LocationPermissionViewModel
@@ -21,6 +22,7 @@ import com.example.atmos.ui.home.components.HomeContent
 import com.example.atmos.ui.home.components.HomeDialogs
 import com.example.atmos.ui.home.state.HomeEvent
 import com.example.atmos.ui.home.state.HomeScreenState
+import com.example.atmos.ui.home.state.HomeUIEvents
 import com.example.atmos.ui.home.viewmodel.HomeScreenViewModel
 import com.example.atmos.utils.hasLocationPermission
 import com.example.atmos.utils.openAppSettings
@@ -38,6 +40,7 @@ fun HomeScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val permissionState by permissionViewModel.permissionState.collectAsStateWithLifecycle()
     val networkState by networkViewModel.isConnected.collectAsStateWithLifecycle()
+
     val context = LocalContext.current
     val scrollState = rememberScrollState()
 
@@ -55,15 +58,17 @@ fun HomeScreen(
         label = "blurRadius"
     )
 
-    fun startLocationAndLoad() {
+    fun startLocationAndLoad(forceUpdate: Boolean = false) {
         requestLocation(
             fusedClient = fusedClient,
             onLocationReady = { resolvedLocation ->
-                viewModel.onEvent(HomeEvent.OnLocationUpdated(resolvedLocation))
                 viewModel.onEvent(
                     HomeEvent.OnLoad(
-                        latitude = resolvedLocation.latitude,
-                        longitude = resolvedLocation.longitude
+                        point = StoredPoint(
+                            latitude = resolvedLocation.latitude,
+                            longitude = resolvedLocation.longitude
+                        ),
+                        forceUpdate = forceUpdate
                     )
                 )
             }
@@ -71,15 +76,18 @@ fun HomeScreen(
     }
 
     fun retryWithLocation(forceUpdate: Boolean = false) {
-        uiState.location?.let {
-            viewModel.onEvent(
-                HomeEvent.OnLoad(
-                    latitude = it.latitude,
-                    longitude = it.longitude,
-                    forceUpdate = forceUpdate
+        when {
+            uiState.point != null -> {
+                viewModel.onEvent(
+                    HomeEvent.OnLoad(
+                        point = uiState.point ?: StoredPoint(0.0, 0.0),
+                        forceUpdate = forceUpdate
+                    )
                 )
-            )
-        } ?: startLocationAndLoad()
+            }
+
+            else -> startLocationAndLoad(forceUpdate = forceUpdate)
+        }
     }
 
     val locationPermissionLauncher = rememberPermissionHandler(
@@ -108,14 +116,27 @@ fun HomeScreen(
                     Manifest.permission.ACCESS_FINE_LOCATION
                 )
             }
-            else -> {
-                if (permissionState.isGpsEnabled) {
-                    if (networkState) {
-                        if (!uiState.isDataLoaded) {
-                            retryWithLocation()
-                        }
-                    } else {
-                        viewModel.setScreenState(HomeScreenState.NetworkUnavailable)
+
+            !networkState -> {
+                viewModel.setScreenState(HomeScreenState.NetworkUnavailable)
+            }
+
+            permissionState.isGpsEnabled && networkState -> {
+                if (!uiState.isDataLoaded) {
+                    retryWithLocation()
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        viewModel.homeUIEvens.collect { event ->
+            when (event) {
+                HomeUIEvents.TriggerGPSLocation -> {
+                    if (permissionState.isGpsEnabled &&
+                        context.hasLocationPermission()
+                    ) {
+                        startLocationAndLoad(forceUpdate = true)
                     }
                 }
             }
@@ -145,11 +166,12 @@ fun HomeScreen(
 
     HomeContent(
         isGpsEnabled = permissionState.isGpsEnabled,
+        userPreferencesState = uiState.userPreferences,
         uiState = uiState,
         scrollState = scrollState,
         blurRadius = blurRadius,
         onRetry = { retryWithLocation() },
-        onRefresh = { retryWithLocation(true) },
+        onRefresh = { retryWithLocation(forceUpdate = true) },
         onRequestPermission = {
             locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         },
