@@ -1,6 +1,5 @@
 package com.example.atmos.ui.home.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.atmos.data.enums.Language
@@ -45,10 +44,6 @@ class HomeScreenViewModel @Inject constructor(
         observeOnSettings()
     }
 
-    // ════════════════════════════════════════════════════
-    // Observe Settings Changes
-    // ════════════════════════════════════════════════════
-
     private fun observeOnSettings() {
         viewModelScope.launch {
             userPreferencesRepository.getUserPreferences().collect { newPrefs ->
@@ -58,16 +53,14 @@ class HomeScreenViewModel @Inject constructor(
 
                 when {
                     currentPrefs == null -> {
-                        Log.d("TAG", "handleInitialLoad")
                         handleInitialLoad(newPrefs)
                     }
 
                     newPrefs.temperatureUnitOption != currentPrefs.temperatureUnitOption ||
-                            newPrefs.windUnitOption != currentPrefs.windUnitOption -> { }
+                            newPrefs.windUnitOption != currentPrefs.windUnitOption -> {
+                    }
 
                     newPrefs.languageOption != currentPrefs.languageOption -> {
-                        Log.d("TAG", "languageOption")
-
                         val point = resolvePoint(newPrefs)
                         if (point != null) {
                             loadWeather(point = point, forceUpdate = true)
@@ -78,7 +71,7 @@ class HomeScreenViewModel @Inject constructor(
 
                     newPrefs.locationOption == LocationOption.GPS &&
                             newPrefs.locationOption != currentPrefs.locationOption -> {
-                        Log.d("TAG", "GPS")
+
                         _uiState.update { it.copy(screenState = HomeScreenState.Loading) }
                         _homeEventChannel.send(HomeUIEvents.TriggerGPSLocation)
                     }
@@ -86,7 +79,7 @@ class HomeScreenViewModel @Inject constructor(
                     newPrefs.locationOption == LocationOption.SPECIFIC_LOCATION &&
                             newPrefs.storedPoint != null &&
                             newPrefs.storedPoint != _uiState.value.point -> {
-                        Log.d("TAG", "SPECIFIC_LOCATION")
+
                         loadWeather(
                             point = newPrefs.storedPoint,
                             forceUpdate = true
@@ -99,9 +92,6 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    // ════════════════════════════════════════════════════
-    // Initial Load Logic
-    // ════════════════════════════════════════════════════
 
     private suspend fun handleInitialLoad(prefs: UserPreferences) {
         when (prefs.locationOption) {
@@ -120,11 +110,6 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    // ════════════════════════════════════════════════════
-    // Helpers
-    // ════════════════════════════════════════════════════
-
-    // ✅ Resolves which point to use based on location option
     private fun resolvePoint(prefs: UserPreferences): StoredPoint? {
         return when (prefs.locationOption) {
             LocationOption.SPECIFIC_LOCATION -> prefs.storedPoint
@@ -132,14 +117,10 @@ class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    // ════════════════════════════════════════════════════
-    // Public Events
-    // ════════════════════════════════════════════════════
 
     fun onEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.OnLoad -> {
-                Log.d("TAG", "on event")
                 _uiState.update {
                     it.copy(
                         isDataLoaded = false,
@@ -158,10 +139,6 @@ class HomeScreenViewModel @Inject constructor(
     fun setScreenState(state: HomeScreenState) {
         _uiState.update { it.copy(screenState = state) }
     }
-
-    // ════════════════════════════════════════════════════
-    // Load Weather
-    // ════════════════════════════════════════════════════
 
     private fun loadWeather(point: StoredPoint?, forceUpdate: Boolean = false) {
         if (point == null) return

@@ -1,7 +1,6 @@
 package com.example.atmos.ui.home
 
 import android.Manifest
-import android.util.Log
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.rememberScrollState
@@ -14,7 +13,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.example.atmos.data.enums.LocationOption
 import com.example.atmos.domain.model.StoredPoint
 import com.example.atmos.ui.core.components.rememberPermissionHandler
 import com.example.atmos.ui.core.viewmodel.LocationPermissionEvent
@@ -60,7 +58,6 @@ fun HomeScreen(
         label = "blurRadius"
     )
 
-    // ✅ Fetch GPS location and load weather
     fun startLocationAndLoad(forceUpdate: Boolean = false) {
         requestLocation(
             fusedClient = fusedClient,
@@ -78,10 +75,8 @@ fun HomeScreen(
         )
     }
 
-    // ✅ Retry — respects location option
     fun retryWithLocation(forceUpdate: Boolean = false) {
         when {
-            // Specific location set and point available
             uiState.point != null -> {
                 viewModel.onEvent(
                     HomeEvent.OnLoad(
@@ -91,7 +86,6 @@ fun HomeScreen(
                 )
             }
 
-            // GPS mode or no stored point
             else -> startLocationAndLoad(forceUpdate = forceUpdate)
         }
     }
@@ -111,7 +105,6 @@ fun HomeScreen(
         }
     )
 
-    // ✅ React to permission and network changes
     LaunchedEffect(
         permissionState.isPermissionGranted,
         permissionState.isGpsEnabled,
@@ -129,8 +122,6 @@ fun HomeScreen(
             }
 
             permissionState.isGpsEnabled && networkState -> {
-                // ✅ Only trigger if data not loaded
-                // ViewModel handles GPS vs Specific internally
                 if (!uiState.isDataLoaded) {
                     retryWithLocation()
                 }
@@ -138,11 +129,9 @@ fun HomeScreen(
         }
     }
 
-    // ✅ Observe one-shot UI events from ViewModel
     LaunchedEffect(Unit) {
         viewModel.homeUIEvens.collect { event ->
             when (event) {
-                // ✅ ViewModel requests GPS location
                 HomeUIEvents.TriggerGPSLocation -> {
                     if (permissionState.isGpsEnabled &&
                         context.hasLocationPermission()
