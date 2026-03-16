@@ -36,7 +36,8 @@ fun FavoritesScreen(
     modifier: Modifier = Modifier,
     viewModel: FavoritesViewModel = hiltViewModel(),
     onNavigateToMap: () -> Unit,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
+    onNavigateToFavDetails: (Double, Double) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -104,7 +105,8 @@ fun FavoritesScreen(
                                             viewModel.onEvent(
                                                 FavoritesEvent.OnDeleteFavorite(item)
                                             )
-                                        }
+                                        },
+                                        onClick = onNavigateToFavDetails
                                     )
                                 }
                             }

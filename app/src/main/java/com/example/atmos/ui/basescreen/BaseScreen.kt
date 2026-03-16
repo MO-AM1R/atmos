@@ -14,6 +14,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.example.atmos.domain.model.StoredPoint
+import com.example.atmos.ui.favoritedetails.FavoriteDetailsScreen
 import com.example.atmos.ui.favorites.FavoritesScreen
 import com.example.atmos.ui.home.HomeScreen
 import com.example.atmos.ui.map.MapScreen
@@ -31,6 +34,8 @@ fun BaseScreen() {
 
     val showBottomBar = currentDestination?.destination
         ?.hasRoute(BaseContainerScreens.MapScreen::class) == false
+            && currentDestination?.destination
+        ?.hasRoute(BaseContainerScreens.FavoriteDetailsScreen::class) == false
 
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -48,7 +53,26 @@ fun BaseScreen() {
                     savedStateHandle = backStackEntry.savedStateHandle,
                     onNavigateToMap = {
                         navController.navigate(BaseContainerScreens.MapScreen)
+                    },
+                    onNavigateToFavDetails = { latitude, longitude ->
+                        navController.navigate(
+                            BaseContainerScreens.FavoriteDetailsScreen(
+                                latitude = latitude,
+                                longitude = longitude
+                            )
+                        )
                     }
+                )
+            }
+
+            composable<BaseContainerScreens.FavoriteDetailsScreen> { backStackEntry ->
+                val args = backStackEntry.toRoute<BaseContainerScreens.FavoriteDetailsScreen>()
+                FavoriteDetailsScreen(
+                    point = StoredPoint(
+                        latitude = args.latitude,
+                        longitude = args.longitude
+                    ),
+                    onNavigateBack = { navController.popBackStack() }
                 )
             }
 

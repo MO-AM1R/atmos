@@ -1,5 +1,6 @@
 package com.example.atmos.ui.favorites.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.material3.SwipeToDismissBox
 import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
@@ -15,7 +16,8 @@ fun FavoriteLocationItem(
     modifier: Modifier = Modifier,
     item: FavoriteWeatherItem,
     temperatureUnit: TemperatureUnit,
-    onDelete: () -> Unit
+    onDelete: () -> Unit,
+    onClick: (Double, Double) -> Unit
 ) {
 
     val dismissState = rememberSwipeToDismissBoxState(
@@ -34,7 +36,12 @@ fun FavoriteLocationItem(
     }
 
     SwipeToDismissBox(
-        modifier = modifier,
+        modifier = modifier.clickable(
+            true,
+            onClick = {
+                onClick(item.latitude, item.longitude)
+            },
+        ),
         state = dismissState,
         backgroundContent = {},
     ) {
