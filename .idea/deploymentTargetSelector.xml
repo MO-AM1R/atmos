@@ -16,9 +16,6 @@
       <SelectionState runConfigName="AlertDaoTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
-      <SelectionState runConfigName="getAllAlerts()">
-        <option name="selectionMode" value="DROPDOWN" />
-      </SelectionState>
       <SelectionState runConfigName="FavoritesLocalDataSourceTest">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
