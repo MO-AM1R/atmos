@@ -87,7 +87,7 @@ class AlertDaoTest {
     }
 
     @Test
-    fun getAllAlerts() = runTest {
+    fun getAllAlerts_retrieveAllAlerts() = runTest {
         dummyData.forEach { alertDao.insertAlert(it) }
 
         val result = alertDao.getAllAlerts().first()
@@ -97,7 +97,7 @@ class AlertDaoTest {
     }
 
     @Test
-    fun getAlertById() = runTest {
+    fun getAlertById_alertId_retrieveAlertWithSpecificId() = runTest {
         dummyData.forEach { alertDao.insertAlert(it) }
 
         val result = alertDao.getAlertById(1)
@@ -107,7 +107,7 @@ class AlertDaoTest {
     }
 
     @Test
-    fun getAlertById_notFound_returnsNull() = runTest {
+    fun getAlertById_invalidAlertId_returnsNull() = runTest {
         dummyData.forEach { alertDao.insertAlert(it) }
 
         val result = alertDao.getAlertById(999)
@@ -116,7 +116,7 @@ class AlertDaoTest {
     }
 
     @Test
-    fun getActiveAlerts() = runTest {
+    fun getActiveAlerts_retrieveActiveAlerts() = runTest {
         dummyData.forEach { alertDao.insertAlert(it) }
 
         val result = alertDao.getActiveAlerts()
@@ -128,7 +128,7 @@ class AlertDaoTest {
     }
 
     @Test
-    fun insertAlert() = runTest {
+    fun insertAlert_task_retrieveNewAlertList() = runTest {
         val alert = dummyData[0]
         alertDao.insertAlert(alert)
 
@@ -139,7 +139,7 @@ class AlertDaoTest {
     }
 
     @Test
-    fun deleteAlertById() = runTest {
+    fun deleteAlertById_alertId_retrieveNullWithTheDeletedAlertId() = runTest {
         dummyData.forEach { alertDao.insertAlert(it) }
 
         alertDao.deleteAlertById(1)
@@ -150,7 +150,7 @@ class AlertDaoTest {
     }
 
     @Test
-    fun deleteAllAlerts() = runTest {
+    fun deleteAllAlerts_retrieveEmptyList() = runTest {
         dummyData.forEach { alertDao.insertAlert(it) }
 
         dummyData.forEach { alertDao.deleteAlertById(it.id) }
