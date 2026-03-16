@@ -16,6 +16,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.atmos.domain.model.StoredPoint
+import com.example.atmos.ui.alert.AlertsScreen
 import com.example.atmos.ui.favoritedetails.FavoriteDetailsScreen
 import com.example.atmos.ui.favorites.FavoritesScreen
 import com.example.atmos.ui.home.HomeScreen
@@ -77,7 +78,7 @@ fun BaseScreen() {
             }
 
             composable<BaseContainerScreens.AlertsScreens> {
-                //TODO: Alerts Screen
+                AlertsScreen()
             }
 
             composable<BaseContainerScreens.SettingsScreens> { backStackEntry ->

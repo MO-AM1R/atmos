@@ -64,7 +64,7 @@ class FavoritesViewModel @Inject constructor(
                         _uiState.value.favorites.forEach { entity ->
                             launch {
                                 fetchWeatherForFavorite(entity)
-                            }.invokeOnCompletion { _uiState.update { it.copy(state = FavoritesState.Success) } }
+                            }
                         }
                     }
 
@@ -79,12 +79,19 @@ class FavoritesViewModel @Inject constructor(
             favoriteRepository.getAllFavorites().collect { resource ->
                 when (resource) {
                     is Resource.Success -> {
-                        _uiState.update { it.copy(favorites = resource.data) }
+                        val filtered = resource.data.filter { it.id != pendingDeleteItem?.id }
+
+                        _uiState.update {
+                            it.copy(
+                                favorites = filtered,
+                                state = FavoritesState.Success
+                            )
+                        }
 
                         _uiState.value.favorites.forEach { entity ->
                             launch {
                                 fetchWeatherForFavorite(entity)
-                            }.invokeOnCompletion { _uiState.update { it.copy(state = FavoritesState.Success) } }
+                            }
                         }
                     }
 
@@ -155,6 +162,7 @@ class FavoritesViewModel @Inject constructor(
                     favorites = state.favorites.map { item ->
                         if (favoriteWeatherItem.id == item.id) updatedItem else item
                     },
+                    state = FavoritesState.Success
                 )
             }
 
@@ -167,7 +175,6 @@ class FavoritesViewModel @Inject constructor(
                             item.copy(isLoading = false, error = e.message)
                         else item
                     },
-                    state = FavoritesState.Error(e.message ?: "Error")
                 )
             }
         }
@@ -191,6 +198,18 @@ class FavoritesViewModel @Inject constructor(
     }
 
     private fun onDeleteFavorite(item: FavoriteWeatherItem) {
+        deleteJob?.cancel()
+        pendingDeleteItem?.let { previousItem ->
+            viewModelScope.launch {
+                val entity = favoriteRepository.getFavoriteByPoint(
+                    lat = previousItem.latitude,
+                    lon = previousItem.longitude
+                )
+                entity?.let { favoriteRepository.deleteFavorite(it) }
+            }
+            pendingDeleteItem = null
+        }
+
         _uiState.update { state ->
             state.copy(
                 favorites = state.favorites.filter { it.id != item.id },
@@ -200,7 +219,6 @@ class FavoritesViewModel @Inject constructor(
 
         pendingDeleteItem = item
 
-        deleteJob?.cancel()
         deleteJob = viewModelScope.launch {
             delay(4000L)
 
