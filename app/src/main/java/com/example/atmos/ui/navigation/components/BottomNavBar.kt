@@ -31,7 +31,7 @@ import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.example.atmos.domain.model.BottomNavItem
 import com.example.atmos.domain.model.bottomNavItems
-import com.example.atmos.ui.navigation.screens.BottomNavScreens
+import com.example.atmos.ui.navigation.screens.BaseContainerScreens
 import com.example.atmos.ui.theme.BottomNavBackground
 import com.example.atmos.ui.theme.BottomNavBorder
 import com.example.atmos.ui.theme.extraColors
@@ -41,7 +41,7 @@ import com.example.atmos.ui.theme.extraColors
 fun BottomNavBar(
     modifier: Modifier = Modifier,
     currentDestination: NavDestination? = null,
-    onSelectScreen: (BottomNavScreens) -> Unit = {},
+    onSelectScreen: (BaseContainerScreens) -> Unit = {},
 ) {
     Box(
         modifier = modifier

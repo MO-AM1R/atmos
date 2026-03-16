@@ -8,9 +8,6 @@ sealed class Screens {
     object SplashScreen : Screens()
 
     @Serializable
-    object MapScreen : Screens()
-
-    @Serializable
     object OnboardingScreen : Screens()
 
     @Serializable

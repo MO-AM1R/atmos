@@ -72,6 +72,9 @@ fun SettingsScreen(
 
     LaunchedEffect(Unit) {
         observeOnEvents()
+    }
+
+    LaunchedEffect(Unit) {
         observeOnSavedStateHandle()
     }
 

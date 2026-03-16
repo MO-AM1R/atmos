@@ -28,16 +28,15 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
-    private val weatherRepository   : WeatherRepository,
-    private val settingsRepository  : UserPreferencesRepository,
-    private val reverseGeocoding    : ReverseGeocodingHelper
+    private val weatherRepository: WeatherRepository,
+    private val settingsRepository: UserPreferencesRepository,
+    private val reverseGeocoding: ReverseGeocodingHelper
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(SettingsUiState())
     val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
 
     private val _refreshState = MutableStateFlow<Resource<Unit>>(Resource.Success(Unit))
-    val refreshState: StateFlow<Resource<Unit>> = _refreshState.asStateFlow()
 
     private val _settingNavigationEvents = Channel<SettingsNavigationEvent>(Channel.BUFFERED)
     val settingNavigationEvents = _settingNavigationEvents.receiveAsFlow()
@@ -52,11 +51,11 @@ class SettingsViewModel @Inject constructor(
             settingsRepository.getUserPreferences().collect { prefs ->
                 _uiState.update {
                     it.copy(
-                        locationOption  = prefs.locationOption,
-                        storedPoint     = prefs.storedPoint,
+                        locationOption = prefs.locationOption,
+                        storedPoint = prefs.storedPoint,
                         temperatureUnit = prefs.temperatureUnitOption,
-                        windUnit        = prefs.windUnitOption,
-                        language        = prefs.languageOption
+                        windUnit = prefs.windUnitOption,
+                        language = prefs.languageOption
                     )
                 }
 
@@ -70,7 +69,7 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
-    fun navigateToMap(){
+    fun navigateToMap() {
         viewModelScope.launch {
             _settingNavigationEvents.send(SettingsNavigationEvent.NavigateToMap)
         }
@@ -78,11 +77,11 @@ class SettingsViewModel @Inject constructor(
 
     fun onEvent(event: SettingsEvent) {
         when (event) {
-            is SettingsEvent.OnLocationPointSelected    -> onLocationSelected(event.storedPoint)
+            is SettingsEvent.OnLocationPointSelected -> onLocationSelected(event.storedPoint)
             is SettingsEvent.OnTemperatureUnitSelected -> onTemperatureUnitSelected(event.newOption)
-            is SettingsEvent.OnWindUnitSelected        -> onWindUnitSelected(event.newOption)
-            is SettingsEvent.OnLanguageSelected        -> onLanguageSelected(event.newOption)
-            is SettingsEvent.OnLocationOptionChanged   -> onLocationOptionChanged(event.newOption)
+            is SettingsEvent.OnWindUnitSelected -> onWindUnitSelected(event.newOption)
+            is SettingsEvent.OnLanguageSelected -> onLanguageSelected(event.newOption)
+            is SettingsEvent.OnLocationOptionChanged -> onLocationOptionChanged(event.newOption)
             SettingsEvent.OnNavigateToMapScreen -> navigateToMap()
         }
     }
@@ -95,8 +94,8 @@ class SettingsViewModel @Inject constructor(
 
             _uiState.update {
                 it.copy(
-                    locationOption       = LocationOption.SPECIFIC_LOCATION,
-                    storedPoint          = point,
+                    locationOption = LocationOption.SPECIFIC_LOCATION,
+                    storedPoint = point,
                     isLoadingLocationName = true
                 )
             }
@@ -108,14 +107,14 @@ class SettingsViewModel @Inject constructor(
 
             _uiState.update {
                 it.copy(
-                    storedLocationName    = locationName,
+                    storedLocationName = locationName,
                     isLoadingLocationName = false
                 )
             }
 
             refreshWeather(
-                lat  = point.latitude,
-                lon  = point.longitude,
+                lat = point.latitude,
+                lon = point.longitude,
                 lang = _uiState.value.language.apiValue
             )
         }
@@ -125,7 +124,6 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             settingsRepository.saveTemperatureUnit(unit)
             _uiState.update { it.copy(temperatureUnit = unit) }
-            refreshWeatherWithCurrentSettings()
         }
     }
 
@@ -157,30 +155,36 @@ class SettingsViewModel @Inject constructor(
 
         viewModelScope.launch {
             refreshWeather(
-                lat  = point.latitude,
-                lon  = point.longitude,
+                lat = point.latitude,
+                lon = point.longitude,
                 lang = state.language.apiValue
             )
         }
     }
 
     private suspend fun refreshWeather(
-        lat : Double,
-        lon : Double,
+        lat: Double,
+        lon: Double,
         lang: String
     ) {
         _uiState.update { it.copy(isRefreshing = true) }
 
         combine(
-            weatherRepository.getCurrentWeather(lat = lat, lon = lon, lang = lang, forceUpdate = true),
+            weatherRepository.getCurrentWeather(
+                lat = lat,
+                lon = lon,
+                lang = lang,
+                forceUpdate = true
+            ),
             weatherRepository.getForecast(lat = lat, lon = lon, lang = lang, forceUpdate = true)
         ) { weatherResult, forecastResult ->
             when {
-                weatherResult  is Resource.Loading ||
-                        forecastResult is Resource.Loading  -> Resource.Loading()
-                weatherResult  is Resource.Error    -> Resource.Error(weatherResult.message)
-                forecastResult is Resource.Error    -> Resource.Error(forecastResult.message)
-                else                                -> Resource.Success(Unit)
+                weatherResult is Resource.Loading ||
+                        forecastResult is Resource.Loading -> Resource.Loading()
+
+                weatherResult is Resource.Error -> Resource.Error(weatherResult.message)
+                forecastResult is Resource.Error -> Resource.Error(forecastResult.message)
+                else -> Resource.Success(Unit)
             }
         }.collect { result ->
             _refreshState.value = result

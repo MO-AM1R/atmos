@@ -1,32 +1,32 @@
 package com.example.atmos.domain.model
 
 import com.example.atmos.R
-import com.example.atmos.ui.navigation.screens.BottomNavScreens
+import com.example.atmos.ui.navigation.screens.BaseContainerScreens
 
 data class BottomNavItem(
-    val screen   : BottomNavScreens,
+    val screen   : BaseContainerScreens,
     val iconRes  : Int,
     val labelRes : Int
 )
 
 val bottomNavItems = listOf(
     BottomNavItem(
-        screen   = BottomNavScreens.HomeScreens,
+        screen   = BaseContainerScreens.HomeScreens,
         iconRes  = R.drawable.ic_home,
         labelRes = R.string.nav_home
     ),
     BottomNavItem(
-        screen   = BottomNavScreens.FavoritesScreens,
+        screen   = BaseContainerScreens.FavoritesScreens,
         iconRes  = R.drawable.ic_favorite,
         labelRes = R.string.nav_favorites
     ),
     BottomNavItem(
-        screen   = BottomNavScreens.AlertsScreens,
+        screen   = BaseContainerScreens.AlertsScreens,
         iconRes  = R.drawable.ic_alerts,
         labelRes = R.string.nav_alerts
     ),
     BottomNavItem(
-        screen   = BottomNavScreens.SettingsScreens,
+        screen   = BaseContainerScreens.SettingsScreens,
         iconRes  = R.drawable.ic_settings,
         labelRes = R.string.nav_settings
     ),

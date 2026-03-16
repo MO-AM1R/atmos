@@ -72,7 +72,7 @@ fun MapSearchBar(
                 },
                 placeholder = {
                     Text(
-                        text = "Search location...",
+                        text = "Search point...",
                         color = Color.White.copy(alpha = 0.4f)
                     )
                 },

@@ -6,7 +6,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.atmos.ui.basescreen.BaseScreen
-import com.example.atmos.ui.map.MapScreen
 import com.example.atmos.ui.navigation.screens.Screens
 import com.example.atmos.ui.onboarding.OnboardingScreen
 import com.example.atmos.ui.splash.SplashScreen
@@ -46,16 +45,8 @@ fun AppNavigation(
             )
         }
 
-        composable<Screens.MapScreen> {
-            MapScreen(navController = navController)
-        }
-
         composable<Screens.BaseScreen> {
-            BaseScreen(
-                navigateToMap = {
-                    navController.navigate(Screens.MapScreen)
-                },
-            )
+            BaseScreen()
         }
     }
 }
