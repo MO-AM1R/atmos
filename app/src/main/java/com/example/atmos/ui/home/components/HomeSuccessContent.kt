@@ -38,6 +38,7 @@ fun HomeSuccessContent(
             .fillMaxSize()
             .verticalScroll(scrollState)
             .padding(horizontal = 20.dp)
+            .padding(bottom = 70.dp)
     ) {
 
         Spacer(modifier = Modifier.height(60.dp))
@@ -65,6 +66,6 @@ fun HomeSuccessContent(
             hourlyForecasts = uiState.forecastDays?.hourlyForecasts ?: emptyList()
         )
 
-        Spacer(modifier = Modifier.height(150.dp))
+        Spacer(modifier = Modifier.height(100.dp))
     }
 }

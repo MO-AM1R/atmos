@@ -82,47 +82,54 @@ fun SettingsScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-                .padding(horizontal = 20.dp, vertical = 24.dp)
+                .padding(top = 32.dp, bottom = 120.dp)
         ) {
+
             SettingsHeader()
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+            ) {
 
-            SettingsSectionTitle(title = stringResource(R.string.settings_section_location))
+                Spacer(modifier = Modifier.height(24.dp))
 
-            Spacer(modifier = Modifier.height(12.dp))
+                SettingsSectionTitle(title = stringResource(R.string.settings_section_location))
 
-            LocationSection(
-                locationOption = uiState.value.locationOption,
-                storedLocation = uiState.value.storedLocationName,
-                isLoadingLocationName = uiState.value.isLoadingLocationName,
-                onEvent = settingsViewModel::onEvent,
-                navigateToMap = navigateToMap
-            )
+                Spacer(modifier = Modifier.height(12.dp))
 
-            Spacer(modifier = Modifier.height(28.dp))
+                LocationSection(
+                    locationOption = uiState.value.locationOption,
+                    storedLocation = uiState.value.storedLocationName,
+                    isLoadingLocationName = uiState.value.isLoadingLocationName,
+                    onEvent = settingsViewModel::onEvent,
+                    navigateToMap = navigateToMap
+                )
 
-            SettingsSectionTitle(title = stringResource(R.string.settings_section_units))
+                Spacer(modifier = Modifier.height(28.dp))
 
-            Spacer(modifier = Modifier.height(12.dp))
+                SettingsSectionTitle(title = stringResource(R.string.settings_section_units))
 
-            UnitsSection(
-                selectedTemperatureUnit = uiState.value.temperatureUnit,
-                selectedWindUnit = uiState.value.windUnit,
-                onEvent = settingsViewModel::onEvent,
-            )
+                Spacer(modifier = Modifier.height(12.dp))
 
-            Spacer(modifier = Modifier.height(28.dp))
+                UnitsSection(
+                    selectedTemperatureUnit = uiState.value.temperatureUnit,
+                    selectedWindUnit = uiState.value.windUnit,
+                    onEvent = settingsViewModel::onEvent,
+                )
 
-            SettingsSectionTitle(title = stringResource(R.string.settings_section_appearance))
+                Spacer(modifier = Modifier.height(28.dp))
 
-            Spacer(modifier = Modifier.height(12.dp))
+                SettingsSectionTitle(title = stringResource(R.string.settings_section_appearance))
 
-            AppearanceSection(
-                language = uiState.value.language,
-                onEvent = settingsViewModel::onEvent,
-            )
+                Spacer(modifier = Modifier.height(12.dp))
+
+                AppearanceSection(
+                    language = uiState.value.language,
+                    onEvent = settingsViewModel::onEvent,
+                )
+            }
         }
+
     }
 }
