@@ -56,7 +56,7 @@ fun ChooseFromMapRow(
                 imageVector = Icons.Default.LocationOn,
                 contentDescription = null,
                 tint = if (storedLocation != null)
-                    MaterialTheme.colorScheme.primary
+                    MaterialTheme.extraColors.textPrimary
                 else
                     MaterialTheme.extraColors.textMuted,
                 modifier = Modifier.size(22.dp)

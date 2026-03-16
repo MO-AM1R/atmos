@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.example.atmos.ui.favorites.FavoritesScreen
 import com.example.atmos.ui.home.HomeScreen
 import com.example.atmos.ui.map.MapScreen
 import com.example.atmos.ui.navigation.components.BottomNavBar
@@ -42,8 +43,13 @@ fun BaseScreen() {
                 HomeScreen()
             }
 
-            composable<BaseContainerScreens.FavoritesScreens> {
-                //TODO: Favourites Screen
+            composable<BaseContainerScreens.FavoritesScreens> { backStackEntry ->
+                FavoritesScreen(
+                    savedStateHandle = backStackEntry.savedStateHandle,
+                    onNavigateToMap = {
+                        navController.navigate(BaseContainerScreens.MapScreen)
+                    }
+                )
             }
 
             composable<BaseContainerScreens.AlertsScreens> {

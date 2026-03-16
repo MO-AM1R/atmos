@@ -43,6 +43,7 @@ ksp = "2.3.4"
 animationCore = "1.10.5"
 kotlinx-serialization = "1.10.0"
 runtime = "1.10.5"
+ui = "1.10.5"
 
 
 [libraries]
@@ -107,6 +108,7 @@ hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testi
 androidx-compose-animation-core = { group = "androidx.compose.animation", name = "animation-core", version.ref = "animationCore" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
 
 
 [plugins]
