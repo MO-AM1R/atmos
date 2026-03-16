@@ -40,4 +40,12 @@ object AppConstants {
         const val CURRENT_LOC_SIZE  = 0.8
         const val SELECTED_POINT_KEY  = "selected_point"
     }
+
+    object AlertConstants {
+        const val EXTRA_ALERT_ID   = "alert_id"
+        const val EXTRA_ALERT_TYPE = "alert_type"
+        const val EXTRA_IS_END     = "is_end"
+        const val NOTIFICATION_ID  = 1001
+        const val ALARM_NOTIFICATION_ID = 1002
+    }
 }
