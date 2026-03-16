@@ -146,6 +146,35 @@ class WeatherRepositoryImpl @Inject constructor(
     }.flowOn(Dispatchers.IO)
 
 
+    override fun getForecastForPoint(
+        lat: Double,
+        lon: Double,
+        unit: String,
+        lang: String,
+    ): Flow<Resource<Forecast>> = flow {
+        emit(Resource.Loading())
+
+
+        val result = remote.getForecast(lat, lon, unit, lang)
+        if (result.isSuccess) {
+            val dto = result.getOrNull()
+
+            if (dto != null) {
+                emit(Resource.Success(dto.toDomain()))
+            } else {
+                emit(Resource.Error("No forecast data available"))
+            }
+        } else {
+            result.onFailure { throwable ->
+                emit(Resource.Error("Error: ${throwable.localizedMessage}"))
+            }
+        }
+
+    }.catch { throwable ->
+        emit(Resource.Error("Unexpected error: ${throwable.localizedMessage}"))
+    }.flowOn(Dispatchers.IO)
+
+
     override suspend fun hasCache(): Boolean {
         return local.getCachedTime().first() != null
     }

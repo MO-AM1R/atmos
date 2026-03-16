@@ -33,4 +33,11 @@ interface WeatherRepository {
     ): Flow<Resource<CurrentWeather>>
 
     suspend fun hasCache(): Boolean
+
+    fun getForecastForPoint(
+        lat: Double,
+        lon: Double,
+        unit: String = TemperatureUnit.CELSIUS.apiValue,
+        lang: String = Language.ENGLISH.apiValue,
+    ): Flow<Resource<Forecast>>
 }
