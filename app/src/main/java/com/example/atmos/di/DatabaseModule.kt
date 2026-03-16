@@ -2,6 +2,7 @@ package com.example.atmos.di
 import android.app.Application
 import androidx.room.Room
 import com.example.atmos.data.database.AppDatabase
+import com.example.atmos.data.database.dao.AlertDao
 import com.example.atmos.data.database.dao.FavoriteDao
 import com.example.atmos.data.database.dao.ForecastDao
 import com.example.atmos.data.database.dao.WeatherDao
@@ -39,5 +40,10 @@ class DatabaseModule {
     @Provides
     fun provideFavoriteDao(appDatabase: AppDatabase): FavoriteDao{
         return appDatabase.favoriteDao()
+    }
+
+    @Provides
+    fun provideAlertDao(appDatabase: AppDatabase): AlertDao{
+        return appDatabase.alertDao()
     }
 }
