@@ -13,7 +13,10 @@
         </DropdownSelection>
         <DialogSelection />
       </SelectionState>
-      <SelectionState runConfigName="FavoritesLocalDataSourceTest">
+      <SelectionState runConfigName="Tests in 'com.example.atmos'">
+        <option name="selectionMode" value="DROPDOWN" />
+      </SelectionState>
+      <SelectionState runConfigName="Tests in 'com.example.atmos.data'">
         <option name="selectionMode" value="DROPDOWN" />
       </SelectionState>
     </selectionStates>

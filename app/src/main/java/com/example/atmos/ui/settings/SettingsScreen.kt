@@ -1,5 +1,6 @@
 package com.example.atmos.ui.settings
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,11 +11,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.atmos.MainActivity
 import com.example.atmos.R
 import com.example.atmos.domain.model.StoredPoint
 import com.example.atmos.ui.onboarding.components.GradientBackground
@@ -38,13 +41,22 @@ fun SettingsScreen(
 ) {
 
     val uiState = settingsViewModel.uiState.collectAsStateWithLifecycle()
-
+    val context = LocalContext.current
 
     suspend fun observeOnEvents() {
         settingsViewModel.settingNavigationEvents.collect { event ->
             when (event) {
                 SettingsNavigationEvent.NavigateToMap -> {
                     navigateToMap()
+                }
+
+                SettingsNavigationEvent.RestartActivity -> {
+                    context.startActivity(
+                        Intent(context, MainActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }
+                    )
                 }
             }
         }

@@ -33,6 +33,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -48,6 +49,7 @@ import com.example.atmos.ui.theme.Padding
 import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
 import com.example.atmos.ui.theme.WeatherViolet
+import com.example.atmos.utils.LocalizationHelper
 import kotlinx.coroutines.delay
 
 
@@ -139,6 +141,7 @@ fun SplashScreen(
 
     val viewModel = hiltViewModel<SplashViewModel>()
     val state = viewModel.state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     @Suppress("AssignedValueIsNeverRead")
     LaunchedEffect(Unit) {
@@ -153,6 +156,7 @@ fun SplashScreen(
         delay(200)
         delay(2000L)
 
+        LocalizationHelper.markSplashAsSeen(context)
         onFinish(state.value.onboardingSeenBefore)
     }
 

@@ -13,12 +13,13 @@ import com.example.atmos.ui.splash.SplashScreen
 @Composable
 fun AppNavigation(
     modifier: Modifier = Modifier,
+    startScreen: Screens = Screens.SplashScreen
 ) {
     val navController = rememberNavController()
 
     NavHost(
         navController = navController,
-        startDestination = Screens.SplashScreen
+        startDestination = startScreen
     ) {
         composable<Screens.SplashScreen> {
             SplashScreen(

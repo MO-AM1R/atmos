@@ -138,6 +138,9 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             settingsRepository.saveLanguage(language)
             _uiState.update { it.copy(language = language) }
+            _settingNavigationEvents.send(
+                SettingsNavigationEvent.RestartActivity
+            )
             refreshWeatherWithCurrentSettings()
         }
     }
