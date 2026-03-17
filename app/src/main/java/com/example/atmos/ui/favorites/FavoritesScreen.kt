@@ -19,7 +19,6 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.atmos.data.enums.TemperatureUnit
-import com.example.atmos.domain.model.FavoriteWeatherItem
 import com.example.atmos.ui.favorites.components.FavoriteCustomSnackbar
 import com.example.atmos.ui.favorites.components.FavoriteHeader
 import com.example.atmos.ui.favorites.components.FavoriteLocationItem

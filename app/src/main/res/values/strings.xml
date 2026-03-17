@@ -107,7 +107,7 @@
     <string name="alert_notification_title">Weather Alert</string>
     <string name="alert_notification_channel_id">weather_alerts</string>
     <string name="alert_notification_channel_name">Weather Alerts</string>
-    <string name="alert_notification_content">%1$s in %2$s — Feels like %3$s</string>
+    <string name="alert_notification_content">%1$s in %2$s — Weather Description: %3$s</string>
     <string name="alert_alarm_title">Weather Alarm</string>
     <string name="alert_alarm_content">Current weather in %1$s: %2$s, Feels like %3$s</string>
     <string name="alert_removed">Alert removed</string>
@@ -121,4 +121,11 @@
     <string name="notification_permission_permanently_denied">You\'ve permanently denied notification permission. Please open app settings and enable it manually to receive weather alerts.</string>
     <string name="allow">Allow</string>
     <string name="cancel">Cancel</string>
+    <string name="no_favorites_yet">No favorites yet</string>
+    <string name="tap_to_add_a_location">Tap + to add a location</string>
+    <string name="search_point">Search point…</string>
+    <string name="pressure_unit">mb</string>
+    <string name="weather_description">Weather Description</string>
+    <string name="high">H</string>
+    <string name="low">L</string>
 </resources>

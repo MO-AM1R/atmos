@@ -20,7 +20,7 @@
     <string name="pressure">الضغط</string>
     <string name="clouds">الغيوم</string>
     <string name="today_s_forecast">توقعات اليوم</string>
-    <string name="_5_day_outlook">توقعات 5 أيام</string>
+    <string name="_5_day_outlook">توقعات ٥ أيام</string>
     <string name="please_enable_gps_to_get_accurate_weather_data_for_your_current_location">يرجى تفعيل GPS للحصول على بيانات طقس دقيقة لموقعك الحالي.</string>
     <string name="gps_is_disabled">GPS معطّل</string>
     <string name="enable_gps">تفعيل GPS</string>
@@ -107,7 +107,7 @@
     <string name="alert_notification_title">تنبيه الطقس</string>
     <string name="alert_notification_channel_id">weather_alerts</string>
     <string name="alert_notification_channel_name">تنبيهات الطقس</string>
-    <string name="alert_notification_content">%1$s في %2$s — الإحساس كـ %3$s</string>
+    <string name="alert_notification_content">%1$s في %2$s — وصف الطقس: %3$s</string>
     <string name="alert_alarm_title">منبّه الطقس</string>
     <string name="alert_alarm_content">الطقس الحالي في %1$s: %2$s، الإحساس كـ %3$s</string>
     <string name="alert_removed">تم حذف التنبيه</string>
@@ -121,4 +121,11 @@
     <string name="notification_permission_permanently_denied">لقد رفضت إذن الإشعارات بشكل دائم. يرجى فتح إعدادات التطبيق وتفعيله يدويًا لاستقبال تنبيهات الطقس.</string>
     <string name="allow">سماح</string>
     <string name="cancel">إلغاء</string>
+    <string name="no_favorites_yet">لا توجد مواقع مفضلة بعد</string>
+    <string name="tap_to_add_a_location">اضغط + لإضافة موقع</string>
+    <string name="search_point">ابحث عن موقع…</string>
+    <string name="pressure_unit">مليبار</string>
+    <string name="weather_description">وصف الطقس</string>
+    <string name="high">ع</string>
+    <string name="low">ص</string>
 </resources>

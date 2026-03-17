@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -30,7 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -90,7 +88,8 @@ fun MapSuccessContent(
                         painter = painterResource(R.drawable.ic_arrow_back),
                         tint = Color.White.copy(alpha = 0.8f),
                         contentDescription = stringResource(R.string.description),
-                        modifier = Modifier.size(appBarHeight * 0.3f)
+                        modifier = Modifier
+                            .size(appBarHeight * 0.3f)
                             .padding(10.dp)
                     )
                 }
@@ -100,14 +99,16 @@ fun MapSuccessContent(
                     mapSearchEngineState = state.mapSearchEngineState,
                     onEvent = onEvent,
                     onResultSelect = { point ->
-                        onEvent(MapScreenEvent.OnSelectPoint(point))
-                        mapViewportState.flyTo(
-                            cameraOptions = cameraOptions {
-                                center(point)
-                                zoom(15.0)
-                                pitch(45.0)
-                            }
-                        )
+                        if (point != null) {
+                            onEvent(MapScreenEvent.OnSelectPoint(point))
+                            mapViewportState.flyTo(
+                                cameraOptions = cameraOptions {
+                                    center(point)
+                                    zoom(15.0)
+                                    pitch(45.0)
+                                }
+                            )
+                        }
                     }
                 )
             }

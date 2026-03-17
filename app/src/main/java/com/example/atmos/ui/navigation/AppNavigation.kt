@@ -1,5 +1,7 @@
 package com.example.atmos.ui.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -10,6 +12,7 @@ import com.example.atmos.ui.navigation.screens.Screens
 import com.example.atmos.ui.onboarding.OnboardingScreen
 import com.example.atmos.ui.splash.SplashScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavigation(
     modifier: Modifier = Modifier,

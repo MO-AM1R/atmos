@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.atmos.R
@@ -38,6 +39,7 @@ import com.example.atmos.ui.theme.WeatherTypography
 import com.example.atmos.ui.theme.extraColors
 import com.example.atmos.utils.AppConstants.ICONS_BASE_URL
 import com.example.atmos.utils.formatTemperature
+import com.example.atmos.utils.toLocalizedDigits
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -87,7 +89,7 @@ fun HeroWeatherCard(
                     SimpleDateFormat(
                         "EEEE, MMMM d, yyyy",
                         Locale.getDefault()
-                    ).format(Date(it.timestampUnix * 1000))
+                    ).format(Date(it.timestampUnix * 1000)).toLocalizedDigits()
                 } ?: "--",
                 style = WeatherTypography.bodyMedium,
                 color = colors.textMuted
@@ -110,10 +112,13 @@ fun HeroWeatherCard(
             Spacer(modifier = Modifier.height(Spacing.Large))
 
             Text(
-                text = weather?.temperature?.formatTemperature(temperatureUnit ?: TemperatureUnit.CELSIUS)
+                text = weather?.temperature?.formatTemperature(
+                    temperatureUnit ?: TemperatureUnit.CELSIUS
+                )?.toLocalizedDigits()
                     ?: "--°",
                 style = WeatherTypography.displayLarge,
-                fontWeight = FontWeight.ExtraBold,
+                fontWeight = FontWeight.Bold,
+                letterSpacing = 1.sp,
                 color = colors.textPrimary
             )
 
@@ -126,20 +131,14 @@ fun HeroWeatherCard(
                     .padding(horizontal = 20.dp, vertical = 8.dp)
             ) {
                 Text(
-                    text = weather?.weatherMain ?: "--",
-                    style = WeatherTypography.titleMedium,
-                    color = colors.textPrimary
+                    text = weather?.weatherDescription ?: "--",
+                    style = WeatherTypography.bodyMedium,
+                    color = colors.textPrimary,
+                    textAlign = TextAlign.Center
                 )
             }
 
             Spacer(modifier = Modifier.height(Spacing.Medium))
-
-            Text(
-                text = weather?.weatherDescription ?: "--",
-                style = WeatherTypography.bodyMedium,
-                color = colors.textMuted,
-                textAlign = TextAlign.Center
-            )
         }
     }
 }

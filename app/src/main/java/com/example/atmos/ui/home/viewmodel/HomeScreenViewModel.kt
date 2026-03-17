@@ -13,8 +13,10 @@ import com.example.atmos.ui.home.state.HomeScreenState
 import com.example.atmos.ui.home.state.HomeUIEvents
 import com.example.atmos.ui.home.state.HomeUiState
 import com.example.atmos.utils.Resource
+import com.example.atmos.utils.ReverseGeocodingHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,6 +32,7 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val reverseGeocodingHelper: ReverseGeocodingHelper,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -162,6 +165,11 @@ class HomeScreenViewModel @Inject constructor(
                 ?.apiValue
                 ?: Language.ENGLISH.apiValue
 
+            val locationNameDeferred = async {
+                reverseGeocodingHelper.getLocationName(point)
+                    ?: "${point.latitude}, ${point.longitude}"
+            }
+
             combine(
                 weatherRepository.getCurrentWeather(
                     lat = point.latitude,
@@ -205,9 +213,14 @@ class HomeScreenViewModel @Inject constructor(
 
                     weatherResource is Resource.Success &&
                             forecastResource is Resource.Success -> {
+
+                        val locationName = locationNameDeferred.await()
+
                         _uiState.update {
                             it.copy(
-                                currentWeather = weatherResource.data,
+                                currentWeather = weatherResource.data.copy(
+                                    cityName = locationName
+                                ),
                                 forecastDays = forecastResource.data,
                                 isLoading = false,
                                 isDataLoaded = true,

@@ -27,6 +27,7 @@ import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
 import com.example.atmos.ui.theme.extraColors
 import com.example.atmos.utils.formatWindSpeed
+import com.example.atmos.utils.toLocalizedDigits
 
 
 @Composable
@@ -43,25 +44,27 @@ fun WeatherStatsRow(
             modifier = Modifier.weight(1f),
             icon = R.drawable.ic_humidity,
             label = stringResource(R.string.humidity),
-            value = "${weather?.humidityPercent ?: "--"}%"
+            value = "${weather?.humidityPercent ?: "--"}%".toLocalizedDigits()
         )
         StatCard(
             modifier = Modifier.weight(1f),
             icon = R.drawable.ic_wind,
             label = stringResource(R.string.wind_speed),
-            value = weather?.windSpeedRaw?.formatWindSpeed(userPreferencesState?.windUnitOption ?: WindUnit.METERS_PER_SECOND) ?: "--"
+            value = weather?.windSpeedRaw?.formatWindSpeed(
+                userPreferencesState?.windUnitOption ?: WindUnit.METERS_PER_SECOND
+            )?.toLocalizedDigits() ?: "--"
         )
         StatCard(
             modifier = Modifier.weight(1f),
             icon = R.drawable.ic_pressure,
             label = stringResource(R.string.pressure),
-            value = "${weather?.pressureHpa ?: "--"} mb"
+            value = "${weather?.pressureHpa ?: "--"} " + stringResource(R.string.pressure_unit).toLocalizedDigits()
         )
         StatCard(
             modifier = Modifier.weight(1f),
             icon = R.drawable.ic_clouds,
             label = stringResource(R.string.clouds),
-            value = "${weather?.cloudCoverPercent ?: "--"}%"
+            value = "${weather?.cloudCoverPercent ?: "--"}%".toLocalizedDigits()
         )
     }
 }
@@ -79,7 +82,8 @@ fun StatCard(
         modifier = modifier
             .clip(RoundedCornerShape(20.dp))
             .background(colors.cardBackground)
-            .padding(vertical = 12.dp, horizontal = 8.dp),
+            .padding(vertical = 12.dp, horizontal = 8.dp)
+            .size(80.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(Spacing.XSmall)
     ) {

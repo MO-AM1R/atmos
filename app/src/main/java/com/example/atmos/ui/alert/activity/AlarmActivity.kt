@@ -1,5 +1,6 @@
 package com.example.atmos.ui.alert.activity
 
+import android.app.KeyguardManager
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
@@ -44,22 +45,27 @@ class AlarmActivity : ComponentActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(true)
             setTurnScreenOn(true)
+
+            val keyguardManager = getSystemService(KeyguardManager::class.java)
+            keyguardManager?.requestDismissKeyguard(this, null)
         } else {
+            @Suppress("DEPRECATION")
             window.addFlags(
-                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+                WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
+                        WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
             )
         }
 
         val locationName = intent.getStringExtra("location_name").orEmpty()
         val temp = intent.getStringExtra("temp").orEmpty()
-        val feelsLike = intent.getStringExtra("feels_like").orEmpty()
+        val feelsLike = intent.getStringExtra("weatherDescription").orEmpty()
 
         setContent {
             AtmosTheme {
                 AlarmScreen(
                     locationName = locationName,
                     temp = temp,
-                    feelsLike = feelsLike,
+                    weatherDescription = feelsLike,
                     onDismiss = { finish() })
             }
         }
@@ -68,7 +74,7 @@ class AlarmActivity : ComponentActivity() {
 
 @Composable
 fun AlarmScreen(
-    locationName: String, temp: String, feelsLike: String, onDismiss: () -> Unit
+    locationName: String, temp: String, weatherDescription: String, onDismiss: () -> Unit
 ) {
     GradientBackground {
         Box(
@@ -101,7 +107,7 @@ fun AlarmScreen(
                     text = temp, fontSize = 48.sp, fontWeight = FontWeight.Bold, color = Color.White
                 )
                 Text(
-                    text = "Feels like $feelsLike",
+                    text = stringResource(R.string.weather_description) + ": $weatherDescription",
                     fontSize = 16.sp,
                     color = Color.White.copy(alpha = 0.6f)
                 )
@@ -119,7 +125,9 @@ fun AlarmScreen(
                     )
                 ) {
                     Text(
-                        text = "Dismiss", fontSize = 16.sp, fontWeight = FontWeight.SemiBold
+                        text = stringResource(R.string.dismiss),
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
             }

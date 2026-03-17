@@ -31,7 +31,7 @@ import com.example.atmos.ui.theme.SettingsSectionBackground
 import com.example.atmos.ui.theme.extraColors
 import com.example.atmos.utils.AppConstants.ICONS_BASE_URL
 import com.example.atmos.utils.formatTemperature
-import kotlin.text.ifEmpty
+import com.example.atmos.utils.toLocalizedDigits
 
 @Composable
 fun FavoriteLocationCard(
@@ -68,9 +68,10 @@ fun FavoriteLocationCard(
             )
 
             Column(
-                verticalArrangement = Arrangement.spacedBy(4.dp),) {
+                verticalArrangement = Arrangement.spacedBy(4.dp),
+            ) {
                 Text(
-                    text = item.cityName.ifEmpty { "${item.latitude}, ${item.longitude}" },
+                    text = item.cityName.ifEmpty { "${item.latitude}, ${item.longitude}" }.toLocalizedDigits(),
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                     color = MaterialTheme.extraColors.textPrimary,
@@ -79,7 +80,7 @@ fun FavoriteLocationCard(
                 )
                 Text(
                     text = item.weatherMain,
-                    fontSize = 12.sp,
+                    fontSize = 14.sp,
                     color = MaterialTheme.extraColors.textMuted,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -91,16 +92,25 @@ fun FavoriteLocationCard(
             horizontalAlignment = Alignment.End
         ) {
             Text(
-                text = item.temperature.formatTemperature(temperatureUnit),
+                text = item.temperature.formatTemperature(temperatureUnit).toLocalizedDigits(),
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 color = MaterialTheme.extraColors.textPrimary,
                 overflow = TextOverflow.Ellipsis
             )
+
             Text(
-                text = "H:${item.maxTemp.formatTemperature(temperatureUnit)} " +
-                        "L:${item.minTemp.formatTemperature(temperatureUnit)}",
-                fontSize = 12.sp,
+                text = stringResource(R.string.high) + ":${
+                    item.maxTemp.formatTemperature(
+                        temperatureUnit
+                    ).toLocalizedDigits()
+                } " +
+                        stringResource(R.string.low) + ":${
+                    item.minTemp.formatTemperature(
+                        temperatureUnit
+                    )
+                }".toLocalizedDigits(),
+                fontSize = 14.sp,
                 color = MaterialTheme.extraColors.textMuted,
                 overflow = TextOverflow.Ellipsis
             )

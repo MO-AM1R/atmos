@@ -29,6 +29,7 @@ import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
 import com.example.atmos.ui.theme.extraColors
 import com.example.atmos.utils.AppConstants.ICONS_BASE_URL
+import com.example.atmos.utils.toLocalizedDigits
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -83,7 +84,7 @@ fun HourlyForecastCard(
     ) {
         Text(
             text = SimpleDateFormat("h a", Locale.getDefault())
-                .format(Date(forecast.timestampUnix * 1000)),
+                .format(Date(forecast.timestampUnix * 1000)).toLocalizedDigits(),
             style = WeatherTypography.labelLarge,
             color = colors.textMuted
         )
@@ -101,7 +102,7 @@ fun HourlyForecastCard(
         )
 
         Text(
-            text = "${forecast.temperature.toInt()}°",
+            text = "${forecast.temperature.toInt()}°".toLocalizedDigits(),
             style = WeatherTypography.titleMedium,
             fontWeight = FontWeight.Bold,
             color = colors.textPrimary

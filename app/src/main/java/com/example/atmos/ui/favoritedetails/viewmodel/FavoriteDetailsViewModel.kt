@@ -9,8 +9,10 @@ import com.example.atmos.ui.favoritedetails.state.FavoriteDetailsEvent
 import com.example.atmos.ui.favoritedetails.state.FavoriteDetailsScreenState
 import com.example.atmos.ui.favoritedetails.state.FavoriteDetailsUiState
 import com.example.atmos.utils.Resource
+import com.example.atmos.utils.ReverseGeocodingHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -25,6 +27,7 @@ import javax.inject.Inject
 class FavoriteDetailsViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val reverseGeocoding: ReverseGeocodingHelper,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(FavoriteDetailsUiState())
     val uiState: StateFlow<FavoriteDetailsUiState> = _uiState.asStateFlow()
@@ -79,6 +82,11 @@ class FavoriteDetailsViewModel @Inject constructor(
         point: StoredPoint,
         lang: String
     ) {
+        val locationNameDeferred = viewModelScope.async {
+            reverseGeocoding.getLocationName(point)
+                ?: "${point.latitude}, ${point.longitude}"
+        }
+
         combine(
             weatherRepository.getWeatherForPoint(
                 lat = point.latitude,
@@ -101,6 +109,7 @@ class FavoriteDetailsViewModel @Inject constructor(
                 }
 
                 weatherResource is Resource.Error -> {
+                    locationNameDeferred.cancel()
                     _uiState.update {
                         it.copy(
                             isLoading = false,
@@ -112,6 +121,7 @@ class FavoriteDetailsViewModel @Inject constructor(
                 }
 
                 forecastResource is Resource.Error -> {
+                    locationNameDeferred.cancel()
                     _uiState.update {
                         it.copy(
                             isLoading = false,
@@ -124,9 +134,14 @@ class FavoriteDetailsViewModel @Inject constructor(
 
                 weatherResource is Resource.Success &&
                         forecastResource is Resource.Success -> {
+
+                    val locationName = locationNameDeferred.await()
+
                     _uiState.update {
                         it.copy(
-                            currentWeather = weatherResource.data,
+                            currentWeather = weatherResource.data.copy(
+                                cityName = locationName
+                            ),
                             forecastDays = forecastResource.data,
                             isLoading = false,
                             isDataLoaded = true,

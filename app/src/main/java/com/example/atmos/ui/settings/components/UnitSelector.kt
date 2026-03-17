@@ -26,7 +26,7 @@ import com.example.atmos.ui.theme.extraColors
 fun <T> UnitSelector(
     options: List<T>,
     selected: T,
-    label: (T) -> String,
+    label: @Composable (T) -> String,
     onSelect: (T) -> Unit
 ) {
     Row(

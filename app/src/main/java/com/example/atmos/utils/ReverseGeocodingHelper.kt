@@ -2,6 +2,7 @@ package com.example.atmos.utils
 
 import com.example.atmos.domain.model.StoredPoint
 import com.mapbox.geojson.Point
+import com.mapbox.search.ApiType
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.ReverseGeoOptions
 import com.mapbox.search.SearchCallback
@@ -17,7 +18,8 @@ import kotlin.coroutines.resume
 class ReverseGeocodingHelper @Inject constructor() {
 
     private val searchEngine = SearchEngine.createSearchEngineWithBuiltInDataProviders(
-        SearchEngineSettings()
+        settings = SearchEngineSettings(),
+        apiType = ApiType.GEOCODING
     )
 
     suspend fun getLocationName(point: StoredPoint): String? =
