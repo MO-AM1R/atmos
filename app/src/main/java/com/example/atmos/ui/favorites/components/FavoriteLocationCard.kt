@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
@@ -15,23 +16,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.example.atmos.R
 import com.example.atmos.data.enums.TemperatureUnit
 import com.example.atmos.domain.model.FavoriteWeatherItem
+import com.example.atmos.ui.core.components.ResourceIcon
 import com.example.atmos.ui.theme.SettingsSectionBackground
 import com.example.atmos.ui.theme.extraColors
-import com.example.atmos.utils.AppConstants.ICONS_BASE_URL
 import com.example.atmos.utils.formatTemperature
 import com.example.atmos.utils.toLocalizedDigits
+import com.example.atmos.utils.toWeatherIconRes
+
 
 @Composable
 fun FavoriteLocationCard(
@@ -57,14 +56,9 @@ fun FavoriteLocationCard(
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            AsyncImage(
-                modifier = Modifier.clip(CircleShape),
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(ICONS_BASE_URL + item.weatherIcon + ".png")
-                    .crossfade(true)
-                    .build(),
-                contentDescription = stringResource(R.string.description),
-                contentScale = ContentScale.Crop,
+            ResourceIcon(
+                resourceId = item.weatherIcon.toWeatherIconRes(),
+                modifier = Modifier.clip(CircleShape).size(40.dp),
             )
 
             Column(
