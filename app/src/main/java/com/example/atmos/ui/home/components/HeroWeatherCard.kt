@@ -22,23 +22,18 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.example.atmos.R
 import com.example.atmos.data.enums.TemperatureUnit
 import com.example.atmos.domain.model.CurrentWeather
+import com.example.atmos.ui.core.components.ResourceIcon
 import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
 import com.example.atmos.ui.theme.extraColors
-import com.example.atmos.utils.AppConstants.ICONS_BASE_URL
 import com.example.atmos.utils.formatTemperature
+import com.example.atmos.utils.nullableToWeatherIconRes
 import com.example.atmos.utils.toLocalizedDigits
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -97,16 +92,11 @@ fun HeroWeatherCard(
 
             Spacer(modifier = Modifier.height(Spacing.XLarge))
 
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(ICONS_BASE_URL + weather?.weatherIconCode + ".png")
-                    .crossfade(true)
-                    .build(),
-                contentDescription = stringResource(R.string.description),
-                contentScale = ContentScale.Crop,
+            ResourceIcon(
                 modifier = Modifier
                     .clip(CircleShape)
                     .size(100.dp),
+                resourceId = weather?.weatherIconCode.nullableToWeatherIconRes(),
             )
 
             Spacer(modifier = Modifier.height(Spacing.Large))

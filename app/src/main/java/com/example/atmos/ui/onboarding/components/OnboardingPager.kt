@@ -19,7 +19,6 @@ fun OnboardingPager(
         state    = pagerState,
         modifier = modifier.fillMaxWidth(),
         key      = { index -> pages[index].title },
-        userScrollEnabled = false,
     ) { pageIndex ->
         OnboardingPage(
             item          = pages[pageIndex],

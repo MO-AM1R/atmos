@@ -23,23 +23,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.example.atmos.R
 import com.example.atmos.domain.model.ForecastDay
 import com.example.atmos.domain.model.HourlyForecast
 import com.example.atmos.domain.model.groupIntoDays
+import com.example.atmos.ui.core.components.ResourceIcon
 import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
 import com.example.atmos.ui.theme.extraColors
-import com.example.atmos.utils.AppConstants.ICONS_BASE_URL
 import com.example.atmos.utils.toLocalizedDigits
+import com.example.atmos.utils.toWeatherIconRes
 
 
 @Composable
@@ -112,13 +109,8 @@ fun DayForecastRow(
             )
         }
 
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(ICONS_BASE_URL + forecastDay.representativeIcon + ".png")
-                .crossfade(true)
-                .build(),
-            contentDescription = stringResource(R.string.description),
-            contentScale = ContentScale.Crop,
+        ResourceIcon(
+            resourceId = forecastDay.representativeIcon.toWeatherIconRes(),
             modifier = Modifier
                 .clip(CircleShape)
                 .size(32.dp),

@@ -16,20 +16,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
 import com.example.atmos.R
 import com.example.atmos.domain.model.HourlyForecast
+import com.example.atmos.ui.core.components.ResourceIcon
 import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
 import com.example.atmos.ui.theme.extraColors
-import com.example.atmos.utils.AppConstants.ICONS_BASE_URL
 import com.example.atmos.utils.toLocalizedDigits
+import com.example.atmos.utils.toWeatherIconRes
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -89,13 +86,8 @@ fun HourlyForecastCard(
             color = colors.textMuted
         )
 
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(ICONS_BASE_URL + forecast.weatherIconCode + ".png")
-                .crossfade(true)
-                .build(),
-            contentDescription = stringResource(R.string.description),
-            contentScale = ContentScale.Crop,
+        ResourceIcon(
+            resourceId = forecast.weatherIconCode.toWeatherIconRes(),
             modifier = Modifier
                 .clip(CircleShape)
                 .size(32.dp),
