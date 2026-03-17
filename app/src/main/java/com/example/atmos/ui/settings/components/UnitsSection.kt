@@ -22,6 +22,7 @@ import com.example.atmos.data.enums.WindUnit
 import com.example.atmos.ui.settings.state.SettingsEvent
 import com.example.atmos.ui.theme.SettingsSectionBackground
 import com.example.atmos.ui.theme.extraColors
+import com.example.atmos.utils.localizedSymbol
 
 @Composable
 fun UnitsSection(
@@ -52,7 +53,7 @@ fun UnitsSection(
             UnitSelector(
                 options = TemperatureUnit.entries,
                 selected = selectedTemperatureUnit,
-                label = { it.symbol },
+                label = { it.localizedSymbol() },
                 onSelect = { unit ->
                     onEvent(SettingsEvent.OnTemperatureUnitSelected(unit))
                 }
@@ -74,7 +75,7 @@ fun UnitsSection(
             UnitSelector(
                 options = WindUnit.entries,
                 selected = selectedWindUnit,
-                label = { it.symbol },
+                label = { it.localizedSymbol() },
                 onSelect = { unit ->
                     onEvent(SettingsEvent.OnWindUnitSelected(unit))
                 }

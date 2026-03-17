@@ -1,6 +1,8 @@
 package com.example.atmos.ui.basescreen
 
 import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,6 +27,7 @@ import com.example.atmos.ui.navigation.components.BottomNavBar
 import com.example.atmos.ui.navigation.screens.BaseContainerScreens
 import com.example.atmos.ui.settings.SettingsScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("RestrictedApi")
 @Composable
 fun BaseScreen() {

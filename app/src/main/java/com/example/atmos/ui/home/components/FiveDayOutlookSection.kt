@@ -39,6 +39,7 @@ import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
 import com.example.atmos.ui.theme.extraColors
 import com.example.atmos.utils.AppConstants.ICONS_BASE_URL
+import com.example.atmos.utils.toLocalizedDigits
 
 
 @Composable
@@ -105,7 +106,7 @@ fun DayForecastRow(
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = forecastDay.dateLabel,
+                text = forecastDay.dateLabel.toLocalizedDigits(),
                 style = WeatherTypography.labelSmall,
                 color = colors.textMuted
             )
@@ -160,12 +161,12 @@ fun DayForecastRow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = "${forecastDay.minTemp.toInt()}°",
+                text = "${forecastDay.minTemp.toInt()}°".toLocalizedDigits(),
                 style = WeatherTypography.titleMedium,
                 color = colors.textMuted
             )
             Text(
-                text = "${forecastDay.maxTemp.toInt()}°",
+                text = "${forecastDay.maxTemp.toInt()}°".toLocalizedDigits(),
                 style = WeatherTypography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = colors.textPrimary

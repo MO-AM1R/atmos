@@ -1,5 +1,6 @@
 package com.example.atmos.ui.map.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.atmos.domain.model.SearchResultItem
@@ -7,10 +8,12 @@ import com.example.atmos.ui.map.state.MapNavigationEvent
 import com.example.atmos.ui.map.state.MapScreenEvent
 import com.example.atmos.ui.map.state.MapScreenState
 import com.example.atmos.ui.map.state.MapScreenUIState
+import com.mapbox.base.common.logger.Logger
 import com.mapbox.search.ResponseInfo
 import com.mapbox.search.SearchMultipleSelectionCallback
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.SearchSuggestionsCallback
+import com.mapbox.search.common.RestrictedMapboxSearchAPI
 import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -106,45 +109,41 @@ class MapScreenViewModel @Inject constructor(
         }
     }
 
+    @OptIn(RestrictedMapboxSearchAPI::class)
     fun updateQuery(newQuery: String) {
         updateMapSearchState(query = newQuery)
 
         if (newQuery.length > 2) {
-            updateMapSearchState(isSearching = true, showSuggestions = true)
+
+            updateMapSearchState(
+                isSearching = true,
+                showSuggestions = true
+            )
+
             viewModelScope.launch {
-                _mapState.value.mapSearchEngineState.searchEngine.search(
+                val searchEngine = _mapState.value.mapSearchEngineState.searchEngine
+
+                searchEngine.search(
                     query = newQuery,
                     options = SearchOptions(limit = 5),
                     callback = object : SearchSuggestionsCallback {
+
                         override fun onSuggestions(
                             suggestions: List<SearchSuggestion>,
                             responseInfo: ResponseInfo
                         ) {
-                            _mapState.value.mapSearchEngineState.searchEngine.select(
-                                suggestions = suggestions,
-                                executor = searchExecutor,
-                                callback = object : SearchMultipleSelectionCallback {
-                                    override fun onResult(
-                                        suggestions: List<SearchSuggestion>,
-                                        results: List<SearchResult>,
-                                        responseInfo: ResponseInfo
-                                    ) {
-                                        updateMapSearchState(
-                                            isSearching = false,
-                                            suggestionsSearch = results.map { result ->
-                                                SearchResultItem(
-                                                    name = result.name,
-                                                    address = result.address?.formattedAddress(),
-                                                    point = result.coordinate
-                                                )
-                                            }
-                                        )
-                                    }
 
-                                    override fun onError(e: Exception) {
-                                        updateMapSearchState(isSearching = false)
-                                    }
-                                }
+                            val mappedResults = suggestions.map { suggestion ->
+                                SearchResultItem(
+                                    name = suggestion.name,
+                                    address = suggestion.address?.formattedAddress(),
+                                    point = suggestion.coordinate
+                                )
+                            }
+
+                            updateMapSearchState(
+                                isSearching = false,
+                                suggestionsSearch = mappedResults
                             )
                         }
 
@@ -154,8 +153,12 @@ class MapScreenViewModel @Inject constructor(
                     }
                 )
             }
+
         } else {
-            updateMapSearchState(suggestionsSearch = emptyList(), showSuggestions = false)
+            updateMapSearchState(
+                suggestionsSearch = emptyList(),
+                showSuggestions = false
+            )
         }
     }
 

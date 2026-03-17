@@ -3,17 +3,25 @@ package com.example.atmos.app
 import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.content.Context
 import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.os.Build
 import com.example.atmos.R
+import com.example.atmos.data.enums.Language
 import com.example.atmos.utils.AppConstants
+import com.example.atmos.utils.LocalizationHelper
 import com.mapbox.common.MapboxOptions
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.runBlocking
 import kotlin.jvm.java
 
 @HiltAndroidApp
 class Atmos : Application(){
+    override fun attachBaseContext(base: Context) {
+        super.attachBaseContext(LocalizationHelper.applyWithoutDI(base))
+    }
+
     override fun onCreate() {
         super.onCreate()
         MapboxOptions.accessToken = AppConstants.MAP_PUBLIC_API_KEY

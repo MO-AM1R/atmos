@@ -100,13 +100,10 @@ class AlertBroadcastReceiver : BroadcastReceiver() {
                 val temp = weather.temperature.formatTemperature(
                     prefs?.temperatureUnitOption ?: TemperatureUnit.CELSIUS
                 )
-                val feelsLike = weather.feelsLike.formatTemperature(
-                    prefs?.temperatureUnitOption ?: TemperatureUnit.CELSIUS
-                )
 
                 when (AlertType.valueOf(alertType)) {
-                    AlertType.NOTIFICATION -> showNotification(context, locationName, temp, feelsLike)
-                    AlertType.ALARM -> showAlarm(context, locationName, temp, feelsLike)
+                    AlertType.NOTIFICATION -> showNotification(context, locationName, temp, weather.weatherDescription)
+                    AlertType.ALARM -> showAlarm(context, locationName, temp, weather.weatherDescription)
                 }
 
                 alertRepository.markAlertExpired(alertId)
@@ -124,7 +121,7 @@ class AlertBroadcastReceiver : BroadcastReceiver() {
         context: Context,
         locationName: String,
         temp: String,
-        feelsLike: String
+        weatherDescription: String
     ) {
         val notificationManager = context.getSystemService(NotificationManager::class.java)
 
@@ -148,7 +145,7 @@ class AlertBroadcastReceiver : BroadcastReceiver() {
                     R.string.alert_notification_content,
                     temp,
                     locationName,
-                    feelsLike
+                    weatherDescription
                 )
             )
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -166,13 +163,13 @@ class AlertBroadcastReceiver : BroadcastReceiver() {
         context: Context,
         locationName: String,
         temp: String,
-        feelsLike: String
+        weatherDescriptor: String
     ) {
         val alarmIntent = Intent(context, AlarmActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             putExtra("location_name", locationName)
             putExtra("temp", temp)
-            putExtra("feels_like", feelsLike)
+            putExtra("weatherDescription", weatherDescriptor)
         }
 
         val fullScreenPendingIntent = PendingIntent.getActivity(

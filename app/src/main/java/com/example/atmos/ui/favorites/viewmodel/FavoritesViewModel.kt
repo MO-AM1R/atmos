@@ -138,7 +138,7 @@ class FavoritesViewModel @Inject constructor(
                     latitude = favoriteWeatherItem.latitude,
                     longitude = favoriteWeatherItem.longitude,
                     cityName = cityName,
-                    weatherMain = weatherResult.data.weatherMain,
+                    weatherMain = weatherResult.data.weatherDescription,
                     weatherIcon = weatherResult.data.weatherIconCode,
                     temperature = weatherResult.data.temperature,
                     minTemp = weatherResult.data.minimumTemp,

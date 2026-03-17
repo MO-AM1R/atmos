@@ -1,4 +1,5 @@
 package com.example.atmos.data.datasource.local
+import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -10,6 +11,8 @@ import com.example.atmos.data.enums.WindUnit
 import com.example.atmos.domain.model.StoredPoint
 import com.example.atmos.domain.model.UserPreferences
 import com.example.atmos.utils.AppConstants.SharedPreferences.Keys
+import com.example.atmos.utils.LocalizationHelper
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
@@ -21,7 +24,8 @@ import javax.inject.Singleton
 
 @Singleton
 class UserPreferencesDataStoreImpl @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
+    @param:ApplicationContext private val context: Context,
 ) : UserPreferencesDataStore {
 
     private val userPreferences: Flow<UserPreferences> = dataStore.data
@@ -127,5 +131,7 @@ class UserPreferencesDataStoreImpl @Inject constructor(
         dataStore.edit { prefs ->
             prefs[Keys.LANGUAGE] = language.name
         }
+
+        LocalizationHelper.saveLanguageToPrefs(context, language)
     }
 }

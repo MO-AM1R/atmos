@@ -35,10 +35,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.atmos.R
 import com.example.atmos.domain.model.SearchResultItem
 import com.example.atmos.ui.map.state.MapScreenEvent
 import com.example.atmos.ui.map.state.MapSearchEngineState
@@ -50,7 +52,7 @@ fun MapSearchBar(
     modifier: Modifier = Modifier,
     mapSearchEngineState: MapSearchEngineState,
     onEvent: (MapScreenEvent) -> Unit,
-    onResultSelect: (Point) -> Unit,
+    onResultSelect: (Point?) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -72,7 +74,7 @@ fun MapSearchBar(
                 },
                 placeholder = {
                     Text(
-                        text = "Search point...",
+                        text = stringResource(R.string.search_point),
                         color = Color.White.copy(alpha = 0.4f)
                     )
                 },

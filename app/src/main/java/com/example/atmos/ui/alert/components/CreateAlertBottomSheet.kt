@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.example.atmos.R
 import com.example.atmos.data.enums.AlertType
 import com.example.atmos.ui.theme.extraColors
+import com.example.atmos.utils.toLocalizedDigits
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -109,7 +110,7 @@ fun CreateAlertBottomSheet(
                     color = Color.White.copy(alpha = 0.6f)
                 )
                 AlertTimeField(
-                    text = startTimeText,
+                    text = startTimeText.toLocalizedDigits(),
                     onClick = { showTimePicker { startTimeMs = it } }
                 )
             }
@@ -124,7 +125,7 @@ fun CreateAlertBottomSheet(
                         color = Color.White.copy(alpha = 0.6f)
                     )
                     AlertTimeField(
-                        text = endTimeText,
+                        text = endTimeText.toLocalizedDigits(),
                         onClick = { showTimePicker { endTimeMs = it } }
                     )
                 }

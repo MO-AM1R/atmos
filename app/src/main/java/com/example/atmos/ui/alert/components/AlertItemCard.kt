@@ -32,6 +32,7 @@ import com.example.atmos.domain.model.AlertUiItem
 import com.example.atmos.ui.theme.BackgroundDark2
 import com.example.atmos.ui.theme.SettingsSectionBackground
 import com.example.atmos.ui.theme.extraColors
+import com.example.atmos.utils.toLocalizedDigits
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -88,7 +89,7 @@ fun AlertItemCard(
                         else
                             R.string.alert_type_alarm
                     ),
-                    fontSize = 15.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.SemiBold,
                     color = if (item.isExpired)
                         MaterialTheme.extraColors.textMuted
@@ -101,7 +102,7 @@ fun AlertItemCard(
                         append(
                             stringResource(
                                 R.string.alert_start_time,
-                                timeFormatter.format(Date(item.startTimeMs))
+                                timeFormatter.format(Date(item.startTimeMs)).toLocalizedDigits()
                             )
                         )
                         item.endTimeMs?.let { endTime ->
@@ -109,19 +110,19 @@ fun AlertItemCard(
                             append(
                                 stringResource(
                                     R.string.alert_end_time,
-                                    timeFormatter.format(Date(endTime))
+                                    timeFormatter.format(Date(endTime)).toLocalizedDigits()
                                 )
                             )
                         }
                     },
-                    fontSize = 12.sp,
+                    fontSize = 14.sp,
                     color = MaterialTheme.extraColors.textMuted
                 )
 
                 if (item.isExpired) {
                     Text(
                         text = stringResource(R.string.alert_expired),
-                        fontSize = 11.sp,
+                        fontSize = 13.sp,
                         color = Color(0xFFE05A5A)
                     )
                 }

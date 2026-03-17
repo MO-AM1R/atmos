@@ -11,7 +11,6 @@ import com.example.atmos.domain.model.AlertUiItem
 
 @Composable
 fun AlertItem(
-    modifier: Modifier = Modifier,
     item: AlertUiItem,
     onDelete: () -> Unit,
     onToggle: (Boolean) -> Unit
@@ -30,7 +29,6 @@ fun AlertItem(
     }
 
     SwipeToDismissBox(
-        modifier = modifier,
         state = dismissState,
         backgroundContent = {}
     ) {

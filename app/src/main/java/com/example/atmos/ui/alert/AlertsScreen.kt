@@ -140,15 +140,14 @@ fun AlertsScreen(
         )
     }
 
-    Box(modifier = modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize()) {
         GradientBackground {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 32.dp, bottom = 110.dp)
+                    .padding(top = 32.dp, bottom = 110.dp, start = 0.dp, end = 0.dp)
             ) {
                 AlertsHeader(
-                    modifier = Modifier.padding(horizontal = 16.dp),
                     onAddClick = {
                         notificationPermissionViewModel.onEvent(
                             NotificationPermissionEvent.OnAddAlertClicked

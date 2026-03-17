@@ -30,6 +30,7 @@ fun MapView(
         modifier = Modifier.fillMaxSize(),
         mapViewportState = mapViewportState,
         scaleBar = {},
+        compass = {},
         logo = {},
         attribution = {},
         onMapLongClickListener = onPointSelected
