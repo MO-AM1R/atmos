@@ -44,6 +44,9 @@ animationCore = "1.10.5"
 kotlinx-serialization = "1.10.0"
 runtime = "1.10.5"
 ui = "1.10.5"
+androidXTestCore = "1.7.0"
+robolectric = "4.16.1"
+fragmentKtx = "1.8.9"
 
 
 [libraries]
@@ -109,6 +112,11 @@ androidx-compose-animation-core = { group = "androidx.compose.animation", name =
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "runtime" }
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "ui" }
+androidx-test-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "androidXTestCore" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
+androidx-junit-ktx = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "junitVersion" }
+kotlin-stdlib-jdk7 = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib-jdk7", version.ref = "kotlin" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
 
 
 [plugins]
