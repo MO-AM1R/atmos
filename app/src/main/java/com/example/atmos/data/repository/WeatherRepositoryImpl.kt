@@ -1,4 +1,5 @@
 package com.example.atmos.data.repository
+import android.util.Log
 import com.example.atmos.data.datasource.local.WeatherLocalDataSource
 import com.example.atmos.data.datasource.remote.WeatherRemoteDataSource
 import com.example.atmos.data.mappers.toDomain
@@ -6,8 +7,10 @@ import com.example.atmos.data.mappers.toEntity
 import com.example.atmos.data.mappers.toEntityList
 import com.example.atmos.domain.model.CurrentWeather
 import com.example.atmos.domain.model.Forecast
+import com.example.atmos.domain.model.StoredPoint
 import com.example.atmos.domain.repository.WeatherRepository
 import com.example.atmos.utils.Resource
+import com.example.atmos.utils.ReverseGeocodingHelper
 import jakarta.inject.Singleton
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -20,7 +23,8 @@ import javax.inject.Inject
 @Singleton
 class WeatherRepositoryImpl @Inject constructor(
     private val remote: WeatherRemoteDataSource,
-    private val local: WeatherLocalDataSource
+    private val local: WeatherLocalDataSource,
+    private val reverseGeocodingHelper: ReverseGeocodingHelper,
 ) : WeatherRepository {
 
     override fun getCurrentWeather(
@@ -32,7 +36,7 @@ class WeatherRepositoryImpl @Inject constructor(
     ): Flow<Resource<CurrentWeather>> = flow {
         emit(Resource.Loading())
 
-        if (!forceUpdate){
+        if (!forceUpdate) {
             val cachedWeather = local.getCachedWeather().first()
             val isCacheValid = local.isCacheValid().first()
 
@@ -48,14 +52,26 @@ class WeatherRepositoryImpl @Inject constructor(
             val dto = result.getOrNull()
 
             if (dto != null) {
-                local.clearAllCache()
-                local.cacheCurrentWeather(dto.toEntity())
+                val locationName = try {
+                    reverseGeocodingHelper.getLocationName(
+                        StoredPoint(
+                            latitude = dto.coordinate.latitude,
+                            longitude = dto.coordinate.longitude
+                        )
+                    )
+                } catch (_: Exception) {
+                    null
+                } ?: dto.cityName
 
-                emit(Resource.Success(dto.toDomain()))
+                val updatedDto = dto.copy(cityName = locationName)
+
+                local.clearWeatherCache()
+                local.cacheCurrentWeather(updatedDto.toEntity())
+
+                emit(Resource.Success(updatedDto.toDomain()))
             } else {
                 emit(Resource.Error("No data available"))
             }
-
         } else {
             val cachedWeather = local.getCachedWeather().first()
 
@@ -96,6 +112,7 @@ class WeatherRepositoryImpl @Inject constructor(
             val dto = result.getOrNull()
 
             if (dto != null) {
+                local.clearForecastCache()
                 local.cacheForecast(dto.toEntityList())
 
                 emit(Resource.Success(dto.toDomain()))

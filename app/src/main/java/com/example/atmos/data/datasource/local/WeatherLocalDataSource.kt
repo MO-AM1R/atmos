@@ -16,4 +16,7 @@ interface WeatherLocalDataSource {
     fun isCacheValid(): Flow<Boolean>
 
     suspend fun clearAllCache()
+
+    suspend fun clearWeatherCache()
+    suspend fun clearForecastCache()
 }

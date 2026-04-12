@@ -8,37 +8,83 @@ import android.content.Context
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.CancellationTokenSource
 import com.mapbox.geojson.Point
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withTimeout
+import kotlin.coroutines.resume
 
 @SuppressLint("MissingPermission")
-fun requestLocation(
+suspend fun requestLocation(
     fusedClient: FusedLocationProviderClient,
-    onLocationReady: (Location) -> Unit
+    timeoutMillis: Long = 10_000L,
+    onLocationReady: (Location) -> Unit,
+    onTimeout: () -> Unit = {}
 ) {
-    fusedClient.getCurrentLocation(
-        Priority.PRIORITY_HIGH_ACCURACY,
-        null
-    ).addOnSuccessListener {
-        it?.let(onLocationReady)
+    val cancellationTokenSource = CancellationTokenSource()
+
+    try {
+        withTimeout(timeoutMillis) {
+            val location = suspendCancellableCoroutine { continuation ->
+                fusedClient.getCurrentLocation(
+                    Priority.PRIORITY_HIGH_ACCURACY,
+                    cancellationTokenSource.token
+                ).addOnSuccessListener { location ->
+                    continuation.resume(location)
+                }.addOnFailureListener { _ ->
+                    continuation.resume(null)
+                }
+
+                continuation.invokeOnCancellation {
+                    cancellationTokenSource.cancel()
+                }
+            }
+
+            if (location != null) {
+                onLocationReady(location)
+            } else {
+                onTimeout()
+            }
+        }
+    } catch (_: TimeoutCancellationException) {
+        cancellationTokenSource.cancel()
+        onTimeout()
     }
 }
 
 
 @SuppressLint("MissingPermission")
-fun getCurrentLocation(
-    context : Context,
-    onResult: (Point?) -> Unit
-) {
+suspend fun getCurrentLocation(
+    context: Context,
+    timeoutMillis: Long = 10_000L
+): Point? {
     val client = LocationServices.getFusedLocationProviderClient(context)
-    client.getCurrentLocation(
-        Priority.PRIORITY_HIGH_ACCURACY,
-        CancellationTokenSource().token
-    ).addOnSuccessListener { location ->
-        if (location != null) {
-            onResult(Point.fromLngLat(location.longitude, location.latitude))
-        } else {
-            onResult(null)
+    val cancellationTokenSource = CancellationTokenSource()
+
+    return try {
+        withTimeout(timeoutMillis) {
+            suspendCancellableCoroutine { continuation ->
+                client.getCurrentLocation(
+                    Priority.PRIORITY_HIGH_ACCURACY,
+                    cancellationTokenSource.token
+                ).addOnSuccessListener { location ->
+                    if (location != null) {
+                        continuation.resume(
+                            Point.fromLngLat(location.longitude, location.latitude)
+                        )
+                    } else {
+                        continuation.resume(null)
+                    }
+                }.addOnFailureListener {
+                    continuation.resume(null)
+                }
+
+                continuation.invokeOnCancellation {
+                    cancellationTokenSource.cancel()
+                }
+            }
         }
-    }.addOnFailureListener {
-        onResult(null)
+    } catch (_: TimeoutCancellationException) {
+        cancellationTokenSource.cancel()
+        null
     }
 }

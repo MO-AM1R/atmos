@@ -7,6 +7,8 @@ sealed class HomeEvent {
         val point: StoredPoint,
         val forceUpdate: Boolean = false
     ) : HomeEvent()
+
+    object OnLocationTimeout : HomeEvent()
 }
 
 sealed class HomeUIEvents {

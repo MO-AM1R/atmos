@@ -25,7 +25,6 @@ import com.example.atmos.ui.theme.homeIcon
 fun HomeContent(
     uiState: HomeUiState,
     scrollState: ScrollState,
-    isGpsEnabled: Boolean,
     blurRadius: Dp,
     onRetry: () -> Unit,
     onRefresh: () -> Unit,
@@ -46,7 +45,6 @@ fun HomeContent(
         )
 
         HomeStateContent(
-            isGpsEnabled = isGpsEnabled,
             userPreferencesState = userPreferencesState,
             uiState = uiState,
             scrollState = scrollState,

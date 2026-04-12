@@ -1,5 +1,6 @@
 package com.example.atmos.ui.home.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.atmos.data.enums.Language
@@ -12,11 +13,10 @@ import com.example.atmos.ui.home.state.HomeEvent
 import com.example.atmos.ui.home.state.HomeScreenState
 import com.example.atmos.ui.home.state.HomeUIEvents
 import com.example.atmos.ui.home.state.HomeUiState
+import com.example.atmos.utils.NetworkMonitor
 import com.example.atmos.utils.Resource
-import com.example.atmos.utils.ReverseGeocodingHelper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,7 +32,7 @@ import javax.inject.Inject
 class HomeScreenViewModel @Inject constructor(
     private val weatherRepository: WeatherRepository,
     private val userPreferencesRepository: UserPreferencesRepository,
-    private val reverseGeocodingHelper: ReverseGeocodingHelper,
+    private val networkMonitor: NetworkMonitor
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(HomeUiState())
@@ -43,8 +43,40 @@ class HomeScreenViewModel @Inject constructor(
 
     private var weatherJob: Job? = null
 
+
     init {
+        observeNetwork()
         observeOnSettings()
+    }
+
+    private fun observeNetwork() {
+        viewModelScope.launch {
+            networkMonitor.networkStatus.collect { isConnected ->
+                val currentState = _uiState.value
+                _uiState.update { it.copy(isConnected = isConnected) }
+
+                when {
+                    isConnected &&
+                            currentState.screenState is HomeScreenState.NetworkUnavailable -> {
+                        val point = currentState.point
+                        if (point != null) {
+                            loadWeather(point = point, forceUpdate = true)
+                        } else {
+                            _homeEventChannel.send(HomeUIEvents.TriggerGPSLocation)
+                        }
+                    }
+
+                    !isConnected
+                            && currentState.screenState.isDataRelated
+                            && !currentState.isLoading
+                            && !currentState.isDataLoaded -> {
+                        _uiState.update {
+                            it.copy(screenState = HomeScreenState.NetworkUnavailable)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun observeOnSettings() {
@@ -124,17 +156,32 @@ class HomeScreenViewModel @Inject constructor(
     fun onEvent(event: HomeEvent) {
         when (event) {
             is HomeEvent.OnLoad -> {
-                _uiState.update {
-                    it.copy(
-                        isDataLoaded = false,
-                        screenState = HomeScreenState.Loading
-                    )
-                }
-
                 loadWeather(
                     point = event.point,
                     forceUpdate = event.forceUpdate
                 )
+            }
+
+            HomeEvent.OnLocationTimeout -> {
+                val currentState = _uiState.value
+
+                _uiState.update {
+                    it.copy(
+                        screenState = when {
+                            !currentState.isConnected -> {
+                                HomeScreenState.NetworkUnavailable
+                            }
+
+                            currentState.isDataLoaded -> {
+                                HomeScreenState.Success
+                            }
+
+                            else -> {
+                                HomeScreenState.Error("Unable to get your location. Please try again.")
+                            }
+                        }
+                    )
+                }
             }
         }
     }
@@ -144,6 +191,8 @@ class HomeScreenViewModel @Inject constructor(
     }
 
     private fun loadWeather(point: StoredPoint?, forceUpdate: Boolean = false) {
+        Log.d("TAG", "Request")
+
         if (point == null) return
         if (_uiState.value.isDataLoaded && !forceUpdate) return
 
@@ -152,8 +201,6 @@ class HomeScreenViewModel @Inject constructor(
         weatherJob = viewModelScope.launch {
             _uiState.update {
                 it.copy(
-                    isLoading = true,
-                    error = null,
                     point = point,
                     isDataLoaded = false,
                     screenState = HomeScreenState.Loading
@@ -161,14 +208,8 @@ class HomeScreenViewModel @Inject constructor(
             }
 
             val lang = _uiState.value.userPreferences
-                ?.languageOption
-                ?.apiValue
+                ?.languageOption?.apiValue
                 ?: Language.ENGLISH.apiValue
-
-            val locationNameDeferred = async {
-                reverseGeocodingHelper.getLocationName(point)
-                    ?: "${point.latitude}, ${point.longitude}"
-            }
 
             combine(
                 weatherRepository.getCurrentWeather(
@@ -185,19 +226,15 @@ class HomeScreenViewModel @Inject constructor(
                 )
             ) { weatherResource, forecastResource ->
                 Pair(weatherResource, forecastResource)
-
             }.collect { (weatherResource, forecastResource) ->
                 when {
                     weatherResource is Resource.Loading ||
-                            forecastResource is Resource.Loading -> {
-                        _uiState.update { it.copy(isLoading = true) }
-                    }
+                            forecastResource is Resource.Loading -> {}
 
                     weatherResource is Resource.Error -> {
                         _uiState.update {
                             it.copy(
-                                isLoading = false,
-                                screenState = HomeScreenState.Error(weatherResource.message)
+                                screenState = categorizeError(weatherResource.message)
                             )
                         }
                     }
@@ -205,24 +242,17 @@ class HomeScreenViewModel @Inject constructor(
                     forecastResource is Resource.Error -> {
                         _uiState.update {
                             it.copy(
-                                isLoading = false,
-                                screenState = HomeScreenState.Error(forecastResource.message)
+                                screenState = categorizeError(forecastResource.message)
                             )
                         }
                     }
 
                     weatherResource is Resource.Success &&
                             forecastResource is Resource.Success -> {
-
-                        val locationName = locationNameDeferred.await()
-
                         _uiState.update {
                             it.copy(
-                                currentWeather = weatherResource.data.copy(
-                                    cityName = locationName
-                                ),
+                                currentWeather = weatherResource.data,
                                 forecastDays = forecastResource.data,
-                                isLoading = false,
                                 isDataLoaded = true,
                                 screenState = HomeScreenState.Success
                             )
@@ -230,6 +260,18 @@ class HomeScreenViewModel @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    private fun categorizeError(message: String?): HomeScreenState {
+        return when {
+            message?.contains("Unable to resolve host") == true ||
+                    message?.contains("timeout") == true ||
+                    message?.contains("No address associated") == true -> {
+                Log.d("TAG", "No network")
+                HomeScreenState.NetworkUnavailable
+            }
+            else -> HomeScreenState.Error(message.toString())
         }
     }
 }

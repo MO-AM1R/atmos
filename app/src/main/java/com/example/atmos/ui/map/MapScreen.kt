@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
@@ -35,6 +36,7 @@ import com.mapbox.geojson.Point
 import com.mapbox.maps.dsl.cameraOptions
 import com.mapbox.maps.extension.compose.animation.viewport.rememberMapViewportState
 import com.mapbox.maps.plugin.animation.MapAnimationOptions
+import kotlinx.coroutines.launch
 
 
 @OptIn(ExperimentalPermissionsApi::class)
@@ -51,7 +53,7 @@ fun MapScreen(
     val permissionState by permissionViewModel.permissionState.collectAsStateWithLifecycle()
     val networkState by networkViewModel.isConnected.collectAsStateWithLifecycle()
     val mapState by mapScreenViewModel.mapState.collectAsStateWithLifecycle()
-
+    val scope = rememberCoroutineScope()
 
     suspend fun observeOnNavigation() {
         mapScreenViewModel.mapNavigationEvent.collect { event ->
@@ -88,10 +90,13 @@ fun MapScreen(
     }
 
     fun fetchAndFlyToMyLocation() {
-        getCurrentLocation(context) { point ->
-            point?.let {
-                mapScreenViewModel.onEvent(MapScreenEvent.OnLoadedCurrentLocation(it))
-                flyToLocation(it)
+        scope.launch {
+            val point = getCurrentLocation(context, timeoutMillis = 10_000L)
+            if (point != null) {
+                mapScreenViewModel.onEvent(MapScreenEvent.OnLoadedCurrentLocation(point))
+                flyToLocation(point)
+            } else {
+                mapScreenViewModel.setScreenState(MapScreenState.NetworkUnavailable)
             }
         }
     }

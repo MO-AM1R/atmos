@@ -50,4 +50,12 @@ class WeatherLocalDataSourceImpl @Inject constructor(
         weatherDao.clearCachedWeather()
         forecastDao.clearCachedForecast()
     }
+
+    override suspend fun clearWeatherCache(){
+        weatherDao.clearCachedWeather()
+    }
+
+    override suspend fun clearForecastCache(){
+        forecastDao.clearCachedForecast()
+    }
 }

@@ -20,7 +20,6 @@ import com.example.atmos.ui.home.state.HomeUiState
 @Composable
 fun HomeStateContent(
     uiState: HomeUiState,
-    isGpsEnabled: Boolean,
     scrollState: ScrollState,
     onRetry: () -> Unit,
     onRefresh: () -> Unit,
@@ -36,41 +35,40 @@ fun HomeStateContent(
         },
         label = stringResource(R.string.homestatetransition)
     ) { screenState ->
-        if (isGpsEnabled) {
-            when (screenState) {
-                is HomeScreenState.Loading -> {
-                    HomeLoadingContent()
-                }
-
-                is HomeScreenState.LocationPermission -> {
-                    LocationPermissionContent(
-                        onRequestPermission = onRequestPermission,
-                        onOpenSettings = onOpenSettings
-                    )
-                }
-
-                is HomeScreenState.NetworkUnavailable -> {
-                    NetworkUnavailableContent()
-                }
-
-                is HomeScreenState.Success -> {
-                    HomeSuccessContent(
-                        userPreferencesState = userPreferencesState,
-                        uiState = uiState,
-                        scrollState = scrollState,
-                        onRefresh = onRefresh
-                    )
-                }
-
-                is HomeScreenState.Error -> {
-                    HomeErrorContent(
-                        message = screenState.message,
-                        onRetry = onRetry
-                    )
-                }
+        when (screenState) {
+            is HomeScreenState.Loading,
+            is HomeScreenState.Initial -> {
+                HomeLoadingContent()
             }
-        }else{
-            GpsDisabledContent(
+
+            is HomeScreenState.LocationPermission -> {
+                LocationPermissionContent(
+                    onRequestPermission = onRequestPermission,
+                    onOpenSettings = onOpenSettings
+                )
+            }
+
+            is HomeScreenState.NetworkUnavailable -> {
+                NetworkUnavailableContent()
+            }
+
+            is HomeScreenState.Success -> {
+                HomeSuccessContent(
+                    userPreferencesState = userPreferencesState,
+                    uiState = uiState,
+                    scrollState = scrollState,
+                    onRefresh = onRefresh
+                )
+            }
+
+            is HomeScreenState.Error -> {
+                HomeErrorContent(
+                    message = screenState.message,
+                    onRetry = onRetry
+                )
+            }
+
+            HomeScreenState.GpsDisabled -> GpsDisabledContent(
                 onOpenGpsSettings = onOpenGpsSettings
             )
         }
