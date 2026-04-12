@@ -45,15 +45,6 @@ fun HomeContent(
             contentScale = ContentScale.Crop
         )
 
-        ResourceIcon(
-            modifier = Modifier
-                .padding(horizontal = 25.dp, vertical = 50.dp)
-                .size(48.dp)
-                .align(Alignment.TopEnd)
-                .blur(blurRadius),
-            resourceId = MaterialTheme.homeIcon
-        )
-
         HomeStateContent(
             isGpsEnabled = isGpsEnabled,
             userPreferencesState = userPreferencesState,
