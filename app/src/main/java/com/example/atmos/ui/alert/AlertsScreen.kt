@@ -43,11 +43,11 @@ import com.example.atmos.ui.alert.viewmodel.AlertsViewModel
 import com.example.atmos.ui.core.viewmodel.NotificationPermissionEvent
 import com.example.atmos.ui.core.viewmodel.NotificationPermissionViewModel
 import com.example.atmos.ui.onboarding.components.GradientBackground
+import io.github.fletchmckee.liquid.rememberLiquidState
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AlertsScreen(
-    modifier: Modifier = Modifier,
     viewModel: AlertsViewModel = hiltViewModel(),
     notificationPermissionViewModel: NotificationPermissionViewModel = hiltViewModel()
 ) {
@@ -140,8 +140,12 @@ fun AlertsScreen(
         )
     }
 
+    val liquidState = rememberLiquidState()
+
     Box(modifier = Modifier.fillMaxSize()) {
-        GradientBackground {
+        GradientBackground(
+            liquidState = liquidState
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -181,6 +185,7 @@ fun AlertsScreen(
                                 ) { item ->
                                     key(item.id) {
                                         AlertItem(
+                                            liquidState = liquidState,
                                             item = item,
                                             onDelete = {
                                                 viewModel.onEvent(

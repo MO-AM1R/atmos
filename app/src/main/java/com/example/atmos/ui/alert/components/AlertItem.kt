@@ -5,15 +5,16 @@ import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Modifier
 import com.example.atmos.domain.model.AlertUiItem
+import io.github.fletchmckee.liquid.LiquidState
 
 
 @Composable
 fun AlertItem(
     item: AlertUiItem,
     onDelete: () -> Unit,
-    onToggle: (Boolean) -> Unit
+    onToggle: (Boolean) -> Unit,
+    liquidState: LiquidState
 ) {
     val dismissState = rememberSwipeToDismissBoxState(
         positionalThreshold = { it * 0.4f }
@@ -34,7 +35,8 @@ fun AlertItem(
     ) {
         AlertItemCard(
             item = item,
-            onToggle = onToggle
+            onToggle = onToggle,
+            liquidState = liquidState
         )
     }
 }
