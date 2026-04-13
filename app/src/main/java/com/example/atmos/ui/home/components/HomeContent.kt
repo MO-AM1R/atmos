@@ -33,7 +33,7 @@ fun HomeContent(
         ResourceImage(
             modifier = Modifier
                 .fillMaxSize()
-                .blur(4.dp).liquefiable(liquidState),
+                .liquefiable(liquidState),
             resourceId = MaterialTheme.background,
             contentScale = ContentScale.Crop
         )
