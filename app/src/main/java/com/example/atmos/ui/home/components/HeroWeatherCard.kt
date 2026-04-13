@@ -1,134 +1,116 @@
 package com.example.atmos.ui.home.components
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.atmos.R
 import com.example.atmos.data.enums.TemperatureUnit
 import com.example.atmos.domain.model.CurrentWeather
+import com.example.atmos.ui.core.components.LiquidGlassContainer
 import com.example.atmos.ui.core.components.ResourceIcon
-import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
 import com.example.atmos.ui.theme.extraColors
 import com.example.atmos.utils.formatTemperature
 import com.example.atmos.utils.nullableToWeatherIconRes
 import com.example.atmos.utils.toLocalizedDigits
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import io.github.fletchmckee.liquid.LiquidState
 
 
 @Composable
 fun HeroWeatherCard(
-    weather: CurrentWeather?,
-    onRefreshClick: () -> Unit,
     modifier: Modifier = Modifier,
-    temperatureUnit: TemperatureUnit?
+    weather: CurrentWeather?,
+    temperatureUnit: TemperatureUnit? = TemperatureUnit.CELSIUS,
+    onRefreshClick: () -> Unit,
+    liquidState: LiquidState
 ) {
     val colors = MaterialTheme.extraColors
 
-    Box(
-        modifier = modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(32.dp))
-            .background(colors.cardBackgroundStrong)
-            .border(1.dp, colors.cardBorder, RoundedCornerShape(32.dp))
-            .padding(24.dp)
+    LiquidGlassContainer(
+        liquidState= liquidState,
+        modifier = modifier.fillMaxWidth(),
+        contentPadding = PaddingValues(vertical = 32.dp, horizontal = 24.dp)
     ) {
-        IconButton(
-            onClick = onRefreshClick,
-            modifier = Modifier.align(Alignment.TopEnd)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Refresh,
-                contentDescription = null,
-                tint = Color.White
-            )
-        }
-
-        Column(
+        Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                text = weather?.cityName ?: "--",
-                style = WeatherTypography.headlineMedium,
-                fontWeight = FontWeight.Bold,
-                color = colors.textPrimary
-            )
-
-            Text(
-                text = weather?.let {
-                    SimpleDateFormat(
-                        "EEEE, MMMM d, yyyy",
-                        Locale.getDefault()
-                    ).format(Date(it.timestampUnix * 1000)).toLocalizedDigits()
-                } ?: "--",
-                style = WeatherTypography.bodyMedium,
-                color = colors.textMuted
-            )
-
-            Spacer(modifier = Modifier.height(Spacing.XLarge))
-
             ResourceIcon(
                 modifier = Modifier
                     .clip(CircleShape)
-                    .size(100.dp),
-                resourceId = weather?.weatherIconCode.nullableToWeatherIconRes(),
+                    .size(76.dp),
+                resourceId = weather?.weatherIconCode
+                    .nullableToWeatherIconRes(),
             )
 
-            Spacer(modifier = Modifier.height(Spacing.Large))
-
-            Text(
-                text = weather?.temperature?.formatTemperature(
-                    temperatureUnit ?: TemperatureUnit.CELSIUS
-                )?.toLocalizedDigits()
-                    ?: "--°",
-                style = WeatherTypography.displayLarge,
-                fontWeight = FontWeight.Bold,
-                letterSpacing = 1.sp,
-                color = colors.textPrimary
-            )
-
-            Spacer(modifier = Modifier.height(Spacing.Small))
-
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(50.dp))
-                    .background(Color.White.copy(alpha = 0.2f))
-                    .padding(horizontal = 20.dp, vertical = 8.dp)
+            Column(
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.Start
             ) {
+                Text(
+                    text = weather?.temperature?.formatTemperature(
+                        temperatureUnit ?: TemperatureUnit.CELSIUS
+                    )?.toLocalizedDigits()
+                        ?: "--°",
+                    style = WeatherTypography.displayMedium.copy(
+                        fontSize = 50.sp
+                    ),
+                    fontWeight = FontWeight.SemiBold,
+                    letterSpacing = 1.sp,
+                    color = colors.textPrimary
+                )
+
                 Text(
                     text = weather?.weatherDescription ?: "--",
                     style = WeatherTypography.bodyMedium,
                     color = colors.textPrimary,
-                    textAlign = TextAlign.Center
+                )
+
+                Text(
+                    text = stringResource(
+                        R.string.feels_like,
+                        weather?.feelsLike?.toString()
+                            ?.toLocalizedDigits() + "°"
+                    ),
+                    style = WeatherTypography.bodyMedium,
+                    color = colors.textPrimary,
                 )
             }
 
-            Spacer(modifier = Modifier.height(Spacing.Medium))
+            Column(
+                modifier = Modifier.align(Alignment.Bottom),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Text(
+                    text = "↗ " + weather?.maximumTemp?.toString()
+                        ?.toLocalizedDigits() + "°",
+                    style = WeatherTypography.bodyMedium,
+                    color = colors.textPrimary,
+                )
+
+                Text(
+                    text = "↓ " + weather?.minimumTemp?.toString()
+                        ?.toLocalizedDigits() + "°",
+                    style = WeatherTypography.bodyMedium,
+                    color = colors.textPrimary,
+                )
+            }
         }
     }
 }

@@ -128,4 +128,6 @@
     <string name="weather_description">Weather Description</string>
     <string name="high">H</string>
     <string name="low">L</string>
+    <string name="feels_like">Feels like %1$s</string>
+    <string name="today">Today</string>
 </resources>

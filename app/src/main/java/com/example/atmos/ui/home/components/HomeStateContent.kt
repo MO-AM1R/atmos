@@ -15,18 +15,19 @@ import com.example.atmos.ui.core.components.LocationPermissionContent
 import com.example.atmos.ui.core.components.NetworkUnavailableContent
 import com.example.atmos.ui.home.state.HomeScreenState
 import com.example.atmos.ui.home.state.HomeUiState
+import io.github.fletchmckee.liquid.LiquidState
 
 
 @Composable
 fun HomeStateContent(
-    uiState: HomeUiState,
-    scrollState: ScrollState,
-    onRetry: () -> Unit,
-    onRefresh: () -> Unit,
-    onRequestPermission: () -> Unit,
-    onOpenSettings: () -> Unit,
-    onOpenGpsSettings: () -> Unit,
-    userPreferencesState: UserPreferences?,
+    uiState: HomeUiState = HomeUiState(),
+    onRetry: () -> Unit = {},
+    onRefresh: () -> Unit = {},
+    onRequestPermission: () -> Unit = {},
+    onOpenSettings: () -> Unit = {},
+    onOpenGpsSettings: () -> Unit = {},
+    userPreferencesState: UserPreferences? = null,
+    liquidState: LiquidState,
 ) {
     AnimatedContent(
         targetState = uiState.screenState,
@@ -56,8 +57,8 @@ fun HomeStateContent(
                 HomeSuccessContent(
                     userPreferencesState = userPreferencesState,
                     uiState = uiState,
-                    scrollState = scrollState,
-                    onRefresh = onRefresh
+                    onRefresh = onRefresh,
+                    liquidState = liquidState,
                 )
             }
 

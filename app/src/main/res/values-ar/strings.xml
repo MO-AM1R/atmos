@@ -128,4 +128,6 @@
     <string name="weather_description">وصف الطقس</string>
     <string name="high">ع</string>
     <string name="low">ص</string>
+    <string name="feels_like">تشعر‍ كـ %1$s</string>
+    <string name="today">اليوم</string>
 </resources>

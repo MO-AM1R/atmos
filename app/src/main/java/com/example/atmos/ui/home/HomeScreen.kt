@@ -29,6 +29,7 @@ import com.example.atmos.utils.openAppSettings
 import com.example.atmos.utils.openGpsSettings
 import com.example.atmos.utils.requestLocation
 import com.google.android.gms.location.LocationServices
+import io.github.fletchmckee.liquid.rememberLiquidState
 import kotlinx.coroutines.launch
 
 
@@ -42,22 +43,10 @@ fun HomeScreen(
     val scope = rememberCoroutineScope()
 
     val context = LocalContext.current
-    val scrollState = rememberScrollState()
 
     val fusedClient = remember {
         LocationServices.getFusedLocationProviderClient(context)
     }
-
-    val isScrolledPastThreshold by remember {
-        derivedStateOf { scrollState.value > 100 }
-    }
-
-    val blurRadius by animateDpAsState(
-        targetValue = if (isScrolledPastThreshold) 0.dp else 12.dp,
-        animationSpec = tween(durationMillis = 400),
-        label = "blurRadius"
-    )
-
 
     fun startLocationAndLoad(forceUpdate: Boolean = false) {
         scope.launch {
@@ -178,8 +167,6 @@ fun HomeScreen(
     HomeContent(
         userPreferencesState = uiState.userPreferences,
         uiState = uiState,
-        scrollState = scrollState,
-        blurRadius = blurRadius,
         onRetry = { retryWithLocation() },
         onRefresh = { retryWithLocation(forceUpdate = true) },
         onRequestPermission = {

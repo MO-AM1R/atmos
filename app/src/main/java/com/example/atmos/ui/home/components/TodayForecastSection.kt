@@ -1,8 +1,7 @@
 package com.example.atmos.ui.home.components
-
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -21,12 +20,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.atmos.R
 import com.example.atmos.domain.model.HourlyForecast
+import com.example.atmos.ui.core.components.LiquidGlassContainer
 import com.example.atmos.ui.core.components.ResourceIcon
 import com.example.atmos.ui.theme.Spacing
 import com.example.atmos.ui.theme.WeatherTypography
 import com.example.atmos.ui.theme.extraColors
+import com.example.atmos.utils.DummyData
 import com.example.atmos.utils.toLocalizedDigits
 import com.example.atmos.utils.toWeatherIconRes
+import io.github.fletchmckee.liquid.LiquidState
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -34,30 +36,36 @@ import java.util.Locale
 
 @Composable
 fun TodayForecastSection(
-    hourlyForecasts: List<HourlyForecast>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    hourlyForecasts: List<HourlyForecast> = DummyData.hourlyForecasts,
+    liquidState: LiquidState,
 ) {
     val colors = MaterialTheme.extraColors
 
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.spacedBy(Spacing.Medium)
+    LiquidGlassContainer(
+        liquidState = liquidState,
+        contentPadding = PaddingValues(horizontal = 18.dp, vertical = 24.dp),
     ) {
-        Text(
-            text = stringResource(R.string.today_s_forecast),
-            style = WeatherTypography.headlineMedium,
-            fontWeight = FontWeight.Bold,
-            color = colors.textPrimary
-        )
-
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(Spacing.Medium)
+        Column(
+            modifier = modifier.fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(Spacing.XLarge)
         ) {
-            items(
-                items = hourlyForecasts,
-                key = { it.timestampUnix }
-            ) { forecast ->
-                HourlyForecastCard(forecast = forecast)
+            Text(
+                text = stringResource(R.string.today_s_forecast),
+                style = WeatherTypography.headlineMedium,
+                fontWeight = FontWeight.Bold,
+                color = colors.textPrimary
+            )
+
+            LazyRow(
+                horizontalArrangement = Arrangement.spacedBy(Spacing.Medium)
+            ) {
+                items(
+                    items = hourlyForecasts,
+                    key = { it.timestampUnix }
+                ) { forecast ->
+                    HourlyForecastCard(forecast = forecast)
+                }
             }
         }
     }
@@ -67,15 +75,14 @@ fun TodayForecastSection(
 @Composable
 fun HourlyForecastCard(
     modifier: Modifier = Modifier,
-    forecast: HourlyForecast
+    forecast: HourlyForecast = DummyData.hourlyForecasts[0],
 ) {
     val colors = MaterialTheme.extraColors
 
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(20.dp))
-            .background(colors.cardBackground)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(Spacing.XSmall)
     ) {
