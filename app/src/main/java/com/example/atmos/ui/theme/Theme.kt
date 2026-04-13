@@ -195,10 +195,3 @@ val MaterialTheme.background: Int
         R.drawable.background_day
     else
         R.drawable.background_night
-
-val MaterialTheme.homeIcon: Int
-    @Composable get() =
-        if (getCurrentThemeMode() == ThemeMode.DAY)
-            R.drawable.home_icon_day
-        else
-            R.drawable.home_icon_night
