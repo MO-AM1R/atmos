@@ -59,27 +59,5 @@ data class LiquidGlassConfig(
             tintColor = SettingsSectionBackground,
             tintAlpha = .3f
         )
-
-        val SettingSection = LiquidGlassConfig(
-            frost = 14.dp,
-            shape = RoundedCornerShape(24.dp),
-            refraction = 0.10f,
-            curve = 0.12f,
-            edge = 0.015f,
-            dispersion = 0.03f,
-            tintColor = Color.White,
-            tintAlpha = 0.08f
-        )
-
-        val SettingSelectionRow = LiquidGlassConfig(
-            frost = 10.dp,
-            shape = RoundedCornerShape(16.dp),
-            refraction = 0.08f,
-            curve = 0.10f,
-            edge = 0.01f,
-            dispersion = 0.02f,
-            tintColor = Color.White,
-            tintAlpha = 0.06f
-        )
     }
 }

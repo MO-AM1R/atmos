@@ -43,12 +43,13 @@ fun HomeStateContent(
             is HomeScreenState.LocationPermission -> {
                 LocationPermissionContent(
                     onRequestPermission = onRequestPermission,
-                    onOpenSettings = onOpenSettings
+                    onOpenSettings = onOpenSettings,
+                    liquidState = liquidState
                 )
             }
 
             is HomeScreenState.NetworkUnavailable -> {
-                NetworkUnavailableContent()
+                NetworkUnavailableContent(liquidState = liquidState)
             }
 
             is HomeScreenState.Success -> {
@@ -62,12 +63,14 @@ fun HomeStateContent(
             is HomeScreenState.Error -> {
                 HomeErrorContent(
                     message = screenState.message,
-                    onRetry = onRetry
+                    onRetry = onRetry,
+                    liquidState = liquidState
                 )
             }
 
             HomeScreenState.GpsDisabled -> GpsDisabledContent(
-                onOpenGpsSettings = onOpenGpsSettings
+                onOpenGpsSettings = onOpenGpsSettings,
+                liquidState = liquidState
             )
         }
     }
