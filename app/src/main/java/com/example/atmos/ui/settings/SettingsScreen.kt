@@ -31,6 +31,7 @@ import com.example.atmos.ui.settings.state.SettingsNavigationEvent
 import com.example.atmos.ui.settings.viewmodel.SettingsViewModel
 import com.example.atmos.utils.AppConstants
 import com.mapbox.geojson.Point
+import io.github.fletchmckee.liquid.rememberLiquidState
 
 
 @Composable
@@ -90,7 +91,11 @@ fun SettingsScreen(
         observeOnSavedStateHandle()
     }
 
-    GradientBackground {
+    val liquidState = rememberLiquidState()
+
+    GradientBackground(
+        liquidState = liquidState
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -115,7 +120,8 @@ fun SettingsScreen(
                     storedLocation = uiState.value.storedLocationName,
                     isLoadingLocationName = uiState.value.isLoadingLocationName,
                     onEvent = settingsViewModel::onEvent,
-                    navigateToMap = navigateToMap
+                    navigateToMap = navigateToMap,
+                    liquidState = liquidState,
                 )
 
                 Spacer(modifier = Modifier.height(28.dp))
@@ -128,6 +134,7 @@ fun SettingsScreen(
                     selectedTemperatureUnit = uiState.value.temperatureUnit,
                     selectedWindUnit = uiState.value.windUnit,
                     onEvent = settingsViewModel::onEvent,
+                    liquidState = liquidState,
                 )
 
                 Spacer(modifier = Modifier.height(28.dp))
@@ -139,6 +146,7 @@ fun SettingsScreen(
                 AppearanceSection(
                     language = uiState.value.language,
                     onEvent = settingsViewModel::onEvent,
+                    liquidState = liquidState,
                 )
             }
         }

@@ -51,7 +51,7 @@ data class LiquidGlassConfig(
 
         val Card = LiquidGlassConfig(
             frost = 12.dp,
-            shape = RoundedCornerShape(20.dp),
+            shape = RoundedCornerShape(16.dp),
             refraction = 0.12f,
             curve = 0.15f,
             edge = 0.018f,
