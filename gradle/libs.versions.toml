@@ -1,6 +1,7 @@
 [versions]
 accompanistPermission = "0.37.3"
 agp = "9.0.1"
+backdrop = "1.0.6"
 datastorePreferencesCore = "1.2.1"
 dotsindicator = "5.1.0"
 kotlin = "2.3.10"
@@ -11,6 +12,7 @@ lifecycleViewmodelCompose = "2.10.0"
 lifecycleRuntimeCompose = "2.10.0"
 activityCompose = "1.13.0"
 androidMaps = "11.19.0"
+liquid = "1.1.1"
 mapsComposeVersion = "11.19.0"
 mapboxSearch = "2.18.2"
 navigationCompose = "2.9.7"
@@ -69,8 +71,10 @@ androidx-compose-material3 = { group = "androidx.compose.material3", name = "mat
 androidx-compose-material-icons = { group = "androidx.compose.material", name = "material-icons-extended" }
 androidx-compose-animation = { group = "androidx.compose.animation", name = "animation" }
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
+backdrop = { module = "io.github.kyant0:backdrop", version.ref = "backdrop" }
 extension-maps-compose = { module = "com.mapbox.extension:maps-compose", version.ref = "mapsComposeVersion" }
 android-maps = { module = "com.mapbox.maps:android-ndk27", version.ref = "androidMaps" }
+liquid = { module = "io.github.fletchmckee.liquid:liquid", version.ref = "liquid" }
 mapbox-search-android = { module = "com.mapbox.search:mapbox-search-android-ndk27", version.ref = "mapboxSearch" }
 mapbox-search-android-ui = { module = "com.mapbox.search:mapbox-search-android-ui-ndk27", version.ref = "mapboxSearch" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }

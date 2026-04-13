@@ -104,6 +104,7 @@ dependencies {
     implementation(libs.kotlinx.serialization)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.dotsindicator)
+    implementation(libs.liquid)
 
     implementation(libs.hilt.android)
     implementation(libs.androidx.compose.animation.core)

@@ -7,13 +7,13 @@ import android.content.Context
 import android.media.AudioAttributes
 import android.media.RingtoneManager
 import android.os.Build
+import androidx.compose.foundation.ComposeFoundationFlags
+import androidx.compose.foundation.ExperimentalFoundationApi
 import com.example.atmos.R
-import com.example.atmos.data.enums.Language
 import com.example.atmos.utils.AppConstants
 import com.example.atmos.utils.LocalizationHelper
 import com.mapbox.common.MapboxOptions
 import dagger.hilt.android.HiltAndroidApp
-import kotlinx.coroutines.runBlocking
 import kotlin.jvm.java
 
 @HiltAndroidApp
@@ -22,8 +22,10 @@ class Atmos : Application(){
         super.attachBaseContext(LocalizationHelper.applyWithoutDI(base))
     }
 
+    @OptIn(ExperimentalFoundationApi::class)
     override fun onCreate() {
         super.onCreate()
+        ComposeFoundationFlags.isPausableCompositionInPrefetchEnabled = true
         MapboxOptions.accessToken = AppConstants.MAP_PUBLIC_API_KEY
         createNotificationChannels()
     }
