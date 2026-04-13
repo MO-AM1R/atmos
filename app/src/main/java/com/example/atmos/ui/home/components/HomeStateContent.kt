@@ -5,7 +5,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.togetherWith
-import androidx.compose.foundation.ScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.example.atmos.R
@@ -22,7 +21,6 @@ import io.github.fletchmckee.liquid.LiquidState
 fun HomeStateContent(
     uiState: HomeUiState = HomeUiState(),
     onRetry: () -> Unit = {},
-    onRefresh: () -> Unit = {},
     onRequestPermission: () -> Unit = {},
     onOpenSettings: () -> Unit = {},
     onOpenGpsSettings: () -> Unit = {},
@@ -57,7 +55,6 @@ fun HomeStateContent(
                 HomeSuccessContent(
                     userPreferencesState = userPreferencesState,
                     uiState = uiState,
-                    onRefresh = onRefresh,
                     liquidState = liquidState,
                 )
             }

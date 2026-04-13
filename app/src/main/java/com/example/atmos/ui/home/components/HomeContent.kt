@@ -1,6 +1,5 @@
 package com.example.atmos.ui.home.components
 
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
@@ -8,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.blur
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.atmos.domain.model.UserPreferences
 import com.example.atmos.ui.core.components.ResourceImage
@@ -23,7 +21,6 @@ fun HomeContent(
     modifier: Modifier = Modifier,
     uiState: HomeUiState = DummyData.nightUiState,
     onRetry: () -> Unit = {},
-    onRefresh: () -> Unit = {},
     onRequestPermission: () -> Unit = {},
     onOpenSettings: () -> Unit = {},
     onOpenGpsSettings: () -> Unit = {},
@@ -45,7 +42,6 @@ fun HomeContent(
             userPreferencesState = userPreferencesState,
             uiState = uiState,
             onRetry = onRetry,
-            onRefresh = onRefresh,
             onRequestPermission = onRequestPermission,
             onOpenSettings = onOpenSettings,
             onOpenGpsSettings = onOpenGpsSettings,

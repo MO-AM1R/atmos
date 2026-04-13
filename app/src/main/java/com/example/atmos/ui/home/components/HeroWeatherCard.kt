@@ -35,7 +35,6 @@ fun HeroWeatherCard(
     modifier: Modifier = Modifier,
     weather: CurrentWeather?,
     temperatureUnit: TemperatureUnit? = TemperatureUnit.CELSIUS,
-    onRefreshClick: () -> Unit,
     liquidState: LiquidState
 ) {
     val colors = MaterialTheme.extraColors

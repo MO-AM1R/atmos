@@ -1,17 +1,12 @@
 package com.example.atmos.ui.home
 
 import android.Manifest
-import androidx.compose.animation.core.animateDpAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.atmos.domain.model.StoredPoint
@@ -29,7 +24,6 @@ import com.example.atmos.utils.openAppSettings
 import com.example.atmos.utils.openGpsSettings
 import com.example.atmos.utils.requestLocation
 import com.google.android.gms.location.LocationServices
-import io.github.fletchmckee.liquid.rememberLiquidState
 import kotlinx.coroutines.launch
 
 
@@ -168,7 +162,6 @@ fun HomeScreen(
         userPreferencesState = uiState.userPreferences,
         uiState = uiState,
         onRetry = { retryWithLocation() },
-        onRefresh = { retryWithLocation(forceUpdate = true) },
         onRequestPermission = {
             locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         },
