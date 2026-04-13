@@ -17,8 +17,20 @@ if (localPropertiesFile.exists()) {
     localProperties.load(localPropertiesFile.inputStream())
 }
 
+val isBundleBuild = gradle.startParameter.taskNames.any {
+    it.contains("bundle", ignoreCase = true)
+}
 
 android {
+    splits {
+        abi {
+            isEnable = !isBundleBuild
+            reset()
+            include("arm64-v8a", "armeabi-v7a", "x86_64")
+            isUniversalApk = false
+        }
+    }
+
     namespace = "com.example.atmos"
     compileSdk {
         version = release(36) {
@@ -56,7 +68,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
