@@ -1,6 +1,7 @@
 package com.example.atmos.ui.alert.activity
 
 import android.app.KeyguardManager
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
@@ -34,10 +35,17 @@ import androidx.compose.ui.unit.sp
 import com.example.atmos.R
 import com.example.atmos.ui.onboarding.components.GradientBackground
 import com.example.atmos.ui.theme.AtmosTheme
+import com.example.atmos.ui.theme.extraColors
+import com.example.atmos.utils.LocalizationHelper
+import com.example.atmos.utils.toLocalizedDigits
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class AlarmActivity : ComponentActivity() {
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocalizationHelper.applyWithoutDI(newBase))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +96,7 @@ fun AlarmScreen(
                 Icon(
                     painter = painterResource(R.drawable.ic_alarm),
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = MaterialTheme.extraColors.textPrimary,
                     modifier = Modifier.size(64.dp)
                 )
                 Text(
@@ -104,7 +112,7 @@ fun AlarmScreen(
                     textAlign = TextAlign.Center
                 )
                 Text(
-                    text = temp, fontSize = 48.sp, fontWeight = FontWeight.Bold, color = Color.White
+                    text = temp.toLocalizedDigits(), fontSize = 48.sp, fontWeight = FontWeight.Bold, color = Color.White
                 )
                 Text(
                     text = stringResource(R.string.weather_description) + ": $weatherDescription",
@@ -121,13 +129,14 @@ fun AlarmScreen(
                         .height(52.dp),
                     shape = RoundedCornerShape(14.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
+                        containerColor = MaterialTheme.extraColors.textPrimary
                     )
                 ) {
                     Text(
                         text = stringResource(R.string.dismiss),
                         fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Black
                     )
                 }
             }
