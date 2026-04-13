@@ -30,6 +30,7 @@ import com.example.atmos.ui.favorites.viewmodel.FavoritesViewModel
 import com.example.atmos.ui.onboarding.components.GradientBackground
 import com.example.atmos.utils.AppConstants
 import com.mapbox.geojson.Point
+import io.github.fletchmckee.liquid.rememberLiquidState
 
 @Composable
 fun FavoritesScreen(
@@ -58,8 +59,12 @@ fun FavoritesScreen(
             }
     }
 
+    val liquidState = rememberLiquidState()
+
     Box(modifier = modifier.fillMaxSize()) {
-        GradientBackground {
+        GradientBackground(
+            liquidState = liquidState
+        ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -106,7 +111,8 @@ fun FavoritesScreen(
                                                 FavoritesEvent.OnDeleteFavorite(item)
                                             )
                                         },
-                                        onClick = onNavigateToFavDetails
+                                        onClick = onNavigateToFavDetails,
+                                        liquidState = liquidState
                                     )
                                 }
                             }

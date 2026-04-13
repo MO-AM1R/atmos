@@ -16,7 +16,7 @@ import io.github.fletchmckee.liquid.liquid
 fun LiquidGlassContainer(
     modifier: Modifier = Modifier,
     liquidState: LiquidState,
-    config: LiquidGlassConfig = LiquidGlassConfig.Card,
+    config: LiquidGlassConfig = LiquidGlassConfig.HomeCard,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     content: @Composable BoxScope.() -> Unit
 ) {

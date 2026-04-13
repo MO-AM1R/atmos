@@ -9,6 +9,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import com.example.atmos.data.enums.TemperatureUnit
 import com.example.atmos.domain.model.FavoriteWeatherItem
+import io.github.fletchmckee.liquid.LiquidState
 
 
 @Composable
@@ -17,7 +18,8 @@ fun FavoriteLocationItem(
     item: FavoriteWeatherItem,
     temperatureUnit: TemperatureUnit,
     onDelete: () -> Unit,
-    onClick: (Double, Double) -> Unit
+    onClick: (Double, Double) -> Unit,
+    liquidState: LiquidState
 ) {
 
     val dismissState = rememberSwipeToDismissBoxState(
@@ -50,7 +52,8 @@ fun FavoriteLocationItem(
         } else {
             FavoriteLocationCard(
                 item = item,
-                temperatureUnit = temperatureUnit
+                temperatureUnit = temperatureUnit,
+                liquidState = liquidState
             )
         }
     }

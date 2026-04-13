@@ -1,4 +1,5 @@
 package com.example.atmos.ui.onboarding.components
+
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -16,56 +17,69 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.atmos.ui.theme.BackgroundDark
 import com.example.atmos.ui.theme.BackgroundDark2
 import com.example.atmos.ui.theme.Padding
+import io.github.fletchmckee.liquid.LiquidState
+import io.github.fletchmckee.liquid.liquefiable
+import io.github.fletchmckee.liquid.rememberLiquidState
 
 
 @Composable
-@Preview()
-fun GradientBackground(content: @Composable BoxScope.() -> Unit = {}) {
-
-    val infinite = rememberInfiniteTransition()
+fun GradientBackground(
+    liquidState: LiquidState = rememberLiquidState(),
+    content: @Composable BoxScope.() -> Unit = {}
+) {
+    val infinite = rememberInfiniteTransition(label = "bgTransition")
 
     val offsetX by infinite.animateFloat(
-        0f,
-        1000f,
-        infiniteRepeatable(
+        initialValue = 0f,
+        targetValue = 1000f,
+        animationSpec = infiniteRepeatable(
             tween(12000, easing = LinearEasing),
             RepeatMode.Reverse
-        )
+        ),
+        label = "offsetX"
     )
 
     val offsetY by infinite.animateFloat(
-        0f,
-        800f,
-        infiniteRepeatable(
+        initialValue = 0f,
+        targetValue = 800f,
+        animationSpec = infiniteRepeatable(
             tween(16000, easing = LinearEasing),
             RepeatMode.Reverse
-        )
+        ),
+        label = "offsetY"
     )
 
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                Brush.linearGradient(
-                    colors = listOf(
-                        BackgroundDark,
-                        BackgroundDark,
-                        BackgroundDark2,
-                        BackgroundDark2
-                    ),
-                    start = Offset(offsetX, offsetY),
-                    end = Offset(offsetX + 600f, offsetY + 1000f)
+    Box(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .liquefiable(liquidState)
+                .background(
+                    Brush.linearGradient(
+                        colors = listOf(
+                            BackgroundDark,
+                            BackgroundDark,
+                            BackgroundDark2,
+                            BackgroundDark2
+                        ),
+                        start = Offset(offsetX, offsetY),
+                        end = Offset(offsetX + 600f, offsetY + 1000f)
+                    )
                 )
-            )
-            .padding(
-                horizontal = Padding.screenPadding.first,
-                vertical = Padding.screenPadding.second
-            ),
-        contentAlignment = Alignment.BottomCenter,
-        content = content
-    )
+        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    horizontal = Padding.screenPadding.first,
+                    vertical = Padding.screenPadding.second
+                ),
+            contentAlignment = Alignment.BottomCenter,
+            content = content
+        )
+    }
 }
