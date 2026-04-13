@@ -37,5 +37,81 @@ data class LiquidGlassConfig(
             dispersion = 0.08f,
             tintAlpha = 0.10f
         )
+
+        val BottomNav = LiquidGlassConfig(
+            frost = 16.dp,
+            shape = RoundedCornerShape(24.dp),
+            refraction = 0.10f,
+            curve = 0.12f,
+            edge = 0.02f,
+            dispersion = 0.03f,
+            tintColor = Color.White,
+            tintAlpha = 0.08f
+        )
+
+        val BackButton = LiquidGlassConfig(
+            frost = 14.dp,
+            shape = RoundedCornerShape(12.dp),
+            refraction = 0.3f,
+            curve = 0.3f,
+            edge = 0.02f,
+            dispersion = 0.08f,
+            tintAlpha = 0.10f
+        )
+
+        val FavoriteCard = LiquidGlassConfig(
+            frost = 12.dp,
+            shape = RoundedCornerShape(20.dp),
+            refraction = 0.12f,
+            curve = 0.15f,
+            edge = 0.018f,
+            dispersion = 0.04f,
+            tintColor = Color.White,
+            tintAlpha = 0.10f
+        )
+
+        val AlertCard = LiquidGlassConfig(
+            frost = 12.dp,
+            shape = RoundedCornerShape(20.dp),
+            refraction = 0.12f,
+            curve = 0.15f,
+            edge = 0.018f,
+            dispersion = 0.04f,
+            tintColor = Color.White,
+            tintAlpha = 0.10f
+        )
+
+        val SettingSection = LiquidGlassConfig(
+            frost = 14.dp,
+            shape = RoundedCornerShape(24.dp),
+            refraction = 0.10f,
+            curve = 0.12f,
+            edge = 0.015f,
+            dispersion = 0.03f,
+            tintColor = Color.White,
+            tintAlpha = 0.08f
+        )
+
+        val SettingSelectionRow = LiquidGlassConfig(
+            frost = 10.dp,
+            shape = RoundedCornerShape(16.dp),
+            refraction = 0.08f,
+            curve = 0.10f,
+            edge = 0.01f,
+            dispersion = 0.02f,
+            tintColor = Color.White,
+            tintAlpha = 0.06f
+        )
+
+        val Chip = LiquidGlassConfig(
+            frost = 8.dp,
+            shape = RoundedCornerShape(12.dp),
+            refraction = 0.06f,
+            curve = 0.08f,
+            edge = 0.008f,
+            dispersion = 0.02f,
+            tintColor = Color.White,
+            tintAlpha = 0.05f
+        )
     }
 }

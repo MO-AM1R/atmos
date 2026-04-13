@@ -13,8 +13,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.atmos.R
+import com.example.atmos.domain.model.CurrentWeather
+import com.example.atmos.domain.model.Forecast
 import com.example.atmos.ui.core.components.ResourceIcon
-import com.example.atmos.ui.home.state.HomeUiState
 import com.example.atmos.ui.theme.WeatherTypography
 import com.example.atmos.ui.theme.White
 import com.example.atmos.ui.theme.extraColors
@@ -22,7 +23,10 @@ import com.example.atmos.utils.toFlagEmoji
 import com.example.atmos.utils.toLocalizedCountryName
 
 @Composable
-fun LocationHeader(uiState: HomeUiState) {
+fun LocationHeader(
+    currentWeather: CurrentWeather?,
+    forecastDays: Forecast?,
+) {
     Column(
         modifier = Modifier
             .fillMaxWidth(),
@@ -45,7 +49,7 @@ fun LocationHeader(uiState: HomeUiState) {
                 )
 
                 Text(
-                    text = uiState.currentWeather?.cityName ?: "--",
+                    text = currentWeather?.cityName ?: "--",
                     style = WeatherTypography.headlineMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.extraColors.textPrimary
@@ -57,15 +61,15 @@ fun LocationHeader(uiState: HomeUiState) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    text = uiState.forecastDays?.countryCode?.toFlagEmoji() ?: "--",
+                    text = forecastDays?.countryCode?.toFlagEmoji() ?: "--",
                     style = WeatherTypography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.extraColors.textPrimary
                 )
 
                 Text(
-                    text = uiState.forecastDays?.cityName
-                        ?.plus(", ${uiState.forecastDays.countryCode.toLocalizedCountryName()}")
+                    text = forecastDays?.cityName
+                        ?.plus(", ${forecastDays.countryCode.toLocalizedCountryName()}")
                         ?: "--",
                     style = WeatherTypography.titleMedium,
                     fontWeight = FontWeight.Bold,

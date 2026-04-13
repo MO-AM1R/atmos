@@ -34,7 +34,7 @@ fun HomeSuccessContent(
 
         Spacer(modifier = Modifier.height(60.dp))
 
-        LocationHeader(uiState)
+        LocationHeader(currentWeather = uiState.currentWeather, forecastDays = uiState.forecastDays)
 
         Spacer(modifier = Modifier.height(20.dp))
 
