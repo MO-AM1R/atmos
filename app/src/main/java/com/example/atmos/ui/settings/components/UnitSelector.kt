@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -44,7 +43,7 @@ fun <T> UnitSelector(
                     .weight(1f)
                     .clip(RoundedCornerShape(50.dp))
                     .background(
-                        if (isSelected) MaterialTheme.extraColors.violet
+                        if (isSelected) extraColors.violet
                         else Color.Transparent
                     )
                     .clickable { onSelect(option) }
@@ -56,7 +55,7 @@ fun <T> UnitSelector(
                     fontSize = 14.sp,
                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                     color = if (isSelected) Color.White
-                    else MaterialTheme.extraColors.textMuted
+                    else extraColors.textMuted
                 )
             }
         }

@@ -1,6 +1,5 @@
 package com.example.atmos.ui.settings.components
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontWeight
@@ -9,7 +8,7 @@ import com.example.atmos.ui.theme.extraColors
 
 @Composable
 fun SettingsSectionTitle(title: String) {
-    val colors = MaterialTheme.extraColors
+    val colors = extraColors
 
     Text(
         text = title,

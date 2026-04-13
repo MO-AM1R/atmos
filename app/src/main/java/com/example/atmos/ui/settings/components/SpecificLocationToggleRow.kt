@@ -25,7 +25,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.atmos.R
 import com.example.atmos.ui.theme.BackgroundDark2
-import com.example.atmos.ui.theme.SettingsSectionBackground
 import com.example.atmos.ui.theme.White
 import com.example.atmos.ui.theme.extraColors
 
@@ -57,7 +56,7 @@ fun SpecificLocationToggleRow(
                         else R.drawable.ic_gps
                     ),
                     contentDescription = null,
-                    tint = MaterialTheme.extraColors.textPrimary,
+                    tint = extraColors.textPrimary,
                     modifier = Modifier.size(22.dp)
                 )
             }
@@ -69,7 +68,7 @@ fun SpecificLocationToggleRow(
                     text = stringResource(R.string.settings_specific_location),
                     fontSize = 15.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.extraColors.textPrimary
+                    color = extraColors.textPrimary
                 )
                 Text(
                     text = stringResource(
@@ -77,7 +76,7 @@ fun SpecificLocationToggleRow(
                         else R.string.settings_gps_auto_subtitle
                     ),
                     fontSize = 12.sp,
-                    color = MaterialTheme.extraColors.textMuted
+                    color = extraColors.textMuted
                 )
             }
         }

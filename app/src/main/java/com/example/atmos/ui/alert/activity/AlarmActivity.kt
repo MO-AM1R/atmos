@@ -20,7 +20,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -96,7 +95,7 @@ fun AlarmScreen(
                 Icon(
                     painter = painterResource(R.drawable.ic_alarm),
                     contentDescription = null,
-                    tint = MaterialTheme.extraColors.textPrimary,
+                    tint = extraColors.textPrimary,
                     modifier = Modifier.size(64.dp)
                 )
                 Text(
@@ -129,7 +128,7 @@ fun AlarmScreen(
                         .height(52.dp),
                     shape = RoundedCornerShape(14.dp),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.extraColors.textPrimary
+                        containerColor = extraColors.textPrimary
                     )
                 ) {
                     Text(

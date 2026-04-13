@@ -42,7 +42,7 @@ fun ChooseFromMapRow(
             .fillMaxWidth()
             .clickable { navigateToMap() }
             .clip(RoundedCornerShape(16.dp))
-            .background(color = MaterialTheme.extraColors.cardBorder.copy(alpha = 0.1f))
+            .background(color = extraColors.cardBorder.copy(alpha = 0.1f))
             .padding(horizontal = 16.dp, vertical = 14.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -56,9 +56,9 @@ fun ChooseFromMapRow(
                 imageVector = Icons.Default.LocationOn,
                 contentDescription = null,
                 tint = if (storedLocation != null)
-                    MaterialTheme.extraColors.textPrimary
+                    extraColors.textPrimary
                 else
-                    MaterialTheme.extraColors.textMuted,
+                    extraColors.textMuted,
                 modifier = Modifier.size(22.dp)
             )
 
@@ -75,7 +75,7 @@ fun ChooseFromMapRow(
                     Text(
                         text = stringResource(R.string.settings_fetching_location),
                         fontSize = 13.sp,
-                        color = MaterialTheme.extraColors.textMuted
+                        color = extraColors.textMuted
                     )
                 }
             } else {
@@ -86,7 +86,7 @@ fun ChooseFromMapRow(
                         else
                             stringResource(R.string.settings_choose_map),
                         fontSize = 11.sp,
-                        color = MaterialTheme.extraColors.textMuted
+                        color = extraColors.textMuted
                     )
                     if (storedLocation != null) {
                         Spacer(modifier = Modifier.height(2.dp))
@@ -94,7 +94,7 @@ fun ChooseFromMapRow(
                             text = storedLocation,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.extraColors.textPrimary,
+                            color = extraColors.textPrimary,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
@@ -106,7 +106,7 @@ fun ChooseFromMapRow(
         Icon(
             imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
             contentDescription = null,
-            tint = MaterialTheme.extraColors.textMuted
+            tint = extraColors.textMuted
         )
     }
 }

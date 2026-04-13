@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,19 +32,19 @@ fun AlertsEmptyContent(modifier: Modifier = Modifier) {
             Icon(
                 painter = painterResource(R.drawable.ic_alerts),
                 contentDescription = null,
-                tint = MaterialTheme.extraColors.textMuted,
+                tint = extraColors.textMuted,
                 modifier = Modifier.size(64.dp)
             )
             Text(
                 text = stringResource(R.string.alerts_empty_title),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.extraColors.textPrimary
+                color = extraColors.textPrimary
             )
             Text(
                 text = stringResource(R.string.alerts_empty_subtitle),
                 fontSize = 14.sp,
-                color = MaterialTheme.extraColors.textMuted,
+                color = extraColors.textMuted,
                 textAlign = TextAlign.Center
             )
         }

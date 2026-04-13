@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -65,8 +64,8 @@ fun UnitsSection(
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 UnitRowHeader(
                     iconRes = R.drawable.ic_wind,
-                    iconTint = MaterialTheme.extraColors.cyan,
-                    iconBackground = MaterialTheme.extraColors.cyan.copy(alpha = 0.3f),
+                    iconTint = extraColors.cyan,
+                    iconBackground = extraColors.cyan.copy(alpha = 0.3f),
                     label = stringResource(R.string.settings_wind_speed)
                 )
                 UnitSelector(

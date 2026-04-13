@@ -65,56 +65,6 @@ object DummyData {
         timestampUnix      = 1717200000L
     )
 
-    val newYorkCurrentWeather = CurrentWeather(
-        cityName           = "New York",
-        countryCode        = "US",
-        latitude           = 40.7128,
-        longitude          = -74.0060,
-        temperature        = 25.0,
-        feelsLike          = 26.0,
-        minimumTemp        = 22.0,
-        maximumTemp        = 28.0,
-        pressureHpa        = 1015,
-        humidityPercent    = 60,
-        windSpeedRaw       = 4.0,
-        windDirectionDeg   = 190,
-        cloudCoverPercent  = 10,
-        visibilityMeters   = 10000,
-        weatherConditionId = 800,
-        weatherMain        = "Clear",
-        weatherDescription = "clear sky",
-        weatherIconCode    = "01d",
-        sunriseUnix        = 1717232400L,
-        sunsetUnix         = 1717285200L,
-        timezoneOffset     = -14400,
-        timestampUnix      = 1717250000L
-    )
-
-    val nightWeather = CurrentWeather(
-        cityName           = "Cairo",
-        countryCode        = "EG",
-        latitude           = 30.0444,
-        longitude          = 31.2357,
-        temperature        = 22.0,
-        feelsLike          = 22.5,
-        minimumTemp        = 20.0,
-        maximumTemp        = 24.0,
-        pressureHpa        = 1012,
-        humidityPercent    = 65,
-        windSpeedRaw       = 2.0,
-        windDirectionDeg   = 150,
-        cloudCoverPercent  = 20,
-        visibilityMeters   = 10000,
-        weatherConditionId = 801,
-        weatherMain        = "Clouds",
-        weatherDescription = "few clouds",
-        weatherIconCode    = "02n",
-        sunriseUnix        = 1717214400L,
-        sunsetUnix         = 1717263600L,
-        timezoneOffset     = 7200,
-        timestampUnix      = 1717270000L
-    )
-
     val extremeHeatWeather = CurrentWeather(
         cityName           = "Riyadh",
         countryCode        = "SA",
@@ -138,31 +88,6 @@ object DummyData {
         sunsetUnix         = 1717256400L,
         timezoneOffset     = 10800,
         timestampUnix      = 1717230000L
-    )
-
-    val freezingWeather = CurrentWeather(
-        cityName           = "Moscow",
-        countryCode        = "RU",
-        latitude           = 55.7558,
-        longitude          = 37.6173,
-        temperature        = -15.0,
-        feelsLike          = -22.0,
-        minimumTemp        = -18.0,
-        maximumTemp        = -10.0,
-        pressureHpa        = 1025,
-        humidityPercent    = 85,
-        windSpeedRaw       = 8.0,
-        windDirectionDeg   = 45,
-        cloudCoverPercent  = 100,
-        visibilityMeters   = 500,
-        weatherConditionId = 602,
-        weatherMain        = "Snow",
-        weatherDescription = "heavy snow",
-        weatherIconCode    = "13d",
-        sunriseUnix        = 1717218000L,
-        sunsetUnix         = 1717275600L,
-        timezoneOffset     = 10800,
-        timestampUnix      = 1717240000L
     )
 
     val stormWeather = CurrentWeather(
@@ -396,64 +321,6 @@ object DummyData {
         )
     )
 
-    val newYorkForecast = Forecast(
-        cityName        = "New York",
-        countryCode     = "US",
-        latitude        = 40.7128,
-        longitude       = -74.0060,
-        timezoneOffset  = -14400,
-        hourlyForecasts = listOf(
-            hourlyForecast1.copy(
-                temperature        = 25.0,
-                feelsLike          = 26.0,
-                minimumTemp        = 22.0,
-                maximumTemp        = 28.0,
-                weatherConditionId = 800,
-                weatherMain        = "Clear",
-                weatherDescription = "clear sky",
-                weatherIconCode    = "01d"
-            )
-        )
-    )
-
-    val successUiState = HomeUiState(
-        currentWeather  = cairoCurrentWeather,
-        forecastDays    = cairoForecast,
-        point           = StoredPoint(30.0444, 31.2357),
-        isDataLoaded    = true,
-        isConnected     = true,
-        screenState     = HomeScreenState.Success,
-        userPreferences = UserPreferences(
-            temperatureUnitOption = TemperatureUnit.CELSIUS,
-            windUnitOption        = WindUnit.METERS_PER_SECOND,
-            languageOption        = Language.ENGLISH,
-            locationOption        = LocationOption.GPS,
-            storedPoint           = null
-        )
-    )
-
-    val loadingUiState = HomeUiState(
-        screenState = HomeScreenState.Loading
-    )
-
-    val errorUiState = HomeUiState(
-        screenState = HomeScreenState.Error("Unable to load weather data"),
-        isConnected = true
-    )
-
-    val networkErrorUiState = HomeUiState(
-        screenState = HomeScreenState.NetworkUnavailable,
-        isConnected = false
-    )
-
-    val gpsDisabledUiState = HomeUiState(
-        screenState = HomeScreenState.GpsDisabled
-    )
-
-    val permissionUiState = HomeUiState(
-        screenState = HomeScreenState.LocationPermission
-    )
-
     val nightUiState = HomeUiState(
         currentWeather  = londonCurrentWeather,
         forecastDays    = londonForecast,
@@ -470,35 +337,4 @@ object DummyData {
         )
     )
 
-    val extremeHeatUiState = HomeUiState(
-        currentWeather  = extremeHeatWeather,
-        forecastDays    = cairoForecast,
-        point           = StoredPoint(24.7136, 46.6753),
-        isDataLoaded    = true,
-        isConnected     = true,
-        screenState     = HomeScreenState.Success,
-        userPreferences = UserPreferences(
-            temperatureUnitOption = TemperatureUnit.CELSIUS,
-            windUnitOption        = WindUnit.METERS_PER_SECOND,
-            languageOption        = Language.ENGLISH,
-            locationOption        = LocationOption.GPS,
-            storedPoint           = null
-        )
-    )
-
-    val stormUiState = HomeUiState(
-        currentWeather = stormWeather,
-        forecastDays = cairoForecast,
-        point = StoredPoint(25.7617, -80.1918),
-        isDataLoaded = true,
-        isConnected = true,
-        screenState = HomeScreenState.Success,
-        userPreferences = UserPreferences(
-            temperatureUnitOption = TemperatureUnit.CELSIUS,
-            windUnitOption = WindUnit.METERS_PER_SECOND,
-            languageOption = Language.ENGLISH,
-            locationOption = LocationOption.GPS,
-            storedPoint = null
-        )
-    )
 }

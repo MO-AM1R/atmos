@@ -1,5 +1,4 @@
 package com.example.atmos.ui.core.components
-import android.graphics.pdf.PdfDocument
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

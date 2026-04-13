@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -69,7 +68,7 @@ fun FavoriteLocationCard(
                             .toLocalizedDigits(),
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
-                        color = MaterialTheme.extraColors.textPrimary,
+                        color = extraColors.textPrimary,
                         overflow = TextOverflow.Ellipsis,
                         maxLines = 1,
                     )
@@ -77,7 +76,7 @@ fun FavoriteLocationCard(
                     Text(
                         text = item.weatherMain,
                         fontSize = 14.sp,
-                        color = MaterialTheme.extraColors.textMuted,
+                        color = extraColors.textMuted,
                         overflow = TextOverflow.Ellipsis
                     )
                 }
@@ -93,7 +92,7 @@ fun FavoriteLocationCard(
                         .toLocalizedDigits(),
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
-                    color = MaterialTheme.extraColors.textPrimary,
+                    color = extraColors.textPrimary,
                     overflow = TextOverflow.Ellipsis
                 )
 
@@ -107,7 +106,7 @@ fun FavoriteLocationCard(
                             .toLocalizedDigits()
                     }",
                     fontSize = 14.sp,
-                    color = MaterialTheme.extraColors.textMuted,
+                    color = extraColors.textMuted,
                     overflow = TextOverflow.Ellipsis
                 )
             }

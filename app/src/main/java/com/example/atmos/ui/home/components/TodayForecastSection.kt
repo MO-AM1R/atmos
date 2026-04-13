@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -40,7 +39,7 @@ fun TodayForecastSection(
     hourlyForecasts: List<HourlyForecast> = DummyData.hourlyForecasts,
     liquidState: LiquidState,
 ) {
-    val colors = MaterialTheme.extraColors
+    val colors = extraColors
 
     LiquidGlassContainer(
         liquidState = liquidState,
@@ -77,7 +76,7 @@ fun HourlyForecastCard(
     modifier: Modifier = Modifier,
     forecast: HourlyForecast = DummyData.hourlyForecasts[0],
 ) {
-    val colors = MaterialTheme.extraColors
+    val colors = extraColors
 
     Column(
         modifier = modifier

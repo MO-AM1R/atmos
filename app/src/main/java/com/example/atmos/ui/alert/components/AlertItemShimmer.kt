@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,7 +29,7 @@ fun AlertItemShimmer(modifier: Modifier = Modifier) {
             .background(SettingsSectionBackground.copy(alpha = 0.3f))
             .border(
                 width = 1.dp,
-                color = MaterialTheme.extraColors.cardBorder,
+                color = extraColors.cardBorder,
                 shape = RoundedCornerShape(16.dp)
             )
             .padding(16.dp),
@@ -45,7 +44,7 @@ fun AlertItemShimmer(modifier: Modifier = Modifier) {
                 modifier = Modifier
                     .size(40.dp)
                     .clip(RoundedCornerShape(10.dp))
-                    .background(MaterialTheme.extraColors.cardBorder)
+                    .background(extraColors.cardBorder)
             )
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Box(
@@ -53,14 +52,14 @@ fun AlertItemShimmer(modifier: Modifier = Modifier) {
                         .width(100.dp)
                         .height(14.dp)
                         .clip(RoundedCornerShape(7.dp))
-                        .background(MaterialTheme.extraColors.cardBorder)
+                        .background(extraColors.cardBorder)
                 )
                 Box(
                     modifier = Modifier
                         .width(160.dp)
                         .height(12.dp)
                         .clip(RoundedCornerShape(6.dp))
-                        .background(MaterialTheme.extraColors.cardBorder)
+                        .background(extraColors.cardBorder)
                 )
             }
         }
@@ -69,7 +68,7 @@ fun AlertItemShimmer(modifier: Modifier = Modifier) {
                 .width(44.dp)
                 .height(24.dp)
                 .clip(RoundedCornerShape(12.dp))
-                .background(MaterialTheme.extraColors.cardBorder)
+                .background(extraColors.cardBorder)
         )
     }
 }

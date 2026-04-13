@@ -15,7 +15,6 @@ import com.example.atmos.ui.splash.SplashScreen
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavigation(
-    modifier: Modifier = Modifier,
     startScreen: Screens = Screens.SplashScreen
 ) {
     val navController = rememberNavController()

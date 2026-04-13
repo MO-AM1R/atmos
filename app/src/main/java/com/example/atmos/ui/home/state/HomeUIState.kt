@@ -18,8 +18,6 @@ data class HomeUiState(
     val isLoading: Boolean
         get() = screenState is HomeScreenState.Loading
 
-    val hasError: Boolean
-        get() = screenState is HomeScreenState.Error
 }
 
 

@@ -18,7 +18,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -57,7 +56,7 @@ fun FiveDayOutlookSection(
         hourlyForecasts.groupIntoDays()
     }
 
-    val colors = MaterialTheme.extraColors
+    val colors = extraColors
 
     LiquidGlassContainer(
         liquidState = liquidState,
@@ -106,7 +105,7 @@ fun DayForecastRow(
     val endFraction = ((forecastDay.maxTemp - globalMin) / globalRange)
         .coerceIn(0.0, 1.0).toFloat()
 
-    val colors = MaterialTheme.extraColors
+    val colors = extraColors
 
     Row(
         modifier = modifier

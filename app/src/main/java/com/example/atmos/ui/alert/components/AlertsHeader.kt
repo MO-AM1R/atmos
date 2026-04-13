@@ -4,14 +4,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -39,19 +37,19 @@ fun AlertsHeader(
                 text = stringResource(R.string.alerts_title),
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Bold,
-                color = MaterialTheme.extraColors.textPrimary
+                color = extraColors.textPrimary
             )
             Text(
                 text = stringResource(R.string.alerts_subtitle),
                 fontSize = 14.sp,
-                color = MaterialTheme.extraColors.textMuted
+                color = extraColors.textMuted
             )
         }
 
         FloatingActionButton(
             modifier = Modifier.size(48.dp),
             onClick = onAddClick,
-            containerColor = MaterialTheme.extraColors.violet,
+            containerColor = extraColors.violet,
             contentColor = Color.White,
             shape = RoundedCornerShape(size = 12.dp)
         ) {

@@ -104,9 +104,9 @@ private fun FloatingBottomNavItem(
                 painter = painterResource(item.iconRes),
                 contentDescription = stringResource(item.labelRes),
                 tint = if (isSelected)
-                    MaterialTheme.extraColors.textPrimary
+                    extraColors.textPrimary
                 else
-                    MaterialTheme.extraColors.textMuted,
+                    extraColors.textMuted,
                 modifier = Modifier.size(22.dp)
             )
 
@@ -114,7 +114,7 @@ private fun FloatingBottomNavItem(
                 text = stringResource(item.labelRes),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.extraColors.textPrimary
+                color = extraColors.textPrimary
             )
         }
     }

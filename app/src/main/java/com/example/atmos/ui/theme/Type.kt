@@ -28,10 +28,6 @@ val CairoFont = FontFamily(
     Font(R.font.cairo_semi_bold, FontWeight.SemiBold),
 )
 
-fun getAppFontFamily(isArabic: Boolean): FontFamily {
-    return if (isArabic) CairoFont else InterFont
-}
-
 val WeatherTypography = Typography(
 
     displayLarge = TextStyle(

@@ -2,12 +2,9 @@ package com.example.atmos.ui.home.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.unit.dp
 import com.example.atmos.domain.model.UserPreferences
 import com.example.atmos.ui.core.components.ResourceImage
 import com.example.atmos.ui.home.state.HomeUiState
@@ -34,7 +31,7 @@ fun HomeContent(
             modifier = Modifier
                 .fillMaxSize()
                 .liquefiable(liquidState),
-            resourceId = MaterialTheme.background,
+            resourceId = background,
             contentScale = ContentScale.Crop
         )
 

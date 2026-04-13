@@ -186,10 +186,10 @@ fun AtmosTheme(
     }
 }
 
-val MaterialTheme.extraColors: WeatherExtraColors
+val extraColors: WeatherExtraColors
     @Composable get() = LocalWeatherExtraColors.current
 
-val MaterialTheme.background: Int
+val background: Int
     @Composable get() =
     if (getCurrentThemeMode() == ThemeMode.DAY)
         R.drawable.background_day

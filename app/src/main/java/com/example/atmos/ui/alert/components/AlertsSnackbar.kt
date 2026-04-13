@@ -70,7 +70,7 @@ fun AlertsSnackbar(
                 Text(
                     text = stringResource(R.string.alert_removed),
                     fontSize = 13.sp,
-                    color = MaterialTheme.extraColors.textPrimary,
+                    color = extraColors.textPrimary,
                     modifier = Modifier.weight(1f)
                 )
                 Row(
@@ -90,13 +90,13 @@ fun AlertsSnackbar(
                             text = stringResource(R.string.alert_undo),
                             fontSize = 12.sp,
                             fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.extraColors.textPrimary
+                            color = extraColors.textPrimary
                         )
                     }
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = null,
-                        tint = MaterialTheme.extraColors.textMuted,
+                        tint = extraColors.textMuted,
                         modifier = Modifier
                             .size(18.dp)
                             .clickable { onDismiss() }

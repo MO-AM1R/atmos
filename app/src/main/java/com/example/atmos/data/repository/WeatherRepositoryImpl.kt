@@ -1,5 +1,4 @@
 package com.example.atmos.data.repository
-import android.util.Log
 import com.example.atmos.data.datasource.local.WeatherLocalDataSource
 import com.example.atmos.data.datasource.remote.WeatherRemoteDataSource
 import com.example.atmos.data.mappers.toDomain

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,7 +42,7 @@ fun AlertTypeSelector(
                     .weight(1f)
                     .clip(RoundedCornerShape(50.dp))
                     .background(
-                        if (isSelected) MaterialTheme.extraColors.violet
+                        if (isSelected) extraColors.violet
                         else Color.Transparent
                     )
                     .clickable { onSelect(type) }
@@ -59,8 +58,8 @@ fun AlertTypeSelector(
                     ),
                     fontSize = 14.sp,
                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                    color = if (isSelected) MaterialTheme.extraColors.textPrimary
-                    else MaterialTheme.extraColors.textMuted
+                    color = if (isSelected) extraColors.textPrimary
+                    else extraColors.textMuted
                 )
             }
         }

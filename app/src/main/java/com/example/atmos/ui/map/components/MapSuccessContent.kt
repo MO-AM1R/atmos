@@ -23,7 +23,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -119,7 +118,7 @@ fun MapSuccessContent(
                     .align(Alignment.BottomEnd)
                     .padding(end = 16.dp, bottom = 100.dp),
                 containerColor = Color(0xFF1E1B2E),
-                contentColor = MaterialTheme.extraColors.violet,
+                contentColor = extraColors.violet,
                 shape = CircleShape,
                 elevation = FloatingActionButtonDefaults.elevation(8.dp)
             ) {

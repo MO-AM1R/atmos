@@ -69,4 +69,3 @@ val SettingsSectionBackground = Color(0xFF9797DA)
 
 val BottomNavBackground = Color(0xFF1E1B2E).copy(alpha = 0.7f)
 val BottomNavBorder     = Color(0xFFFFFFFF).copy(alpha = 0.10f)
-val BottomNavSelected   = Color(0xFF6C63FF).copy(alpha = 0.20f)

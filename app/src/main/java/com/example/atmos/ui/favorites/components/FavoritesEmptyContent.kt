@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -34,19 +33,19 @@ fun FavoritesEmptyContent() {
             Icon(
                 imageVector = Icons.Default.FavoriteBorder,
                 contentDescription = null,
-                tint = MaterialTheme.extraColors.textMuted,
+                tint = extraColors.textMuted,
                 modifier = Modifier.size(64.dp)
             )
             Text(
                 text = stringResource(R.string.no_favorites_yet),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.extraColors.textPrimary
+                color = extraColors.textPrimary
             )
             Text(
                 text = stringResource(R.string.tap_to_add_a_location),
                 fontSize = 14.sp,
-                color = MaterialTheme.extraColors.textMuted,
+                color = extraColors.textMuted,
                 textAlign = TextAlign.Center
             )
         }

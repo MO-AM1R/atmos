@@ -4,8 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -38,8 +36,8 @@ fun AppearanceSection(
         ) {
             UnitRowHeader(
                 iconRes = R.drawable.ic_language,
-                iconTint = MaterialTheme.extraColors.violet,
-                iconBackground = MaterialTheme.extraColors.violet.copy(alpha = 0.2f),
+                iconTint = extraColors.violet,
+                iconBackground = extraColors.violet.copy(alpha = 0.2f),
                 label = stringResource(R.string.settings_language)
             )
             UnitSelector(

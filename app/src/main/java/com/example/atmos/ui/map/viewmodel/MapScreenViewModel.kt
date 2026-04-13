@@ -1,6 +1,5 @@
 package com.example.atmos.ui.map.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.atmos.domain.model.SearchResultItem
@@ -8,13 +7,10 @@ import com.example.atmos.ui.map.state.MapNavigationEvent
 import com.example.atmos.ui.map.state.MapScreenEvent
 import com.example.atmos.ui.map.state.MapScreenState
 import com.example.atmos.ui.map.state.MapScreenUIState
-import com.mapbox.base.common.logger.Logger
 import com.mapbox.search.ResponseInfo
-import com.mapbox.search.SearchMultipleSelectionCallback
 import com.mapbox.search.SearchOptions
 import com.mapbox.search.SearchSuggestionsCallback
 import com.mapbox.search.common.RestrictedMapboxSearchAPI
-import com.mapbox.search.result.SearchResult
 import com.mapbox.search.result.SearchSuggestion
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject

@@ -3,7 +3,6 @@ package com.example.atmos.ui.favoritedetails
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -58,7 +57,7 @@ fun FavoriteDetailsScreen(
                 .fillMaxSize()
                 .liquefiable(liquidState)
                 .blur(4.dp),
-            resourceId = MaterialTheme.background,
+            resourceId = background,
             contentScale = ContentScale.Crop
         )
 

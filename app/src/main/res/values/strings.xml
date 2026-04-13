@@ -13,7 +13,6 @@
     <string name="choose_your_preferences_and_start_exploring">Choose your preferences and start\nexploring</string>
     <string name="get_started">Get Started</string>
     <string name="next">Next</string>
-    <string name="location_service_must_be_enabled">Location Service must be enabled</string>
     <string name="description">Image Description</string>
     <string name="humidity">Humidity</string>
     <string name="wind_speed">Wind Speed</string>
@@ -42,8 +41,6 @@
     <string name="settings_subtitle">Customize your experience</string>
 
     <string name="settings_section_location">Location</string>
-    <string name="settings_gps_title">GPS Location</string>
-    <string name="settings_gps_subtitle">Use current location</string>
     <string name="settings_choose_map">Choose from Map</string>
 
     <string name="settings_section_units">Units</string>
@@ -57,21 +54,9 @@
     <string name="settings_specific_location_subtitle">Using saved location</string>
     <string name="settings_gps_auto_subtitle">GPS will detect automatically</string>
     <string name="settings_gps_auto_detecting">Detecting location automatically via GPS</string>
-    <string name="settings_no_location_stored">No location saved — tap to choose</string>
-    <string name="settings_change_location">Change ›</string>
     <string name="map_error_title">Something Went Wrong</string>
     <string name="map_error_default">An unexpected error occurred.\nPlease try again.</string>
     <string name="map_error_retry">Try Again</string>
-    <string name="map_no_network_title">No Internet Connection</string>
-    <string name="map_no_network_message">Please check your connection\nand try again.</string>
-    <string name="map_no_network_retry">Retry</string>
-    <string name="map_permission_title">Location Access Needed</string>
-    <string name="map_permission_message">We need your location to show\nyou the map and nearby places.</string>
-    <string name="map_permission_allow">Allow Location</string>
-    <string name="map_permission_open_settings">Open Settings</string>
-    <string name="map_gps_disabled_title">GPS is Disabled</string>
-    <string name="map_gps_disabled_message">Please enable GPS to detect\nyour current location.</string>
-    <string name="map_gps_enable">Enable GPS</string>
     <string name="map_save_location">Save</string>
     <string name="settings_fetching_location">Fetching location name…</string>
     <string name="settings_selected_location">Selected Location</string>
@@ -88,14 +73,10 @@
     <string name="alerts_subtitle">Manage your weather alerts</string>
     <string name="alerts_empty_title">No Alerts Yet</string>
     <string name="alerts_empty_subtitle">Tap + to add a new alert</string>
-    <string name="alerts_add">Create Alert</string>
-    <string name="alerts_delete">Delete</string>
     <string name="alert_type_notification">Notification</string>
     <string name="alert_type_alarm">Alarm</string>
     <string name="alert_start_time">Starts: %s</string>
     <string name="alert_end_time">Ends: %s</string>
-    <string name="alert_active">Active</string>
-    <string name="alert_inactive">Inactive</string>
     <string name="alert_expired">Expired</string>
     <string name="alert_sheet_title">Create Alert</string>
     <string name="alert_sheet_start_time">Start Time</string>
@@ -109,12 +90,8 @@
     <string name="alert_notification_channel_name">Weather Alerts</string>
     <string name="alert_notification_content">%1$s in %2$s — Weather Description: %3$s</string>
     <string name="alert_alarm_title">Weather Alarm</string>
-    <string name="alert_alarm_content">Current weather in %1$s: %2$s, Feels like %3$s</string>
     <string name="alert_removed">Alert removed</string>
     <string name="alert_undo">Undo</string>
-    <string name="notification_permission">Notification Permission</string>
-    <string name="this_app_needs_notification_permission_to_send_you_weather_alerts">This app needs notification permission to send you weather alerts.</string>
-    <string name="you_ve_permanently_denied_notification_permission_please_enable_it_from_settings_to_receive_weather_alerts">You\'ve permanently denied notification permission. Please enable it from Settings to receive weather alerts.</string>
     <string name="notification_permission_required">Notification Permission</string>
     <string name="notification_permission_rationale">This app needs notification permission to send you weather alerts at your scheduled time.</string>
     <string name="notification_permission_denied">Permission Denied</string>

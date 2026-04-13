@@ -77,7 +77,7 @@ fun AlertItemCard(
                             else R.drawable.ic_alarm
                         ),
                         contentDescription = null,
-                        tint = MaterialTheme.extraColors.textPrimary,
+                        tint = extraColors.textPrimary,
                         modifier = Modifier.size(22.dp)
                     )
                 }
@@ -93,9 +93,9 @@ fun AlertItemCard(
                         fontSize = 16.sp,
                         fontWeight = FontWeight.SemiBold,
                         color = if (item.isExpired)
-                            MaterialTheme.extraColors.textMuted
+                            extraColors.textMuted
                         else
-                            MaterialTheme.extraColors.textPrimary
+                            extraColors.textPrimary
                     )
 
                     Text(
@@ -117,7 +117,7 @@ fun AlertItemCard(
                             }
                         },
                         fontSize = 14.sp,
-                        color = MaterialTheme.extraColors.textMuted
+                        color = extraColors.textMuted
                     )
 
                     if (item.isExpired) {
@@ -140,9 +140,9 @@ fun AlertItemCard(
                         checkedBorderColor = Color.Transparent,
 
                         uncheckedBorderColor = Color.Transparent,
-                        uncheckedThumbColor = MaterialTheme.extraColors.textPrimary,
-                        uncheckedTrackColor = MaterialTheme.extraColors.textMuted,
-                        uncheckedIconColor = MaterialTheme.extraColors.textPrimary,
+                        uncheckedThumbColor = extraColors.textPrimary,
+                        uncheckedTrackColor = extraColors.textMuted,
+                        uncheckedIconColor = extraColors.textPrimary,
                     )
                 )
             }

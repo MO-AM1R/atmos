@@ -157,7 +157,7 @@ fun CreateAlertBottomSheet(
                     .height(52.dp),
                 shape = RoundedCornerShape(14.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = MaterialTheme.extraColors.violet,
+                    containerColor = extraColors.violet,
                     disabledContainerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
                 )
             ) {

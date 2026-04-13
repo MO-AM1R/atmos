@@ -72,7 +72,4 @@ class FakeWeatherLocalDataSourceImpl(
         cacheValidFlow.value = false
     }
 
-    fun getCachedWeatherSync(): CurrentWeatherEntity?       = cachedWeather
-    fun getCachedForecastsSync(): List<HourlyForecastEntity> = cachedForecasts.toList()
-    fun isCacheValidSync(): Boolean                          = cacheValid
 }

@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,7 +30,7 @@ fun FavoriteLocationShimmer() {
             .background(SettingsSectionBackground.copy(alpha = 0.3f))
             .border(
                 width = 1.dp,
-                color = MaterialTheme.extraColors.cardBorder,
+                color = extraColors.cardBorder,
                 shape = RoundedCornerShape(16.dp)
             )
             .padding(16.dp),
@@ -46,7 +45,7 @@ fun FavoriteLocationShimmer() {
                 modifier = Modifier
                     .size(40.dp)
                     .clip(CircleShape)
-                    .background(MaterialTheme.extraColors.cardBorder)
+                    .background(extraColors.cardBorder)
             )
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Box(
@@ -54,14 +53,14 @@ fun FavoriteLocationShimmer() {
                         .width(120.dp)
                         .height(16.dp)
                         .clip(RoundedCornerShape(8.dp))
-                        .background(MaterialTheme.extraColors.cardBorder)
+                        .background(extraColors.cardBorder)
                 )
                 Box(
                     modifier = Modifier
                         .width(80.dp)
                         .height(12.dp)
                         .clip(RoundedCornerShape(6.dp))
-                        .background(MaterialTheme.extraColors.cardBorder)
+                        .background(extraColors.cardBorder)
                 )
             }
         }
@@ -74,14 +73,14 @@ fun FavoriteLocationShimmer() {
                     .width(60.dp)
                     .height(20.dp)
                     .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.extraColors.cardBorder)
+                    .background(extraColors.cardBorder)
             )
             Box(
                 modifier = Modifier
                     .width(80.dp)
                     .height(12.dp)
                     .clip(RoundedCornerShape(6.dp))
-                    .background(MaterialTheme.extraColors.cardBorder)
+                    .background(extraColors.cardBorder)
             )
         }
     }

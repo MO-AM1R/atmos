@@ -7,13 +7,11 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,10 +26,9 @@ import com.example.atmos.ui.theme.extraColors
 
 @Composable
 fun FavoriteHeader(
-    modifier: Modifier = Modifier,
     onNavigateToMap: () -> Unit,
 ) {
-    val colors = MaterialTheme.extraColors
+    val colors = extraColors
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -58,7 +55,7 @@ fun FavoriteHeader(
         FloatingActionButton(
             modifier = Modifier.size(48.dp),
             onClick = onNavigateToMap,
-            containerColor = MaterialTheme.extraColors.violet,
+            containerColor = extraColors.violet,
             contentColor = Color.White,
             shape = RoundedCornerShape(size = 12.dp)
         ) {

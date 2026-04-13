@@ -1,5 +1,4 @@
 package com.example.atmos.ui.theme
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes
 import androidx.compose.ui.unit.dp
@@ -14,14 +13,5 @@ val WeatherShapes = Shapes(
 )
 
 object AppShapes {
-    val Circle         = CircleShape
-    val Chip           = RoundedCornerShape(50.dp)
-    val Card           = RoundedCornerShape(24.dp)
-    val CardLarge      = RoundedCornerShape(32.dp)
     val Button         = RoundedCornerShape(50.dp)
-    val BottomSheet    = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)
-    val Input          = RoundedCornerShape(16.dp)
-    val NavBar         = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp)
-    val AlertCard      = RoundedCornerShape(16.dp)
-    val SettingsCard   = RoundedCornerShape(20.dp)
 }

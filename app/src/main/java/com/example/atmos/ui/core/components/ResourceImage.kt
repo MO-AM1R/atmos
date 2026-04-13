@@ -8,7 +8,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.atmos.R
-import com.google.android.libraries.places.widget.PlaceSearchFragment
 
 
 @Composable

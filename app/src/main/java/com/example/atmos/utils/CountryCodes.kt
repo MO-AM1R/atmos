@@ -19,19 +19,3 @@ fun String.toFlagEmoji(): String {
     return String(Character.toChars(firstChar)) + String(Character.toChars(secondChar))
 }
 
-fun String.toLocalizedCountryNameWithFlag(locale: Locale = Locale.getDefault()): String {
-    val flag = toFlagEmoji()
-    val name = toLocalizedCountryName(locale)
-    return if (flag.isNotEmpty()) "$name $flag" else name
-}
-
-fun String.isValidCountryCode(): Boolean {
-    if (this.length != 2) return false
-    return runCatching {
-        val resolved = Locale.Builder()
-            .setRegion(this)
-            .build()
-            .getDisplayCountry(Locale.ENGLISH)
-        resolved.isNotBlank() && resolved.uppercase() != this.uppercase()
-    }.getOrDefault(false)
-}

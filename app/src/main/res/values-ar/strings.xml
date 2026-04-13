@@ -13,7 +13,6 @@
     <string name="choose_your_preferences_and_start_exploring">اختر تفضيلاتك وابدأ\nالاستكشاف</string>
     <string name="get_started">ابدأ الآن</string>
     <string name="next">التالي</string>
-    <string name="location_service_must_be_enabled">يجب تفعيل خدمة الموقع</string>
     <string name="description">وصف الصورة</string>
     <string name="humidity">الرطوبة</string>
     <string name="wind_speed">سرعة الرياح</string>
@@ -42,8 +41,6 @@
     <string name="settings_subtitle">خصّص تجربتك</string>
 
     <string name="settings_section_location">الموقع</string>
-    <string name="settings_gps_title">موقع GPS</string>
-    <string name="settings_gps_subtitle">استخدام الموقع الحالي</string>
     <string name="settings_choose_map">اختر من الخريطة</string>
 
     <string name="settings_section_units">الوحدات</string>
@@ -57,21 +54,9 @@
     <string name="settings_specific_location_subtitle">استخدام الموقع المحفوظ</string>
     <string name="settings_gps_auto_subtitle">سيكتشف GPS الموقع تلقائيًا</string>
     <string name="settings_gps_auto_detecting">جارٍ اكتشاف الموقع تلقائيًا عبر GPS</string>
-    <string name="settings_no_location_stored">لا يوجد موقع محفوظ — اضغط للاختيار</string>
-    <string name="settings_change_location">تغيير ›</string>
     <string name="map_error_title">حدث خطأ ما</string>
     <string name="map_error_default">حدث خطأ غير متوقع.\nيرجى المحاولة مجددًا.</string>
     <string name="map_error_retry">حاول مجددًا</string>
-    <string name="map_no_network_title">لا يوجد اتصال بالإنترنت</string>
-    <string name="map_no_network_message">يرجى التحقق من اتصالك\nوالمحاولة مجددًا.</string>
-    <string name="map_no_network_retry">إعادة المحاولة</string>
-    <string name="map_permission_title">مطلوب الوصول إلى الموقع</string>
-    <string name="map_permission_message">نحتاج إلى موقعك لعرض\nالخريطة والأماكن القريبة.</string>
-    <string name="map_permission_allow">السماح بالموقع</string>
-    <string name="map_permission_open_settings">فتح الإعدادات</string>
-    <string name="map_gps_disabled_title">GPS معطّل</string>
-    <string name="map_gps_disabled_message">يرجى تفعيل GPS لاكتشاف\nموقعك الحالي.</string>
-    <string name="map_gps_enable">تفعيل GPS</string>
     <string name="map_save_location">حفظ</string>
     <string name="settings_fetching_location">جارٍ جلب اسم الموقع…</string>
     <string name="settings_selected_location">الموقع المحدد</string>
@@ -88,14 +73,10 @@
     <string name="alerts_subtitle">إدارة تنبيهات الطقس</string>
     <string name="alerts_empty_title">لا توجد تنبيهات بعد</string>
     <string name="alerts_empty_subtitle">اضغط + لإضافة تنبيه جديد</string>
-    <string name="alerts_add">إنشاء تنبيه</string>
-    <string name="alerts_delete">حذف</string>
     <string name="alert_type_notification">إشعار</string>
     <string name="alert_type_alarm">منبّه</string>
     <string name="alert_start_time">يبدأ: %s</string>
     <string name="alert_end_time">ينتهي: %s</string>
-    <string name="alert_active">نشط</string>
-    <string name="alert_inactive">غير نشط</string>
     <string name="alert_expired">منتهي</string>
     <string name="alert_sheet_title">إنشاء تنبيه</string>
     <string name="alert_sheet_start_time">وقت البدء</string>
@@ -109,12 +90,8 @@
     <string name="alert_notification_channel_name">تنبيهات الطقس</string>
     <string name="alert_notification_content">%1$s في %2$s — وصف الطقس: %3$s</string>
     <string name="alert_alarm_title">منبّه الطقس</string>
-    <string name="alert_alarm_content">الطقس الحالي في %1$s: %2$s، الإحساس كـ %3$s</string>
     <string name="alert_removed">تم حذف التنبيه</string>
     <string name="alert_undo">تراجع</string>
-    <string name="notification_permission">إذن الإشعارات</string>
-    <string name="this_app_needs_notification_permission_to_send_you_weather_alerts">يحتاج هذا التطبيق إلى إذن الإشعارات لإرسال تنبيهات الطقس إليك.</string>
-    <string name="you_ve_permanently_denied_notification_permission_please_enable_it_from_settings_to_receive_weather_alerts">لقد رفضت إذن الإشعارات بشكل دائم. يرجى تفعيله من الإعدادات لاستقبال تنبيهات الطقس.</string>
     <string name="notification_permission_required">إذن الإشعارات مطلوب</string>
     <string name="notification_permission_rationale">يحتاج هذا التطبيق إلى إذن الإشعارات لإرسال تنبيهات الطقس في الوقت المحدد.</string>
     <string name="notification_permission_denied">تم رفض الإذن</string>

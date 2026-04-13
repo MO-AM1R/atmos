@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -52,7 +51,7 @@ fun LocationHeader(
                     text = currentWeather?.cityName ?: "--",
                     style = WeatherTypography.headlineMedium,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.extraColors.textPrimary
+                    color = extraColors.textPrimary
                 )
             }
 
@@ -64,7 +63,7 @@ fun LocationHeader(
                     text = forecastDays?.countryCode?.toFlagEmoji() ?: "--",
                     style = WeatherTypography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.extraColors.textPrimary
+                    color = extraColors.textPrimary
                 )
 
                 Text(
@@ -73,7 +72,7 @@ fun LocationHeader(
                         ?: "--",
                     style = WeatherTypography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.extraColors.textPrimary
+                    color = extraColors.textPrimary
                 )
             }
         }

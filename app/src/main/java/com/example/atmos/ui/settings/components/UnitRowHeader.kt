@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -50,7 +49,7 @@ fun UnitRowHeader(
             text = label,
             fontSize = 15.sp,
             fontWeight = FontWeight.SemiBold,
-            color = MaterialTheme.extraColors.textPrimary
+            color = extraColors.textPrimary
         )
     }
 }

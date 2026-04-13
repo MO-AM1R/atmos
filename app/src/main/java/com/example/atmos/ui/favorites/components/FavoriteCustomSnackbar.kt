@@ -109,14 +109,14 @@ fun FavoriteCustomSnackbar(
                             text = stringResource(R.string.undo),
                             fontSize = 12.sp,
                             fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.extraColors.textPrimary
+                            color = extraColors.textPrimary
                         )
                     }
 
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = stringResource(R.string.dismiss),
-                        tint = MaterialTheme.extraColors.textMuted,
+                        tint = extraColors.textMuted,
                         modifier = Modifier
                             .size(18.dp)
                             .clickable { onDismiss() }

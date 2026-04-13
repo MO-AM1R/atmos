@@ -71,7 +71,6 @@ fun FavoritesScreen(
                     .padding(top = 32.dp, bottom = 110.dp)
             ) {
                 FavoriteHeader(
-                    modifier = Modifier.padding(horizontal = 16.dp),
                     onNavigateToMap = onNavigateToMap
                 )
 

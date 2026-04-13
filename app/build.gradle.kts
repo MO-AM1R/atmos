@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.hilt.android)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.kotlin.serialize)
+    alias(libs.plugins.auto.nomousapps)
 }
 
 

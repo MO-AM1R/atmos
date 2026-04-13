@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,13 +28,13 @@ fun GpsAutoRow() {
         Icon(
             painter = painterResource(R.drawable.ic_gps),
             contentDescription = null,
-            tint = MaterialTheme.extraColors.textPrimary,
+            tint = extraColors.textPrimary,
             modifier = Modifier.size(18.dp)
         )
         Text(
             text = stringResource(R.string.settings_gps_auto_detecting),
             fontSize = 13.sp,
-            color = MaterialTheme.extraColors.textMuted
+            color = extraColors.textMuted
         )
     }
 }

@@ -20,13 +20,10 @@ output-metadata.json
 *.iml
 
 # Releases / APKs / AABs
-*.apk
-*.aab
 /release/
 /releases/
 
 # IntelliJ
-*.iml
 .idea/
 misc.xml
 deploymentTargetDropDown.xml
