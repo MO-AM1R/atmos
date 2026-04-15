@@ -12,17 +12,15 @@
 
 ---
 
-## 📸 Screenshots
-
-### 🏠 Home & Onboarding
+## 📸 Screenshot
 
 ![App Design Mockup 1](screenshots/App_Design_Mockup_1.png)
 
-### ⚙️ Settings & Map
+### 🏠 Home Day & Night
 
 ![App Design Mockup 2](screenshots/App_Design_Mockup_2.png)
 
-### ⭐ Favorites & Alerts
+### ⭐ Settings & Favorites & Alerts
 
 ![App Design Mockup 3](screenshots/App_Design_Mockup_3.png)
 
