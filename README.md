@@ -12,10 +12,9 @@
 
 ---
 
-## 📸 Screenshot
-
 ![App Design Mockup 1](screenshots/App_Design_Mockup_1.png)
 
+## 📸 Screenshot
 ### 🏠 Home Day & Night
 
 ![App Design Mockup 2](screenshots/App_Design_Mockup_2.png)
